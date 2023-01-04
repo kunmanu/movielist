@@ -7,13 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>🎬 Movie List 🎬</title>
 </head>
+
 <body>
-    <fieldset>
-        <form action="../controllers/add_movie.php" method="post" >
-            <label for="movie">Movie:</label><br>
-            <input type="text" id="movie" name="movie"><br>
-            <button type="submit">Add</button>
-        </form>
-    </fieldset>
+    <nav class="siteNav">
+        <a href="../controllers/home.php">add List</a>
+        <a href="../controllers/list.php">view List</a>
+    </nav>
+    <?php include '../templates/' . $template . '.phtml'; ?>
 </body>
 </html>

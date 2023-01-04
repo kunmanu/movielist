@@ -1,0 +1,8 @@
+<div class="allList">
+    <?php foreach ($lists as $list): ?>
+        <h3><?=htmlspecialchars($list['name']);?></h3>
+        <?php foreach ($list['movies'] as $movie): ?>
+            <p><?=htmlspecialchars($movie['title']);?></p>
+        <?php endforeach; ?>
+    <?php endforeach; ?>
+</div>

@@ -1,5 +1,6 @@
 <?php
-include_once "../src/Model/MovieModel.php";
+require_once '../autoload.php';
+
 
 
 $errors = [];
@@ -16,11 +17,13 @@ if (!empty($_POST)) {
     if (empty($errors)) {
 
 
-        // On enregistre l'article
+        // On enregistre le film
         $articleModel = new MovieModel();
         $articleModel->addMovie($movie);
 
     }
-        header("Location: ../public/index.phtml");
+
+
+        header("Location: ../public/index.php");
         exit;
 }

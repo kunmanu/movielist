@@ -1,0 +1,25 @@
+    <fieldset>
+        <form action="../controllers/add_list.php" method="post" >
+            <label for="list">List</label><br>
+            <input type="text" id="list" name="list"><br>
+            <button type="submit">Add</button>
+        </form>
+    </fieldset>
+
+    <fieldset>
+        <form action="../controllers/add_movie.php" method="post" >
+            <label for="movie">Movie:</label><br>
+            <input type="text" id="movie" name="movie"><br>
+            <select  name="movie">
+             <?php   foreach ($lists as &$list) :?>
+
+                <option value= <?=htmlspecialchars($list['id_list']);?> ><?=htmlspecialchars($list['name']);?></option>
+             }
+
+              <?php endforeach; ?>
+            </select>
+            <button type="submit">Add</button>
+        </form>
+    </fieldset>
+
+

@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# Don't rewrite requests to the controller
+RewriteCond %{REQUEST_URI} !^ ../controllers/*
+
+# Rewrite all other requests to index.php
+RewriteRule ^(.*)$ public/index.php [L]
