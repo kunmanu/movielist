@@ -23,4 +23,5 @@ CREATE TABLE movies_lists (
     list_id INTEGER NOT NULL,
     FOREIGN KEY (movie_id) REFERENCES movies(id_movie),
     FOREIGN KEY (list_id) REFERENCES lists(id_list)
+        ON DELETE CASCADE
 );

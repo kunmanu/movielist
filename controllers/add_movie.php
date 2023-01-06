@@ -1,12 +1,11 @@
 <?php
 require_once '../autoload.php';
-require_once '../lib/functions.php';
+
 
 
 $errors = [];
 
 if (!empty($_POST)) {
-    dump($_POST);
     $movieTitle = strip_tags(trim($_POST['movie_title']));
     $listId = strip_tags(trim($_POST['list']));
 

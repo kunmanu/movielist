@@ -1,18 +1,27 @@
 <div class="allList">
-    <?php foreach ($lists as $list): ?>
-<!--    --><?php //echo '<pre>';
-//        print_r($lists);
-//        echo '</pre>';?>
-        <div>
-            <h3><?= $list['name'] ?></h3>
-            <?php if (isset($list['movies']) && !empty($list['movies'])): ?>
-                <?php foreach ($list['movies'] as $movie): ?>
-                    <p><?= $movie['title'] ?></p>
-                <?php endforeach ?>
-            <?php else: ?>
-                <p>No movies in this list</p>
-            <?php endif ?>
-        </div>
-    <?php endforeach ?>
+    <?php if (isset($lists)): ?>
+        <?php foreach ($lists as $list): ?>
+            <div class="<?='list-'.$list['id_list'] ?>">
+            <div style="display:flex">
+                    <h3><?= $list['name'] ?></h3>
+                    <button data-id="<?=$list['id_list'] ?>" class="deleteList-btn" type="button">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+                <?php if (isset($list['movies']) && !empty($list['movies'])): ?>
+                    <?php foreach ($list['movies'] as $movie): ?>
+                        <div style="display: flex">
+                            <p><?= $movie['title'] ?></p>
+                            <button  class="deleteMovie-btn" type="button">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    <?php endforeach ?>
+                <?php else: ?>
+                    <p>No movies in this list</p>
+                <?php endif ?>
+            </div>
+        <?php endforeach ?>
+    <?php endif; ?>
 
 </div>

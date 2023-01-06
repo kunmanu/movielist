@@ -18,6 +18,7 @@ class ListModel extends AbstractModel {
     {
         $sql = 'DELETE FROM lists WHERE id_list = ?;';
         $this->db->executeQuery($sql, [$idList]);
+        $this ->deleteListlessMovies();
     }
 
     function getAllList(): bool|array
@@ -47,6 +48,14 @@ class ListModel extends AbstractModel {
         }
         return $lists;
     }
+    function deleteListlessMovies(){
+        $sql = 'DELETE m
+                FROM movies m
+                LEFT JOIN movies_lists ml ON m.id_movie = ml.movie_id
+                WHERE ml.movie_id IS NULL;';
+        $this->db->executeQuery($sql);
+    }
+
 
 }
 

@@ -23,12 +23,6 @@ class MovieModel extends AbstractModel{
 
     }
 
-//    function getMovieFromList($list_id){
-//        $sql = "SELECT m.title FROM movies m
-//                INNER JOIN movies_lists ml ON m.id_movie = ml.movie_id
-//                WHERE ml.list_id = ?";
-//
-//        return $this->db->getAllResults($sql, [$list_id]);
-//    }
+
 
 }
