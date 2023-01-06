@@ -7,7 +7,7 @@ INSERT INTO movies (title, createdAt) VALUES
     ('The Dark Knight', NOW()),
     ('Pulp Fiction', NOW());
 
-INSERT INTO lists (user_id, name, createdAt) VALUES
+INSERT INTO lists (id_user, name, createdAt) VALUES
     ('user1', 'My Favorite Movies', NOW()),
     ('user2', 'Movies to Watch', NOW()),
     ('user3', 'Action Movies', NOW());

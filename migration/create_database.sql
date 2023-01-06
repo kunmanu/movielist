@@ -12,7 +12,7 @@ CREATE TABLE movies (
 
 CREATE TABLE lists (
     id_list INTEGER PRIMARY KEY AUTO_INCREMENT,
-    user_id VARCHAR(255) NOT NULL,
+    id_user VARCHAR(255) NOT NULL,
     name VARCHAR(255) NOT NULL,
     createdAt datetime
 );

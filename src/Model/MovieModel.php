@@ -1,5 +1,6 @@
 <?php
 include_once "../src/core/AbstractModel.php";
+require_once '../lib/functions.php';
 
 
 
@@ -12,14 +13,22 @@ class MovieModel extends AbstractModel{
 
         $this->db->executeQuery($sql, [$title]);
     }
+    function addMovieIntoList(string $title, $listId)
+    {
+        $sql = "START TRANSACTION;
+                INSERT INTO movies (title, createdAt) VALUES (?, NOW());
+                INSERT INTO movies_lists (movie_id, list_id) VALUES (LAST_INSERT_ID(), ?);
+                COMMIT;";
+        $this->db->executeQuery($sql, [$title,$listId]);
 
-
-    function getMovieFromList($list_id){
-        $sql = "SELECT m.title FROM movies m
-                INNER JOIN movies_lists ml ON m.id_movie = ml.movie_id
-                WHERE ml.list_id = ?";
-
-        return $this->db->getAllResults($sql, [$list_id]);
     }
+
+//    function getMovieFromList($list_id){
+//        $sql = "SELECT m.title FROM movies m
+//                INNER JOIN movies_lists ml ON m.id_movie = ml.movie_id
+//                WHERE ml.list_id = ?";
+//
+//        return $this->db->getAllResults($sql, [$list_id]);
+//    }
 
 }

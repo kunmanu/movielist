@@ -1,8 +1,18 @@
 <div class="allList">
     <?php foreach ($lists as $list): ?>
-        <h3><?=htmlspecialchars($list['name']);?></h3>
-        <?php foreach ($list['movies'] as $movie): ?>
-            <p><?=htmlspecialchars($movie['title']);?></p>
-        <?php endforeach; ?>
-    <?php endforeach; ?>
+<!--    --><?php //echo '<pre>';
+//        print_r($lists);
+//        echo '</pre>';?>
+        <div>
+            <h3><?= $list['name'] ?></h3>
+            <?php if (isset($list['movies']) && !empty($list['movies'])): ?>
+                <?php foreach ($list['movies'] as $movie): ?>
+                    <p><?= $movie['title'] ?></p>
+                <?php endforeach ?>
+            <?php else: ?>
+                <p>No movies in this list</p>
+            <?php endif ?>
+        </div>
+    <?php endforeach ?>
+
 </div>

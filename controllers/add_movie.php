@@ -1,26 +1,23 @@
 <?php
 require_once '../autoload.php';
-
+require_once '../lib/functions.php';
 
 
 $errors = [];
 
 if (!empty($_POST)) {
+    dump($_POST);
+    $movieTitle = strip_tags(trim($_POST['movie_title']));
+    $listId = strip_tags(trim($_POST['list']));
 
-    $movie = strip_tags(trim($_POST['movie']));
 
-    if (!$movie) {
-        $errors['movie'] = 'Le champ "movie" est obligatoire';
+    if (!$movieTitle OR !$listId) {
+        $errors = 'error';
     }
 
-    // Si tout est OK (pas d'erreurs)...
     if (empty($errors)) {
-
-
-        // On enregistre le film
-        $articleModel = new MovieModel();
-        $articleModel->addMovie($movie);
-
+        $movieModel = new MovieModel();
+        $movieModel -> addMovieIntoList($movieTitle, $listId);
     }
 
 

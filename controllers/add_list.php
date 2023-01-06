@@ -17,10 +17,10 @@ if (!empty($_POST)) {
         $errors['list'] = 'cannot be empty';
     }
 
-    // Si tout est OK (pas d'erreurs)...
+
     if (empty($errors)) {
 
-        // On enregistre l'article
+
         $articleModel = new ListModel();
         $articleModel-> createList($list);
 
