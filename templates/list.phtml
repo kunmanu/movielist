@@ -2,18 +2,18 @@
     <?php if (isset($lists)): ?>
         <?php foreach ($lists as $list): ?>
             <div class="<?='list-'.$list['id_list'] ?>">
-            <div style="display:flex">
-                    <h3><?= $list['name'] ?></h3>
-                    <button data-id="<?=$list['id_list'] ?>" class="deleteList-btn" type="button">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </div>
+            <div>
+                <h3><?= $list['name'] ?></h3>
+                <button data-idList="<?=$list['id_list'] ?>" class="deleteList-btn" type="button">
+                    delete list
+                </button>
+            </div>
                 <?php if (isset($list['movies']) && !empty($list['movies'])): ?>
                     <?php foreach ($list['movies'] as $movie): ?>
-                        <div style="display: flex">
+                        <div class="<?='movie'.$movie['id_movie'].'-'.'list'.$list['id_list'] ?>">
                             <p><?= $movie['title'] ?></p>
-                            <button  class="deleteMovie-btn" type="button">
-                                <i class="fa-solid fa-trash"></i>
+                            <button data-idList="<?=$list['id_list'] ?>" data-idMovie="<?=$movie['id_movie'] ?>" class="deleteMovie-btn" type="button">
+                                delete movie
                             </button>
                         </div>
                     <?php endforeach ?>

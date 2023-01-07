@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>🎬 Movie List 🎬</title>
-    <script src="https://kit.fontawesome.com/0f005014e4.js" crossorigin="anonymous"></script>
+
     <script src="../public/script/ajax.js" defer></script>
 </head>
 
@@ -15,6 +15,8 @@
         <a href="../controllers/home.php">add List</a>
         <a href="../controllers/list.php">view List</a>
     </nav>
-    <?php include '../templates/' . $template . '.phtml'; ?>
+    <?php if (isset($template)) {
+        include '../templates/' . $template . '.phtml';
+    } ?>
 </body>
 </html>

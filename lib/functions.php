@@ -8,9 +8,4 @@ function buildUrl(string $page, array $params = []): string
 
 
 
-function dump($data)
-{
-    echo "<pre>";
-    var_dump($data);
-    echo "</pre>";
-}
+
