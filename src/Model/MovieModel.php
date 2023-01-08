@@ -23,32 +23,22 @@ class MovieModel extends AbstractModel{
 
     }
 
-    public function deleteMovieFromList($idList, $idMovie)
+
+
+
+    public function getOneMovie($idMovie)
     {
-//        $sql = "DELETE FROM movies_lists
-//                WHERE movie_id = ? AND list_id = ?;";
-//
-//
-//        $this->db->executeQuery($sql, [$idMovie, $idList]);
+        $sql = "SELECT * FROM movies WHERE id_movie = ? LIMIT 1;";
 
-
-        $sql = 'DELETE FROM movies_lists WHERE movie_id = ? AND list_id = ?';
-        $params = [$idMovie, $idList];
-        $stmt = $this->db->executeQuery($sql, $params);
-        $error = $stmt->errorInfo();
-//        dump($error);
-
-
-
+        return $this->db->getOneResult($sql,[$idMovie]);
     }
 
 
-public function getOneMovie($idMovie)
-{
-    $sql = "SELECT * FROM movies WHERE id_movie = ? LIMIT 1;";
-
-    return $this->db->getOneResult($sql,[$idMovie]);
-}
+    public function editMovie(int $id, string $title)
+    {
+        $sql = "UPDATE movies SET title = ? WHERE id_movie = ? LIMIT 1;";
+        $this->db->executeQuery($sql, [$title, $id]);
+    }
 
 
 }

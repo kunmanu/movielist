@@ -37,6 +37,7 @@ class ListModel extends AbstractModel {
                 WHERE ml.list_id = ?";
 
         return $this->db->getAllResults($sql, [$list_id]);
+
     }
 
     function getAllListWithMovies(){
@@ -55,7 +56,20 @@ class ListModel extends AbstractModel {
                 WHERE ml.movie_id IS NULL;';
         $this->db->executeQuery($sql);
     }
+    public function deleteMovieFromList($idList, $idMovie)
+    {
 
+        $sql = 'DELETE FROM movies_lists WHERE movie_id = ? AND list_id = ?';
+        $params = [$idMovie, $idList];
+        $this->db->executeQuery($sql, $params);
+        $this ->deleteListlessMovies();
+
+    }
+
+    public function editList(string $id_list, string $list_name) {
+        $sql = 'UPDATE lists SET name = ? WHERE id_list = ?';
+        $this->db->executeQuery($sql, [$list_name, $id_list]);
+    }
 
 }
 

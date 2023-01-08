@@ -8,9 +8,9 @@ $idList = $data['id_list'];
 $idMovie = $data['id_movie'];
 
 
-$movieModel = new MovieModel();
+$listModel = new ListModel();
 try {
-    $movieModel->deleteMovieFromList($idList, $idMovie);
+    $listModel->deleteMovieFromList($idList, $idMovie);
     echo json_encode([
         'idList' => $idList,
         'idMovie' => $idMovie,
