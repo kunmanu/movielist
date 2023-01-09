@@ -7,13 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>🎬 Movie List 🎬</title>
 
-    <script src="../public/script/ajax.js" defer></script>
+    <script src="../public/script/js.js" defer></script>
 </head>
 
 <body>
     <nav class="siteNav">
-        <a href="../controllers/home.php">add List</a>
-        <a href="../controllers/list.php">view List</a>
+        <a href="../controllers/home.php">home</a>
+        <a href="../controllers/lists.php">all list</a>
+        <a href="../controllers/signup.php">sign up</a>
+        <a href="../controllers/login.php">login</a>
+        <a href="../controllers/logout.php">logout</a>
     </nav>
     <?php if (isset($template)) {
         include '../templates/' . $template . '.phtml';

@@ -20,6 +20,6 @@ if (!empty($_POST)) {
     }
 
 
-        header("Location: ../public/index.php");
+        header("Location: ../controllers/lists.php");
         exit;
 }

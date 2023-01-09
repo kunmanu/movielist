@@ -1,12 +1,61 @@
-console.log('ajax.js');
+/*TODO:
+* casser le fichier en plusieur fichier et gerer les include
+*
+* */
 
-let deleteListBtn = document.querySelectorAll('.deleteList-btn')
-let deleteMovieBtn = document.querySelectorAll('.deleteMovie-btn')
+
+console.log('js.js');
+
+
+
+
+//VIEW LIST
+
+const viewListButtons = document.querySelectorAll('.viewList-btn');
+if (viewListButtons) {
+    viewListButtons.forEach(btn =>{
+    btn.addEventListener('click', function(event) {
+        let idList = event.target.dataset.idlist;
+        window.location.assign(`view_list.php?id=${idList}`, '_blank');
+    });
+
+    })
+
+}
+
+
+//VIEW MOVIE
+
+const viewMovieButtons = document.querySelectorAll('.viewMovie-btn');
+if (viewMovieButtons) {
+    viewMovieButtons.forEach(btn =>{
+        btn.addEventListener('click', function(event) {
+            let idMovie = event.target.dataset.idmovie;
+            window.location.assign(`view_movie.php?&id=${idMovie}`, '_blank');
+        });
+
+    })
+
+}
+
+
+let viewMovieBtn = document.querySelector('.viewMovie-btn');
+
+if (viewMovieBtn) {
+    viewMovieBtn.addEventListener('click', function(event) {
+        let idMovie = event.target.dataset.idmovie;
+        window.location.assign(`view_movie.php?&id=${idMovie}`, '_blank');
+    });
+}
+
+
+
+
 
 //DELETE LIST
+let deleteListBtn = document.querySelectorAll('.deleteList-btn')
 deleteListBtn.forEach(btn => {
     btn.addEventListener('click', () => {
-        console.log(btn.dataset.idlist)
         fetch('../controllers/delete_list.php', {
             method: 'DELETE',
             body: JSON.stringify({
@@ -30,36 +79,39 @@ deleteListBtn.forEach(btn => {
     });
 });
 
-///////DELETE MOVIE
-deleteMovieBtn.forEach(btn => {
-    btn.addEventListener('click', () => {
+///////DELETE MOVIE FROM LIST
+let deleteFromListMovieBtn = document.querySelectorAll('.deleteMovieFromList-btn')
+if (deleteFromListMovieBtn) {
+    deleteFromListMovieBtn.forEach(btn => {
+        btn.addEventListener('click', () => {
 
-        fetch('../controllers/delete_movie.php', {
-            method: 'DELETE',
-            body: JSON.stringify({
-                id_list: btn.dataset.idlist,
-                id_movie: btn.dataset.idmovie
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    // console.log(data)
-                    let itemToRemove = document.querySelector(`.movie${data.idMovie}-list${data.idList}`)
-                    console.log(itemToRemove)
-                    itemToRemove.remove();
+            fetch('../controllers/delete_movie_from_list.php', {
+                method: 'DELETE',
+                body: JSON.stringify({
+                    id_list: btn.dataset.idlist,
+                    id_movie: btn.dataset.idmovie
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
                 }
             })
-            .catch(err => console.error(err));
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        // console.log(data)
+                        let itemToRemove = document.querySelector(`.movie${data.idMovie}-list${data.idList}`)
+                        console.log(itemToRemove)
+                        itemToRemove.remove();
+                    }
+                })
+                .catch(err => console.error(err));
+        });
     });
-});
+}
 
 
 let updateMovieButtons = document.querySelectorAll(".updateMovie-btn");
-console.log(updateMovieButtons)
+
 
 ///////EDIT MOVIE
 updateMovieButtons.forEach((btn) => {
@@ -67,7 +119,7 @@ updateMovieButtons.forEach((btn) => {
 });
 
 function ajaxEditMovie(form) {
-    // Get the id of the movie to be edited and the new title from the form
+    // Get the id of the movie.phtml to be edited and the new title from the form
     let idMovie = form.id.value;
 
     let newTitle = form.title.value;
@@ -95,22 +147,22 @@ function ajaxEditMovie(form) {
 }
 
 let openMovieForm = (btn) => {
-    // Get the movie title element and the movie title
+    // Get the movie.phtml title element and the movie.phtml title
     let idMovie = btn.dataset.idmovie;
     let movieTitleElement = document.getElementById(`${idMovie}`);
     let movieTitle = movieTitleElement.textContent;
 
     // Create the form element
     let form = document.createElement("form");
-    form.classList.add("update-movie-form");
+    form.classList.add("update-movie.phtml-form");
 
-    // Create the input element for the movie title
+    // Create the input element for the movie.phtml title
     let input = document.createElement("input");
     input.type = "text";
     input.name = "title";
     input.value = movieTitle;
 
-    // Create the hidden input element for the movie id
+    // Create the hidden input element for the movie.phtml id
     let idInput = document.createElement("input");
     idInput.type = "hidden";
     idInput.name = "id";
@@ -130,7 +182,7 @@ let openMovieForm = (btn) => {
     // Add the input and submit button to the form
     form.append(input, idInput, submitButton);
 
-    // Replace the movie title element with the form
+    // Replace the movie.phtml title element with the form
     movieTitleElement.replaceWith(form);
 };
 
@@ -211,3 +263,33 @@ function ajaxEditList(form) {
 
 }
 
+
+////////DELETE MOVIE
+
+let deleteMovieButtons = document.querySelectorAll(".deleteMovie-btn")
+
+deleteMovieButtons.forEach((btn)=>{
+    btn.addEventListener('click',(e)=>{
+        console.log(btn.dataset)
+        fetch('../controllers/delete_movie.php', {
+            method: 'DELETE',
+            body: JSON.stringify({
+                idMovie: btn.dataset.idmovie
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.success) {
+                    window.location.assign(`lists.php`, '_blank');
+                } else {
+
+                }
+            })
+            .catch(err => console.log(err));
+    });
+    }
+)

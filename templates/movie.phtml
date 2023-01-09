@@ -1,0 +1,20 @@
+<table>
+    <tr class="<?='movie.phtml'.$movie['id_movie'].'-'.'list'.$list['id_list'] ?>">
+        <td>
+            <p id="<?=$movie['id_movie'] ?>"><?= $movie['title'] ?></p>
+        </td>
+        <td>
+            <button data-idMovie="<?=$movie['id_movie'] ?>" class="deleteMovie-btn" type="button">delete movie</button>
+            <button data-idMovie="<?=$movie['id_movie'] ?>" class="updateMovie-btn" type="button">edit movie</button>
+            <button data-idMovie="<?=$movie['id_movie'] ?>" class="viewMovie-btn" type="button">
+                view movie
+            </button>
+        </td>
+    </tr>
+
+
+
+
+
+</table>
+

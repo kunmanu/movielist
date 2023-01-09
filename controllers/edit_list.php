@@ -25,7 +25,7 @@ if (empty($errors)) {
 
             ]);
 } else {
-    echo json_encode(["message" => "Error editing movie"]);
+    echo json_encode(["message" => "Error editing movie.phtml"]);
 }
 
 

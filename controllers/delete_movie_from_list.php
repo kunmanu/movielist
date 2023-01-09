@@ -2,27 +2,17 @@
 include_once '../autoload.php';
 
 
-
 $data = json_decode(file_get_contents('php://input'), true);
 
+$idList = $data['id_list'];
+$idMovie = $data['id_movie'];
 
 
-
-if (empty($data['idMovie'])) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Missing Movie movie']);
-    exit;
-}
-
-$idMovie = $data['idMovie'];
-
-$MovieModel = new MovieModel();
-$MovieModel ->deleteMovie($idMovie);
-
-
+$listModel = new ListModel();
 try {
-    $MovieModel->deleteMovie($idMovie);
+    $listModel->deleteMovieFromList($idList, $idMovie);
     echo json_encode([
+        'idList' => $idList,
         'idMovie' => $idMovie,
         'success' => true ]);
     exit;
@@ -32,7 +22,6 @@ try {
     echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     exit;
 }
-
 
 
 

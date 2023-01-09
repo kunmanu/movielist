@@ -40,5 +40,17 @@ class MovieModel extends AbstractModel{
         $this->db->executeQuery($sql, [$title, $id]);
     }
 
+    function deleteMovie(int $id)
+    {
+        // Delete records from movies_lists table that have a movie_id value that references the movie
+        $sql = "DELETE FROM movies_lists WHERE movie_id = ?";
+        $this->db->executeQuery($sql, [$id]);
+
+        // Delete movie from movies table
+        $sql = "DELETE FROM movies WHERE id_movie = ? LIMIT 1;";
+        $this->db->executeQuery($sql, [$id]);
+    }
+
+
 
 }

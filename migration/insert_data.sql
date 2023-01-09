@@ -1,3 +1,12 @@
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+truncate user;
+INSERT INTO `user` (`idUser`, `firstname`, `lastname`, `email`, `hash`, `createdAt`, `role`) VALUES
+    (9, 'Alfred', 'Dupont', 'alfred@gmail.com', '$2a$12$C1lAEN9md/exmC4hnE.4te/vnSPS7ekTUMaNLH19AcGIiYEu8bSlq', '2022-05-23 09:07:48', 'ADMIN');
+
+
+truncate movies ;
 INSERT INTO movies (title, createdAt) VALUES
     ('The Shawshank Redemption', NOW()),
     ('The Godfather', NOW()),
@@ -18,7 +27,7 @@ INSERT INTO movies (title, createdAt) VALUES
     ('The Green Mile', NOW()),
     ('Interstellar', NOW()),
     ('The Prestige', NOW());
-
+truncate lists;
 INSERT INTO lists (id_user, name, createdAt) VALUES
     ('user', 'Favorites', NOW()),
     ('user', 'To Watch', NOW()),
@@ -27,7 +36,7 @@ INSERT INTO lists (id_user, name, createdAt) VALUES
     ('user', 'Dramas', NOW()),
     ('user', 'Thrillers', NOW()),
     ('user', 'Sci-Fi', NOW());
-
+truncate movies_lists;
 INSERT INTO movies_lists (movie_id, list_id)VALUES
     (1, 1),
     (2, 1),
@@ -48,3 +57,4 @@ INSERT INTO movies_lists (movie_id, list_id)VALUES
     (17, 7),
     (18, 1);
 
+SET FOREIGN_KEY_CHECKS = 1;

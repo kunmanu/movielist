@@ -24,7 +24,7 @@ $movieTitle = strip_tags(trim($data['title']));
 
         ]);
     } else {
-        echo json_encode(["message" => "Error editing movie"]);
+        echo json_encode(["message" => "Error editing movie.phtml"]);
     }
 
 
