@@ -12,9 +12,11 @@
                         <button data-idList="<?=$list['id_list'] ?>" class="editList-btn" type="button">
                             edit list
                         </button>
-                        <button data-idList="<?=$list['id_list'] ?>" class="viewList-btn" type="button">
-                            view list
-                        </button>
+                        <a href="<?=buildUrl('view_list', ['id' => $list['id_list']]);?>">
+                            <button data-idList="<?=$list['id_list'] ?>" class="viewList-btn" type="button">
+                                view list
+                            </button>
+                        </a>
                     </th>
                 </tr>
                 <tr>
@@ -34,9 +36,11 @@
                                 <button data-idList="<?=$list['id_list'] ?>" data-idMovie="<?=$movie['id_movie'] ?>" class="updateMovie-btn" type="button">
                                     edit movie
                                 </button>
-                                <button data-idList="<?=$list['id_list'] ?>" data-idMovie="<?=$movie['id_movie'] ?>" class="viewMovie-btn" type="button">
-                                    view movie
-                                </button>
+                                <a href="<?=buildUrl('view_movie', ['id' => $movie['id_movie']]);?>">
+                                    <button data-idList="<?=$list['id_list'] ?>" data-idMovie="<?=$movie['id_movie'] ?>" class="viewMovie-btn" type="button">
+                                        view movie
+                                    </button>
+                                </a>
                             </td>
                         </tr>
                     <?php endforeach ?>

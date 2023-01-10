@@ -6,9 +6,11 @@
         <td>
             <button data-idMovie="<?=$movie['id_movie'] ?>" class="deleteMovie-btn" type="button">delete movie</button>
             <button data-idMovie="<?=$movie['id_movie'] ?>" class="updateMovie-btn" type="button">edit movie</button>
-            <button data-idMovie="<?=$movie['id_movie'] ?>" class="viewMovie-btn" type="button">
-                view movie
-            </button>
+            <a href="<?=buildUrl('view_movie', ['id' => $movie['id_movie']]);?>">
+                <button data-idMovie="<?=$movie['id_movie'] ?>" class="viewMovie-btn" type="button">
+                    view movie
+                </button>
+            </a>
         </td>
     </tr>
 
