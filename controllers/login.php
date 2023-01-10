@@ -24,7 +24,7 @@ if (!empty($_POST)) {
         registerUser($user['idUser'], $user['firstname'], $user['lastname'], $user['email'], $user['role']);
     
         // Redirection pour le moment vers la page d'accueil du site
-        header("Location: ../controllers/home.php");
+        header('Location: ' . buildUrl('home'));
         exit;
     } 
         

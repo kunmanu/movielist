@@ -4,6 +4,6 @@ include_once '../lib/functions.php';
 logout();
 
 // On le redirige vers l'accueil
-header("Location: ../controllers/home.php");
+header('Location: ' . buildUrl('home'));
 exit;
 

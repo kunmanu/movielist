@@ -1,0 +1,53 @@
+<div class="allList">
+    <?php if (isset($lists)): ?>
+        <?php foreach ($lists as $list): ?>
+
+            <table class="<?='list-'.$list['id_list'] ?>">
+                <tr>
+                    <th colspan="3">
+                        <h3 id="list-<?=$list['id_list'] ?>"><?= $list['name'] ?></h3>
+                        <button data-idList="<?=$list['id_list'] ?>" class="deleteList-btn" type="button">
+                            delete list
+                        </button>
+                        <button data-idList="<?=$list['id_list'] ?>" class="editList-btn" type="button">
+                            edit list
+                        </button>
+                        <button data-idList="<?=$list['id_list'] ?>" class="viewList-btn" type="button">
+                            view list
+                        </button>
+                    </th>
+                </tr>
+                <tr>
+                    <th>Movie</th>
+                    <th>Action</th>
+                </tr>
+                <?php if (isset($list['movies']) && !empty($list['movies'])): ?>
+                    <?php foreach ($list['movies'] as $movie): ?>
+                        <tr class="<?='movie'.$movie['id_movie'].'-'.'list'.$list['id_list'] ?>">
+                            <td>
+                                <p id="<?="movie".$movie['id_movie'] ?>"><?= $movie['title'] ?></p>
+                            </td>
+                            <td>
+                                <button data-idList="<?=$list['id_list'] ?>" data-idMovie="<?=$movie['id_movie'] ?>" class="deleteMovieFromList-btn" type="button">
+                                    remove from list
+                                </button>
+                                <button data-idList="<?=$list['id_list'] ?>" data-idMovie="<?=$movie['id_movie'] ?>" class="updateMovie-btn" type="button">
+                                    edit movie
+                                </button>
+                                <button data-idList="<?=$list['id_list'] ?>" data-idMovie="<?=$movie['id_movie'] ?>" class="viewMovie-btn" type="button">
+                                    view movie
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="3">
+                            <p>No movies in this list</p>
+                        </td>
+                    </tr>
+                <?php endif ?>
+            </table>
+        <?php endforeach ?>
+    <?php endif; ?>
+</div>

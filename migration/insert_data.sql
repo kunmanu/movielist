@@ -2,8 +2,11 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 truncate user;
-INSERT INTO `user` (`idUser`, `firstname`, `lastname`, `email`, `hash`, `createdAt`, `role`) VALUES
-    (9, 'Alfred', 'Dupont', 'alfred@gmail.com', '$2a$12$C1lAEN9md/exmC4hnE.4te/vnSPS7ekTUMaNLH19AcGIiYEu8bSlq', '2022-05-23 09:07:48', 'ADMIN');
+INSERT INTO `user` ( `firstname`, `lastname`, `email`, `hash`, `createdAt`, `role`) VALUES
+    ('admin', 'Dupont', 'adming@admin.ad', '$2a$12$C1lAEN9mdexmC4hnE.4tevnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'ADMIN'),
+    ('Maud ', 'Sharpe', 'Maud@gmail.com', '$2a$12$C1lAEN9mdexmC4hnE.4tevnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'USER'),
+    ('Pearl ', 'French', 'Pearl@gmail.com', '$2a$12$C1lAEN9mdexmC4hnE.4tevnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'USER'),
+    ('Giles ', 'Beck', 'Giles@gmail.com', '$2a$12$C1lAEN9mdexmC4hnE.4tevnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'USER');
 
 
 truncate movies ;
@@ -27,15 +30,17 @@ INSERT INTO movies (title, createdAt) VALUES
     ('The Green Mile', NOW()),
     ('Interstellar', NOW()),
     ('The Prestige', NOW());
+
 truncate lists;
 INSERT INTO lists (id_user, name, createdAt) VALUES
-    ('user', 'Favorites', NOW()),
-    ('user', 'To Watch', NOW()),
-    ('user', 'Watched', NOW()),
-    ('user', 'Comedies', NOW()),
-    ('user', 'Dramas', NOW()),
-    ('user', 'Thrillers', NOW()),
-    ('user', 'Sci-Fi', NOW());
+    ('1', 'Favorites', NOW()),
+    ('1', 'To Watch', NOW()),
+    ('1', 'Watched', NOW()),
+    ('2', 'Comedies', NOW()),
+    ('2', 'Dramas', NOW()),
+    ('2', 'Thrillers', NOW()),
+    ('2', 'Sci-Fi', NOW());
+
 truncate movies_lists;
 INSERT INTO movies_lists (movie_id, list_id)VALUES
     (1, 1),

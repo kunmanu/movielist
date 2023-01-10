@@ -5,22 +5,24 @@ require_once '../lib/functions.php';
 
 class ListModel extends AbstractModel {
 
-//    function getLists(array $idLists){
-//      $sql
-//    };
-//
-//    public function getMoviesFromLists(array $idList)
-//    {
-//        $movies = [];
-//
-//        foreach ($idList as $id) {
-//            $movie = $this->getMoviesFromList($id);
-//            $movies[] = $movie;
-//
-//        }
-//        foreach (^mo);
-//
-//    }
+    function getAllListWithMoviesFromUser($user){
+        $lists=$this->getAllListsFromUser($user);
+        $listsWithMovies = [];
+        foreach ($lists as $list) {
+            $movies = $this->getMoviesFromList($list['id_list']);
+            $list['movies'] = $movies;
+            array_push($listsWithMovies, $list);
+
+        }
+        return $listsWithMovies;
+
+    }
+
+    public function getAllListsFromUser(string $user) {
+        $sql = 'SELECT * FROM lists WHERE id_user = ?';
+        return $this->db->getAllResults($sql, [$user]);
+    }
+
 
     function getMoviesFromList($list_id)
     {
@@ -42,9 +44,9 @@ class ListModel extends AbstractModel {
         }
         return $listsWithMovies;
 
-
-
     }
+
+
     function createList(string $name, string $user = 'user' )
     {
         $sql = 'INSERT INTO lists (id_user, name, createdAt)

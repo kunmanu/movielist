@@ -7,46 +7,60 @@
 console.log('js.js');
 
 
-
-
 //VIEW LIST
 
-const viewListButtons = document.querySelectorAll('.viewList-btn');
-if (viewListButtons) {
-    viewListButtons.forEach(btn =>{
-    btn.addEventListener('click', function(event) {
-        let idList = event.target.dataset.idlist;
-        window.location.assign(`view_list.php?id=${idList}`, '_blank');
-    });
-
-    })
-
-}
-
+// const viewListButtons = document.querySelectorAll('.viewList-btn');
+// if (viewListButtons) {
+//     viewListButtons.forEach(btn =>{
+//     btn.addEventListener('click', function(event) {
+//         let idList = event.target.dataset.idlist;
+//         // window.location.assign(`/public/index.php?page=view_list`, '_blank');
+//         fetch(`/public/index.php?page=view_list`, {
+//             method: 'POST',
+//             body: JSON.stringify({
+//                 id : idList
+//             }),
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             }
+//         })
+//             .then(res => res.json())
+//             .then(data => {
+//                 if (data.success) {
+//                     window.location.assign(`/public/index.php?page=view_list.php?id=${idList}`, '_blank');
+//                 }
+//             })
+//             .catch(err => console.error(err));
+//     });
+//
+//     })
+//
+// }
+//
 
 //VIEW MOVIE
 
-const viewMovieButtons = document.querySelectorAll('.viewMovie-btn');
-if (viewMovieButtons) {
-    viewMovieButtons.forEach(btn =>{
-        btn.addEventListener('click', function(event) {
-            let idMovie = event.target.dataset.idmovie;
-            window.location.assign(`view_movie.php?&id=${idMovie}`, '_blank');
-        });
-
-    })
-
-}
-
-
-let viewMovieBtn = document.querySelector('.viewMovie-btn');
-
-if (viewMovieBtn) {
-    viewMovieBtn.addEventListener('click', function(event) {
-        let idMovie = event.target.dataset.idmovie;
-        window.location.assign(`view_movie.php?&id=${idMovie}`, '_blank');
-    });
-}
+// const viewMovieButtons = document.querySelectorAll('.viewMovie-btn');
+// if (viewMovieButtons) {
+//     viewMovieButtons.forEach(btn =>{
+//         btn.addEventListener('click', function(event) {
+//             let idMovie = event.target.dataset.idmovie;
+//             window.location.assign(`view_movie.php?&id=${idMovie}`, '_blank');
+//         });
+//
+//     })
+//
+// }
+//
+//
+// let viewMovieBtn = document.querySelector('.viewMovie-btn');
+//
+// if (viewMovieBtn) {
+//     viewMovieBtn.addEventListener('click', function(event) {
+//         let idMovie = event.target.dataset.idmovie;
+//         window.location.assign(`view_movie.php?&id=${idMovie}`, '_blank');
+//     });
+// }
 
 
 
@@ -149,7 +163,7 @@ function ajaxEditMovie(form) {
 let openMovieForm = (btn) => {
     // Get the movie.phtml title element and the movie.phtml title
     let idMovie = btn.dataset.idmovie;
-    let movieTitleElement = document.getElementById(`${idMovie}`);
+    let movieTitleElement = document.getElementById(`movie${idMovie}`);
     let movieTitle = movieTitleElement.textContent;
 
     // Create the form element

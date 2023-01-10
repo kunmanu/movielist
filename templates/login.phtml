@@ -1,4 +1,4 @@
-<form action="../controllers/login.php" method="POST">
+<form action="<?php  buildUrl('home')?>" method="POST">
     <?php if (isset($error)): ?>
         <p class="error"><?=htmlspecialchars($error);?></p>
     <?php endif; ?>

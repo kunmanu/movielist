@@ -36,9 +36,12 @@
                         <button data-idList="<?=$list['id_list'] ?>" class="editList-btn" type="button">
                             edit list
                         </button>
-                        <button data-idList="<?=$list['id_list'] ?>" class="viewList-btn" type="button">
-                            view list
-                        </button>
+                        <a href="<?=buildUrl('view_list', ['id' => $list['id_list']]);?>">
+                            <button data-idList="<?=$list['id_list'] ?>" class="viewList-btn" type="button">
+                                view list
+                            </button>
+                        </a>
+
                     </th>
                 </tr>
                 <tr>
