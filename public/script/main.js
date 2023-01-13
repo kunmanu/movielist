@@ -1,13 +1,8 @@
-/*TODO:
-* casser le fichier en plusieur fichier et gerer les include
-*
-* */
+
+console.log('main.js');
 
 
-console.log('js.js');
 
-
-//VIEW LIST
 
 // const viewListButtons = document.querySelectorAll('.viewList-btn');
 // if (viewListButtons) {
@@ -37,9 +32,9 @@ console.log('js.js');
 //
 // }
 //
-
-//VIEW MOVIE
-
+//
+//
+//
 // const viewMovieButtons = document.querySelectorAll('.viewMovie-btn');
 // if (viewMovieButtons) {
 //     viewMovieButtons.forEach(btn =>{
@@ -64,100 +59,69 @@ console.log('js.js');
 
 
 
+//////////DELETE LIST
 
-
-//DELETE LIST
 let deleteListBtn = document.querySelectorAll('.deleteList-btn')
 deleteListBtn.forEach(btn => {
-    btn.addEventListener('click', () => {
-        fetch('../controllers/delete_list.php', {
-            method: 'DELETE',
-            body: JSON.stringify({
-                idList: btn.dataset.idlist
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                if (data.success) {
-                    console.log(data.id)
-                    document.querySelector(`.list-${data.id}`).remove();
-                } else {
+    btn.addEventListener('click',  async () => {
 
-                }
-            })
-            .catch(err => console.log(err));
+        let ajaxUrl = btn.dataset.ajax
+        let response = await fetch(ajaxUrl);
+        let data = await response.json();
+
+        if (data.success === true) {
+            document.querySelector(`.list-${data.id}`).remove();
+        }
+
     });
 });
 
-///////DELETE MOVIE FROM LIST
+/////DELETE MOVIE FROM LIST
 let deleteFromListMovieBtn = document.querySelectorAll('.deleteMovieFromList-btn')
 if (deleteFromListMovieBtn) {
     deleteFromListMovieBtn.forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
+            let ajaxUrl = btn.dataset.ajax
+            console.log(ajaxUrl)
 
-            fetch('../controllers/delete_movie_from_list.php', {
-                method: 'DELETE',
-                body: JSON.stringify({
-                    id_list: btn.dataset.idlist,
-                    id_movie: btn.dataset.idmovie
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        // console.log(data)
-                        let itemToRemove = document.querySelector(`.movie${data.idMovie}-list${data.idList}`)
-                        console.log(itemToRemove)
-                        itemToRemove.remove();
-                    }
-                })
-                .catch(err => console.error(err));
+            let response = await fetch(ajaxUrl);
+            let data = await response.json();
+
+            if (data.success === true) {
+                console.log(data)
+                document.querySelector(`.movie${data.idMovie}-list${data.idList}`).remove();
+            }
         });
     });
 }
 
 
-let updateMovieButtons = document.querySelectorAll(".updateMovie-btn");
+let editMovieButtons = document.querySelectorAll(".editMovie-btn");
 
 
 ///////EDIT MOVIE
-updateMovieButtons.forEach((btn) => {
+editMovieButtons.forEach((btn) => {
     btn.addEventListener("click", () => openMovieForm(btn));
 });
 
-function ajaxEditMovie(form) {
+async function ajaxEditMovie(form) {
     // Get the id of the movie.phtml to be edited and the new title from the form
-    let idMovie = form.id.value;
+    let newName = form.title.value;
+    console.log(newName)
+    let params = new URLSearchParams();
+    params.append("movie_name", newName);
+    let ajaxUrl = form.dataset.ajax + `&${params.toString()}`;
+    console.log(ajaxUrl)
+    let response = await fetch(ajaxUrl);
+    let data = await response.json();
 
-    let newTitle = form.title.value;
-
-    // Use the fetch API to send a PUT request to the edit_movie.php file
-    fetch("../controllers/edit_movie.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            id_movie: idMovie,
-            title: newTitle
-        })
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            // Handle the response data here
-            console.log(data);
-            let p = document.createElement("p");
-            p.textContent = data.name;
-            p.setAttribute('id',`${data.id_movie}`) ;
-            form.replaceWith(p);
-        });
+    if (data.success === true) {
+        console.log(data)
+        let p = document.createElement("p");
+        p.textContent = data.name;
+        p.id = `movie${data.id_movie}`;
+        form.replaceWith(p);
+    }
 }
 
 let openMovieForm = (btn) => {
@@ -165,6 +129,7 @@ let openMovieForm = (btn) => {
     let idMovie = btn.dataset.idmovie;
     let movieTitleElement = document.getElementById(`movie${idMovie}`);
     let movieTitle = movieTitleElement.textContent;
+    ajaxUrl = btn.dataset.ajax
 
     // Create the form element
     let form = document.createElement("form");
@@ -186,6 +151,7 @@ let openMovieForm = (btn) => {
     let submitButton = document.createElement("button");
     submitButton.type = "submit";
     submitButton.textContent = "ok";
+    form.setAttribute('data-ajax', ajaxUrl)
 
     // Add an event listener to the submit button that calls the ajaxEditMovie function when the form is submitted
     form.addEventListener("submit", (e) => {
@@ -210,6 +176,8 @@ updateListButtons.forEach((btn) => {
 let openListForm = (btn) => {
     // Get the list name element and the list name
     let idList = btn.dataset.idlist;
+    let ajaxUrl =  btn.dataset.ajax
+    console.log(ajaxUrl)
     let listNameElement = document.querySelector(`.list-${idList} h3`);
     let listName = listNameElement.textContent;
 
@@ -229,10 +197,13 @@ let openListForm = (btn) => {
     idInput.name = "id";
     idInput.value = idList;
 
+
     // Create the submit button
     let submitButton = document.createElement("button");
     submitButton.type = "submit";
     submitButton.textContent = "ok";
+
+    form.setAttribute('data-ajax', ajaxUrl)
 
     // Add an event listener to the submit button that calls the ajaxEditList function when the form is submitted
     form.addEventListener("submit", (e) => {
@@ -250,30 +221,45 @@ let openListForm = (btn) => {
 
 };
 
-function ajaxEditList(form) {
-    // Get the id of the list to be edited and the new name from the form
-    let idList = form.id.value;
+async function ajaxEditList(form) {
+
     let newName = form.name.value;
 
+    let params = new URLSearchParams();
+    params.append("list_name", newName);
+    let ajaxUrl = form.dataset.ajax + `&${params.toString()}`;
+    console.log(ajaxUrl)
+    let response = await fetch(ajaxUrl);
+    let data = await response.json();
+
+    if (data.success === true) {
+        console.log(data)
+        let h3 = document.createElement("h3");
+        h3.textContent = data.name;
+        h3.id = `list-${data.id_list}`;
+        form.replaceWith(h3);
+    }
+
+
     // Use the fetch API to send a PUT request to the edit_list.php file
-    fetch("../controllers/edit_list.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            id_list: idList,
-            list_name: newName,
-        }),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data)
-            let h3 = document.createElement("h3");
-            h3.textContent = data.name;
-            h3.id = `list-${data.id_list}`;
-            form.replaceWith(h3);
-        });
+    // fetch("../controllers/edit_list.php", {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //         id_list: idList,
+    //         list_name: newName,
+    //     }),
+    // })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //         console.log(data)
+    //         let h3 = document.createElement("h3");
+    //         h3.textContent = data.name;
+    //         h3.id = `list-${data.id_list}`;
+    //         form.replaceWith(h3);
+    //     });
 
 }
 
@@ -283,27 +269,19 @@ function ajaxEditList(form) {
 let deleteMovieButtons = document.querySelectorAll(".deleteMovie-btn")
 
 deleteMovieButtons.forEach((btn)=>{
-    btn.addEventListener('click',(e)=>{
-        console.log(btn.dataset)
-        fetch('../controllers/delete_movie.php', {
-            method: 'DELETE',
-            body: JSON.stringify({
-                idMovie: btn.dataset.idmovie
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                if (data.success) {
-                    window.location.assign(`lists.php`, '_blank');
-                } else {
+    btn.addEventListener('click',async (e) => {
+        let ajaxUrl = btn.dataset.ajax
+        console.log(ajaxUrl)
+        let response = await fetch(ajaxUrl);
 
-                }
-            })
-            .catch(err => console.log(err));
+        let data = await response.json();
+
+        if (data.success === true) {
+            console.log(data)
+            let p= document.createElement('p')
+            p.textContent = 'film supprimé'
+            document.querySelector(`.movie${data.idMovie}`).replaceWith(p);
+        }
     });
     }
 )

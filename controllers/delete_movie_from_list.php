@@ -2,7 +2,7 @@
 include_once '../autoload.php';
 
 
-$data = json_decode(file_get_contents('php://input'), true);
+$data = $_GET;
 
 $idList = $data['id_list'];
 $idMovie = $data['id_movie'];
@@ -18,7 +18,7 @@ try {
     exit;
 
 } catch (Exception $e) {
-    error_log('Error deleting movie.phtml from list: ' . $e->getMessage());
+    error_log('Error deleting movie from list: ' . $e->getMessage());
     echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     exit;
 }

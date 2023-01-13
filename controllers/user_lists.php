@@ -10,7 +10,7 @@ if(isConnected()){
 
 
 
-
+    $script =  includeJavascript(['main', "ajax"]);
     $template = 'user_lists';
     include '../templates/base.phtml';
 }

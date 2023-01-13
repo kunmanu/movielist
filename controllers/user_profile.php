@@ -1,16 +1,20 @@
 <?php
-include_once '../autoload.php';
 
 if (!isConnected()){
     header('Location: ' . buildUrl('login'));
-    exit;
 }
 
 
+//$user = $_SESSION['user'];
+$model = new UserModel();
+$user = $model ->getUserById($_SESSION['user']['id']);
 
-
+dump($user);
 
 $script =  includeJavascript(['main', "ajax"]);
-
-$template = 'home';
+$template = 'user_profile';
 include '../templates/base.phtml';
+
+/*TODO
+
+*/

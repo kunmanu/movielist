@@ -1,4 +1,5 @@
-<?php 
+<?php
+//namespace MyProject\Core;
 include_once "../app/config.php";
 class Database {
 

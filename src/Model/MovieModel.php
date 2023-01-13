@@ -1,4 +1,5 @@
 <?php
+//namespace MyProject\Model;
 include_once "../src/core/AbstractModel.php";
 require_once '../lib/functions.php';
 

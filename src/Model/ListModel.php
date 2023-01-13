@@ -1,5 +1,5 @@
 <?php
-
+//namespace MyProject\Model;
 include_once "../src/core/AbstractModel.php";
 require_once '../lib/functions.php';
 
@@ -47,7 +47,7 @@ class ListModel extends AbstractModel {
     }
 
 
-    function createList(string $name, string $user = 'user' )
+    function createList(string $name, string $user = '1' )
     {
         $sql = 'INSERT INTO lists (id_user, name, createdAt)
                 VALUES (?,?,NOW())';

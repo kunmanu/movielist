@@ -3,18 +3,18 @@ include_once '../autoload.php';
 
 
 
-$data = json_decode(file_get_contents('php://input'), true);
+$data = $_GET;
 
 
 
 
-if (empty($data['idMovie'])) {
+if (empty($data['id_movie'])) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Missing Movie movie']);
     exit;
 }
 
-$idMovie = $data['idMovie'];
+$idMovie = $data['id_movie'];
 
 $MovieModel = new MovieModel();
 $MovieModel ->deleteMovie($idMovie);

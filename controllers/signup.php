@@ -57,11 +57,12 @@ if (!empty($_POST)) {
         // @TODO stocker 'USER' dans une constante de configuration 
 
         // On redirige l'internaute (pour l'instant vers une page de confirmation)
-        header("Location: ../controllers/home.php");
+        header('Location: ' . buildUrl('home'));
+
         exit;
     }
 }
 
-// Inclusion du template
+$script =  includeJavascript(['main', "ajax"]);
 $template = 'signup';
 include "../templates/base.phtml";

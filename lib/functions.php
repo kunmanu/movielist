@@ -1,12 +1,24 @@
-<?php 
-
+<?php
+//namespace MyProject\Lib;
 // Constantes
 const ROLE_USER = 'USER';
 const ROLE_ADMIN = 'ADMIN';
 
+
+
 /////////////////////////////////////////
 ///////// FONCTIONS UTILITAIRES /////////
 /////////////////////////////////////////
+function includeJavascript(array $scriptArr){
+    $html = "";
+    foreach ($scriptArr as $script){
+       $html .= "<script src='../script/".$script.".js' defer></script>";
+    }
+
+    return $html;
+}
+
+
 
 /**
  * Construit l'URL d'une page à partir du nom de la page et d'un tableau de paramètres

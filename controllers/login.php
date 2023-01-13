@@ -31,6 +31,6 @@ if (!empty($_POST)) {
     $error = 'Identifiants incorrects';
 }
 
-// Inclusion du template
+$script =  includeJavascript(['main', "ajax"]);
 $template = 'login';
 include "../templates/base.phtml";

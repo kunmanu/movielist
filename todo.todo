@@ -11,9 +11,10 @@ crud operation
 
 X Authentification
 
-user profile
+user profile crud on user
 
-security
+
+security and user flow
 
 rework of movie object
 
@@ -29,4 +30,17 @@ Semantic html
 
 Style
 
+///fucntionality
 
+mail verification on login
+
+reset password through mail
+
+
+///gobal refactor
+
+no * in mysql
+
+
+
+use name space, add an sql class

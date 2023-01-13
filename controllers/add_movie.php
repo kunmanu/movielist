@@ -19,7 +19,6 @@ if (!empty($_POST)) {
         $movieModel -> addMovieIntoList($movieTitle, $listId);
     }
 
-
-        header("Location: ../controllers/lists.php");
+        header('Location: ' . buildUrl('all_list'));
         exit;
 }

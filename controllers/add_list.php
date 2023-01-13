@@ -26,7 +26,13 @@ if (!empty($_POST)) {
 
     }
 
-
-    header("Location: ../controllers/lists.php");
+    header('Location: ' . buildUrl('all_list'));
     exit;
 }
+
+
+/*TODO
+add list in ajax
+
+
+*/

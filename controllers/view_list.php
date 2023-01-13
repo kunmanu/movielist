@@ -16,7 +16,7 @@ $list = $listModel->getOneList($id_list);
 $movies = $listModel->getMoviesFromList($id_list);
 
 
-
+$script =  includeJavascript(['main', "ajax"]);
 $template = 'list';
 include '../templates/base.phtml';
 

@@ -4,10 +4,11 @@ require_once '../autoload.php';
 
 $errors = [];
 
-$data = json_decode(file_get_contents('php://input'), true);
+$data = $_GET;
+
 
 $idMovie = strip_tags(trim($data['id_movie']));
-$movieTitle = strip_tags(trim($data['title']));
+$movieTitle = strip_tags(trim($data['movie_name']));
 
 
     if (!$idMovie or !$movieTitle) {
@@ -18,9 +19,11 @@ $movieTitle = strip_tags(trim($data['title']));
         $movieModel = new MovieModel();
         $movieModel->editMovie($idMovie, $movieTitle);
         echo json_encode([
+            'success' => true,
             "message" => "Movie edited successfully",
             'name' => $movieTitle,
             'id_movie' => $idMovie
+
 
         ]);
     } else {
@@ -29,4 +32,3 @@ $movieTitle = strip_tags(trim($data['title']));
 
 
 
-//TODO: use PUT method
