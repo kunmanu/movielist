@@ -1,48 +1,47 @@
-
 SET FOREIGN_KEY_CHECKS = 0;
 
-truncate user;
-INSERT INTO `user` ( `firstname`, `lastname`, `email`, `hash`, `createdAt`, `role`) VALUES
-    ('admin', 'Dupont', 'adming@admin.ad', '$2a$12$C1lAEN9mdexmC4hnE.4tevnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'ADMIN'),
-    ('Maud ', 'Sharpe', 'Maud@gmail.com', '$2a$12$C1lAEN9mdexmC4hnE.4tevnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'USER'),
-    ('Pearl ', 'French', 'Pearl@gmail.com', '$2a$12$C1lAEN9mdexmC4hnE.4tevnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'USER'),
-    ('Giles ', 'Beck', 'Giles@gmail.com', '$2a$12$C1lAEN9mdexmC4hnE.4tevnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'USER');
+truncate Users;
+INSERT INTO Users ( pseudonym, email, hash, createdAt, role) VALUES
+     ('admin', 'admin@admin.ad', '$2a$12$C1lAEN9mdexmC4hnE.4tevnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'ADMIN'),
+     ('Maud ', 'Maud@gmail.com', '$2a$12$C1lAEN9mdexmC4hnE.4tevnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'USER'),
+     ('Pearl ', 'Pearl@gmail.com', '$2a$12$C1lAEN9mdexmC4hnE.4tevnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'USER'),
+     ('Giles ', 'Giles@gmail.com', '$2a$12$C1lAEN9mdexmC4hnE.4tevnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'USER');
 
 
-truncate movies ;
-INSERT INTO movies (title, createdAt) VALUES
-    ('The Shawshank Redemption', NOW()),
-    ('The Godfather', NOW()),
-    ('The Godfather: Part II', NOW()),
-    ('The Dark Knight', NOW()),
-    ('12 Angry Men', NOW()),
-    ('Schindler''s List', NOW()),
-    ('Pulp Fiction', NOW()),
-    ('The Good, the Bad and the Ugly', NOW()),
-    ('The Lord of the Rings: The Return of the King', NOW()),
-    ('Fight Club', NOW()),
-    ('Forrest Gump', NOW()),
-    ('Inception', NOW()),
-    ('The Matrix', NOW()),
-    ('The Silence of the Lambs', NOW()),
-    ('One Flew Over the Cuckoo''s Nest', NOW()),
-    ('Goodfellas', NOW()),
-    ('The Green Mile', NOW()),
-    ('Interstellar', NOW()),
-    ('The Prestige', NOW());
+truncate Movies ;
+INSERT INTO Movies (title, createdAt, userId) VALUES
+    ('The Shawshank Redemption', NOW(), 1),
+    ('The Godfather', NOW(), 1),
+    ('The Godfather: Part II', NOW(), 1),
+    ('The Dark Knight', NOW(), 1),
+    ('12 Angry Men', NOW(), 1),
+    ('Schindler''s Collection', NOW(), 1),
+    ('Pulp Fiction', NOW(), 1),
+    ('The Good, the Bad and the Ugly', NOW(), 1),
+    ('The Lord of the Rings: The Return of the King', NOW(), 1),
+    ('Fight Club', NOW(), 1),
+    ('Forrest Gump', NOW(), 1),
+    ('Inception', NOW(), 1),
+    ('The Matrix', NOW(), 1),
+    ('The Silence of the Lambs', NOW(), 1),
+    ('One Flew Over the Cuckoo''s Nest', NOW(), 1),
+    ('Goodfellas', NOW(), 1),
+    ('The Green Mile', NOW(), 1),
+    ('Interstellar', NOW(), 1),
+    ('The Prestige', NOW(), 1);
 
-truncate lists;
-INSERT INTO lists (id_user, name, createdAt) VALUES
-    ('1', 'Favorites', NOW()),
-    ('1', 'To Watch', NOW()),
-    ('1', 'Watched', NOW()),
-    ('2', 'Comedies', NOW()),
-    ('2', 'Dramas', NOW()),
-    ('2', 'Thrillers', NOW()),
-    ('2', 'Sci-Fi', NOW());
+truncate Collections;
+INSERT INTO Collections (title, userId, createdAt) VALUES
+    ('Favorites', 1, NOW()),
+    ('To Watch', 1, NOW()),
+    ('Watched', 1, NOW()),
+    ('Comedies', 2, NOW()),
+    ('Dramas', 2, NOW()),
+    ('Thrillers', 2, NOW()),
+    ('Sci-Fi', 2, NOW());
 
-truncate movies_lists;
-INSERT INTO movies_lists (movie_id, list_id)VALUES
+
+INSERT INTO MovieCollections (movieId, collectionId)VALUES
     (1, 1),
     (2, 1),
     (3, 1),
@@ -61,5 +60,3 @@ INSERT INTO movies_lists (movie_id, list_id)VALUES
     (16, 7),
     (17, 7),
     (18, 1);
-
-SET FOREIGN_KEY_CHECKS = 1;

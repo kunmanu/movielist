@@ -60,7 +60,7 @@ function checkUser(string $email, string $password)
 /**
  * Enregistre les données d el'utilisateur en session
  */
-function registerUser(string $id, string $firstname, string $lastname, string $email, string $role)
+function registerUser(string $id, string $pseudonym, string $email, string $role)
 {
     // On commence par vérifier qu'une session est bien démarrée
     if (session_status() == PHP_SESSION_NONE) {
@@ -70,8 +70,7 @@ function registerUser(string $id, string $firstname, string $lastname, string $e
     // Puis on enregistre les données de l'utilisateur en session
     $_SESSION['user'] = [
         'id' => $id,
-        'firstname' => $firstname,
-        'lastname' => $lastname,
+        'pseudo' => $pseudonym,
         'email' => $email,
         'role' => $role
     ];

@@ -8,13 +8,13 @@ $data = $_GET;
 
 
 
-if (empty($data['id_movie'])) {
+if (empty($data['idMovie'])) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Missing Movie movie']);
     exit;
 }
 
-$idMovie = $data['id_movie'];
+$idMovie = $data['idMovie'];
 
 $MovieModel = new MovieModel();
 $MovieModel ->deleteMovie($idMovie);
@@ -28,7 +28,7 @@ try {
     exit;
 
 } catch (Exception $e) {
-    error_log('Error deleting movie.phtml from list: ' . $e->getMessage());
+    error_log('Error deleting movie.phtml from collection: ' . $e->getMessage());
     echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     exit;
 }

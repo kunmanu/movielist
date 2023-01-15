@@ -1,5 +1,5 @@
 <?php
-//namespace MyProject\Core;
+
 include_once "../app/config.php";
 class Database {
 
@@ -15,7 +15,7 @@ class Database {
     /**
      * Création d'une connexion PDO à la base de données
      */
-    function getPDOConnection()
+    function getPDOConnection(): PDO
     {
         // Connexion à la base de données
         $dsn = 'mysql:dbname='.DB_NAME.';host='.DB_HOST.';charset=utf8'; // DSN : Data Source Name (informations de connexion à la BDD)

@@ -7,7 +7,7 @@ $errors = [];
 $data = $_GET;
 
 
-$idMovie = strip_tags(trim($data['id_movie']));
+$idMovie = strip_tags(trim($data['idMovie']));
 $movieTitle = strip_tags(trim($data['movie_name']));
 
 
@@ -22,7 +22,7 @@ $movieTitle = strip_tags(trim($data['movie_name']));
             'success' => true,
             "message" => "Movie edited successfully",
             'name' => $movieTitle,
-            'id_movie' => $idMovie
+            'idMovie' => $idMovie
 
 
         ]);

@@ -4,16 +4,16 @@ console.log('main.js');
 
 
 
-// const viewListButtons = document.querySelectorAll('.viewList-btn');
-// if (viewListButtons) {
-//     viewListButtons.forEach(btn =>{
-//     btn.addEventListener('click', function(event) {
-//         let idList = event.target.dataset.idlist;
-//         // window.location.assign(`/public/index.php?page=view_list`, '_blank');
-//         fetch(`/public/index.php?page=view_list`, {
+// const viewCollectionButtons = document.querySelectorAll('.viewCollection-btn');
+// if (viewCollectionButtons) {
+//     viewCollectionButtons.forEach(btn =>{
+//     btn.addEventCollectionener('click', function(event) {
+//         let idCollection = event.target.dataset.idcollection;
+//         // window.location.assign(`/public/index.php?page=view_collection`, '_blank');
+//         fetch(`/public/index.php?page=view_collection`, {
 //             method: 'POST',
 //             body: JSON.stringify({
-//                 id : idList
+//                 id : idCollection
 //             }),
 //             headers: {
 //                 'Content-Type': 'application/json'
@@ -22,7 +22,7 @@ console.log('main.js');
 //             .then(res => res.json())
 //             .then(data => {
 //                 if (data.success) {
-//                     window.location.assign(`/public/index.php?page=view_list.php?id=${idList}`, '_blank');
+//                     window.location.assign(`/public/index.php?page=view_collection.php?id=${idCollection}`, '_blank');
 //                 }
 //             })
 //             .catch(err => console.error(err));
@@ -38,7 +38,7 @@ console.log('main.js');
 // const viewMovieButtons = document.querySelectorAll('.viewMovie-btn');
 // if (viewMovieButtons) {
 //     viewMovieButtons.forEach(btn =>{
-//         btn.addEventListener('click', function(event) {
+//         btn.addEventCollectionener('click', function(event) {
 //             let idMovie = event.target.dataset.idmovie;
 //             window.location.assign(`view_movie.php?&id=${idMovie}`, '_blank');
 //         });
@@ -51,7 +51,7 @@ console.log('main.js');
 // let viewMovieBtn = document.querySelector('.viewMovie-btn');
 //
 // if (viewMovieBtn) {
-//     viewMovieBtn.addEventListener('click', function(event) {
+//     viewMovieBtn.addEventCollectionener('click', function(event) {
 //         let idMovie = event.target.dataset.idmovie;
 //         window.location.assign(`view_movie.php?&id=${idMovie}`, '_blank');
 //     });
@@ -61,8 +61,8 @@ console.log('main.js');
 
 //////////DELETE LIST
 
-let deleteListBtn = document.querySelectorAll('.deleteList-btn')
-deleteListBtn.forEach(btn => {
+let deleteCollectionBtn = document.querySelectorAll('.deleteCollection-btn')
+deleteCollectionBtn.forEach(btn => {
     btn.addEventListener('click',  async () => {
 
         let ajaxUrl = btn.dataset.ajax
@@ -70,16 +70,16 @@ deleteListBtn.forEach(btn => {
         let data = await response.json();
 
         if (data.success === true) {
-            document.querySelector(`.list-${data.id}`).remove();
+            document.querySelector(`.collection-${data.id}`).remove();
         }
 
     });
 });
 
 /////DELETE MOVIE FROM LIST
-let deleteFromListMovieBtn = document.querySelectorAll('.deleteMovieFromList-btn')
-if (deleteFromListMovieBtn) {
-    deleteFromListMovieBtn.forEach(btn => {
+let deleteFromCollectionMovieBtn = document.querySelectorAll('.deleteMovieFromCollection-btn')
+if (deleteFromCollectionMovieBtn) {
+    deleteFromCollectionMovieBtn.forEach(btn => {
         btn.addEventListener('click', async () => {
             let ajaxUrl = btn.dataset.ajax
             console.log(ajaxUrl)
@@ -89,7 +89,7 @@ if (deleteFromListMovieBtn) {
 
             if (data.success === true) {
                 console.log(data)
-                document.querySelector(`.movie${data.idMovie}-list${data.idList}`).remove();
+                document.querySelector(`.movie${data.idMovie}-collection${data.idCollection}`).remove();
             }
         });
     });
@@ -119,7 +119,7 @@ async function ajaxEditMovie(form) {
         console.log(data)
         let p = document.createElement("p");
         p.textContent = data.name;
-        p.id = `movie${data.id_movie}`;
+        p.id = `movie${data.idMovie}`;
         form.replaceWith(p);
     }
 }
@@ -153,7 +153,7 @@ let openMovieForm = (btn) => {
     submitButton.textContent = "ok";
     form.setAttribute('data-ajax', ajaxUrl)
 
-    // Add an event listener to the submit button that calls the ajaxEditMovie function when the form is submitted
+    // Add an event collectionener to the submit button that calls the ajaxEditMovie function when the form is submitted
     form.addEventListener("submit", (e) => {
         e.preventDefault();
         ajaxEditMovie(form);
@@ -167,35 +167,35 @@ let openMovieForm = (btn) => {
 };
 
 ///////EDIT LIST
-let updateListButtons = document.querySelectorAll(".editList-btn")
-updateListButtons.forEach((btn) => {
-    btn.addEventListener("click", () => openListForm(btn));
+let updateCollectionButtons = document.querySelectorAll(".editCollection-btn")
+updateCollectionButtons.forEach((btn) => {
+    btn.addEventListener("click", () => openCollectionForm(btn));
 });
 
 
-let openListForm = (btn) => {
-    // Get the list name element and the list name
-    let idList = btn.dataset.idlist;
+let openCollectionForm = (btn) => {
+    // Get the collection name element and the collection name
+    let idCollection = btn.dataset.idcollection;
     let ajaxUrl =  btn.dataset.ajax
     console.log(ajaxUrl)
-    let listNameElement = document.querySelector(`.list-${idList} h3`);
-    let listName = listNameElement.textContent;
+    let collectionNameElement = document.querySelector(`.collection-${idCollection} h3`);
+    let collectionName = collectionNameElement.textContent;
 
     // Create the form element
     let form = document.createElement("form");
-    form.classList.add("update-list-form");
+    form.classList.add("update-collection-form");
 
-    // Create the input element for the list name
+    // Create the input element for the collection name
     let input = document.createElement("input");
     input.type = "text";
     input.name = "name";
-    input.value = listName;
+    input.value = collectionName;
 
-    // Create the hidden input element for the list id
+    // Create the hidden input element for the collection id
     let idInput = document.createElement("input");
     idInput.type = "hidden";
     idInput.name = "id";
-    idInput.value = idList;
+    idInput.value = idCollection;
 
 
     // Create the submit button
@@ -205,10 +205,10 @@ let openListForm = (btn) => {
 
     form.setAttribute('data-ajax', ajaxUrl)
 
-    // Add an event listener to the submit button that calls the ajaxEditList function when the form is submitted
+    // Add an event collectionener to the submit button that calls the ajaxEditCollection function when the form is submitted
     form.addEventListener("submit", (e) => {
         e.preventDefault();
-        ajaxEditList(form);
+        ajaxEditCollection(form);
 
 
     });
@@ -216,17 +216,17 @@ let openListForm = (btn) => {
     // Add the input and submit button to the form
     form.append(input, idInput, submitButton);
 
-    // Replace the list name element with the form
-    listNameElement.replaceWith(form);
+    // Replace the collection name element with the form
+    collectionNameElement.replaceWith(form);
 
 };
 
-async function ajaxEditList(form) {
+async function ajaxEditCollection(form) {
 
     let newName = form.name.value;
 
     let params = new URLSearchParams();
-    params.append("list_name", newName);
+    params.append("collection_name", newName);
     let ajaxUrl = form.dataset.ajax + `&${params.toString()}`;
     console.log(ajaxUrl)
     let response = await fetch(ajaxUrl);
@@ -236,20 +236,20 @@ async function ajaxEditList(form) {
         console.log(data)
         let h3 = document.createElement("h3");
         h3.textContent = data.name;
-        h3.id = `list-${data.id_list}`;
+        h3.id = `collection-${data.idCollection}`;
         form.replaceWith(h3);
     }
 
 
-    // Use the fetch API to send a PUT request to the edit_list.php file
-    // fetch("../controllers/edit_list.php", {
+    // Use the fetch API to send a PUT request to the edit_collection.php file
+    // fetch("../controllers/edit_collection.php", {
     //     method: "POST",
     //     headers: {
     //         "Content-Type": "application/json",
     //     },
     //     body: JSON.stringify({
-    //         id_list: idList,
-    //         list_name: newName,
+    //         idCollection: idCollection,
+    //         collection_name: newName,
     //     }),
     // })
     //     .then((response) => response.json())
@@ -257,7 +257,7 @@ async function ajaxEditList(form) {
     //         console.log(data)
     //         let h3 = document.createElement("h3");
     //         h3.textContent = data.name;
-    //         h3.id = `list-${data.id_list}`;
+    //         h3.id = `collection-${data.idCollection}`;
     //         form.replaceWith(h3);
     //     });
 

@@ -1,22 +1,22 @@
 <table>
-    <tr class="<?='movie'.$movie['id_movie'] ?>">
+    <tr class="<?='movie'.$movie['idMovie'] ?>">
         <td>
-            <p id="<?="movie".$movie['id_movie'] ?>"><?= $movie['title'] ?></p>
+            <p id="<?="movie".$movie['idMovie'] ?>"><?= $movie['title'] ?></p>
         </td>
         <td>
-            <button data-idMovie="<?=$movie['id_movie'] ?>"
-                    data-ajax="<?=buildUrl('delete_movie', ['id_movie' => $movie['id_movie'] ]);?>"
+            <button data-idMovie="<?=$movie['idMovie'] ?>"
+                    data-ajax="<?=buildUrl('delete_movie', ['idMovie' => $movie['idMovie'] ]);?>"
                     class="deleteMovie-btn"
                     type="button">
                 delete
             </button>
-            <button data-idMovie="<?=$movie['id_movie'] ?>"
-                    data-ajax="<?=buildUrl('edit_movie', ['id_movie' => $movie['id_movie']]);?>"
+            <button data-idMovie="<?=$movie['idMovie'] ?>"
+                    data-ajax="<?=buildUrl('edit_movie', ['idMovie' => $movie['idMovie']]);?>"
                     class="editMovie-btn" type="button">
                 edit movie
             </button>
-            <a href="<?=buildUrl('view_movie', ['id' => $movie['id_movie']]);?>">
-                <button data-idMovie="<?=$movie['id_movie'] ?>"
+            <a href="<?=buildUrl('view_movie', ['id' => $movie['idMovie']]);?>">
+                <button data-idMovie="<?=$movie['idMovie'] ?>"
                         class="viewMovie-btn" type="button">
                     view movie
                 </button>

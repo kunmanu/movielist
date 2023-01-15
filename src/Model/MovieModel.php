@@ -1,54 +1,59 @@
 <?php
-//namespace MyProject\Model;
+
 include_once "../src/core/AbstractModel.php";
+include_once "../src/core/SqlConstants.php";
 require_once '../lib/functions.php';
 
 
 
 class MovieModel extends AbstractModel{
 
-    function addMovie(string $title)
+    function addMovie(string $title, $summary = null, $poster = null, $releaseYear = null, $internetRating = null, $userRating = null, $userText = null, $isFavorite = null)
     {
-        $sql = 'INSERT INTO movies (title, createdAt)
-                VALUES (?,NOW())';
-
-        $this->db->executeQuery($sql, [$title]);
+        $sql = SqlConstants::MOVIES_SQL_ADD_MOVIE;
+        $this->db->executeQuery($sql, [$title, $summary, $poster, $releaseYear, $internetRating, $userRating, $userText, $isFavorite]);
     }
-    function addMovieIntoList(string $title, $listId)
+
+
+    public function addMovieIntoCollection(string $title, int $collectionId, int $userId,  $summary = null, $poster = null, $releaseYear = null, $internetRating = null, $userRating = null, $userText = null, $isFavorite = null)
     {
-        $sql = "START TRANSACTION;
-                INSERT INTO movies (title, createdAt) VALUES (?, NOW());
-                INSERT INTO movies_lists (movie_id, list_id) VALUES (LAST_INSERT_ID(), ?);
-                COMMIT;";
-        $this->db->executeQuery($sql, [$title,$listId]);
+        $sql = SqlConstants::MOVIE_COLLECTIONS_SQL_ADD_MOVIE_INTO_COLLECTION;
+
+        $stmt = $this->db->executeQuery($sql, [$title, $summary, $poster, $releaseYear, $internetRating, $userRating, $userText, $isFavorite, $userId, $collectionId]);
+
+        $errors = $stmt->errorInfo();
+        var_dump($errors);
 
     }
+
 
 
 
 
     public function getOneMovie($idMovie)
     {
-        $sql = "SELECT * FROM movies WHERE id_movie = ? LIMIT 1;";
+        $sql = SqlConstants::MOVIES_SQL_GET_MOVIE_BY_ID;
 
         return $this->db->getOneResult($sql,[$idMovie]);
     }
 
 
-    public function editMovie(int $id, string $title)
+    public function editMovie(int $id, string $title = null, string $summary = null, string $poster = null, int $releaseYear = null, int $internetRating = null, int $userRating = null, string $userText = null, bool $isFavorite = null)
     {
-        $sql = "UPDATE movies SET title = ? WHERE id_movie = ? LIMIT 1;";
-        $this->db->executeQuery($sql, [$title, $id]);
+        $sql = SqlConstants::MOVIES_SQL_UPDATE_MOVIE;
+        $params = [$title, $summary, $poster, $releaseYear, $internetRating, $userRating, $userText, $isFavorite, $id];
+        $this->db->executeQuery($sql, $params);
     }
+
 
     function deleteMovie(int $id)
     {
-        // Delete records from movies_lists table that have a movie_id value that references the movie
-        $sql = "DELETE FROM movies_lists WHERE movie_id = ?";
+        // Delete records from movies_collections table that have a movie_id value that references the movie
+        $sql = SqlConstants::MOVIE_COLLECTIONS_SQL_DELETE_BY_MOVIE_ID;
         $this->db->executeQuery($sql, [$id]);
 
         // Delete movie from movies table
-        $sql = "DELETE FROM movies WHERE id_movie = ? LIMIT 1;";
+        $sql = SqlConstants::MOVIES_SQL_DELETE_MOVIE;
         $this->db->executeQuery($sql, [$id]);
     }
 

@@ -1,13 +1,13 @@
 
 crud operation
-   X add list
-   X add movie into list
-   X delete list
-   X delete movie from a list
+   X add collection
+   X add movie into collection
+   X delete collection
+   X delete movie from a collection
    X update a movie
-   X update a list
+   X update a collection
    X read movie
-   x read list
+   x read collection
 
 X Authentification
 
@@ -16,7 +16,7 @@ user profile crud on user
 
 security and user flow
 
-rework of movie object
+ X rework of movie object
 
 Connection to TMBD
     search into api
@@ -43,4 +43,6 @@ no * in mysql
 
 
 
-use name space, add an sql class
+use name space,
+
+Xadd an sql class

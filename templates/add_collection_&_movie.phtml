@@ -1,0 +1,20 @@
+<fieldset>
+    <form action="<?= buildUrl('add_collection')?>" method="post" >
+        <label for="collection">Collection</label><br>
+        <input type="text" id="collection" name="collection"><br>
+        <button type="submit">Add</button>
+    </form>
+</fieldset>
+
+<fieldset>
+    <form action="<?= buildUrl('add_movie')?>" method="post" >
+        <label for="movie">Movie:</label><br>
+        <input type="text" id="movie" name="movie_title"><br>
+        <select name="collection">
+            <?php foreach ($collections as $collection) :?>
+                <option value= "<?=htmlspecialchars($collection['idCollection']);?>" ><?=htmlspecialchars($collection['title']);?></option>
+            <?php endforeach; ?>
+        </select>
+        <button type="submit">Add</button>
+    </form>
+</fieldset>
