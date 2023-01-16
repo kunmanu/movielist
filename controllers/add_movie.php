@@ -19,7 +19,7 @@ if (!empty($_POST)) {
         try {
             $movieModel->addMovieIntoCollection($movieTitle, $collectionId, $user);
         } catch (Exception $e) {
-            dump($e);
+
         }
     }
 

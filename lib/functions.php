@@ -12,7 +12,7 @@ const ROLE_ADMIN = 'ADMIN';
 function includeJavascript(array $scriptArr){
     $html = "";
     foreach ($scriptArr as $script){
-       $html .= "<script src='../script/".$script.".js' defer></script>";
+       $html .= "<script src='../script/".$script.".js' defer type='module'></script>";
     }
 
     return $html;

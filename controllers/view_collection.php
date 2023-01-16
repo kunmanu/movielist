@@ -21,6 +21,3 @@ $template = 'collection';
 include '../templates/base.phtml';
 
 
-/* TODO : erreure si je recharge la page aprés avoir supprimé,
-
-*/

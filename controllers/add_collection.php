@@ -1,12 +1,7 @@
 <?php
 require_once '../autoload.php';
 
-
-
-
 $errors = [];
-
-
 $user = $_SESSION['user']['id'];
 
 if (!empty($_POST)) {
@@ -17,18 +12,15 @@ if (!empty($_POST)) {
         $errors['collection'] = 'cannot be empty';
     }
 
-
     if (empty($errors)) {
-
-
         $collectionModel = new CollectionModel();
-        $collectionModel-> createCollection($collection, $user);
-
+        $collectionModel->createCollection($collection, $user);
     }
 
     header('Location: ' . buildUrl('all_collection_from_user'));
     exit;
 }
+
 
 
 /*TODO

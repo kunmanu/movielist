@@ -6,22 +6,22 @@ require_once '../lib/functions.php';
 
 class CollectionModel extends AbstractModel {
 
-    function getAllCollectionWithMoviesFromUser($user){
-        $collections=$this->getAllCollectionsFromUser($user);
+    function getAllCollectionWithMoviesFromUser($user): array
+    {
+        $collections = $this->getAllCollectionsFromUser($user);
         $collectionsWithMovies = [];
         foreach ($collections as $collection) {
             $movies = $this->getMoviesFromCollection($collection['idCollection']);
             $collection['movies'] = $movies;
-            array_push($collectionsWithMovies, $collection);
-
+            $collectionsWithMovies[] = $collection;
         }
         return $collectionsWithMovies;
-
     }
 
     public function getAllCollectionsFromUser(int $userId): bool|array
     {
         $sql = SqlConstants::COLLECTION_SQL_GET_ALL_COLLECTIONS_FROM_USER;
+
         return $this->db->getAllResults($sql, [$userId]);
     }
 
@@ -34,7 +34,7 @@ class CollectionModel extends AbstractModel {
         return $this->db->getAllResults($sql, [$idCollection]);
     }
 
-    function getAllCollectionWithMovies()
+    function getAllCollectionWithMovies(): array
     {
         $collections=$this->getAllcollection();
         $collectionsWithMovies = [];
@@ -42,33 +42,45 @@ class CollectionModel extends AbstractModel {
             $movies = $this->getMoviesFromCollection($collection['idCollection']);
             $collection['movies'] = $movies;
             $collectionsWithMovies[] = $collection;
-
         }
         return $collectionsWithMovies;
 
     }
 
 
-
-    function createCollection(string $name, string $user, $isFavorite = null, $userText = null)
-    {
+    function createCollection(
+        string $name,
+        string $user,
+               $isFavorite = null,
+               $userText = null
+    ) {
         $sql = SqlConstants::COLLECTIONS_SQL_ADD_COLLECTION;
-        $this->db->executeQuery($sql, [$name, $user, $isFavorite, $userText]);
+        $this->db->executeQuery(
+            $sql,
+            [
+                $name,
+                $user,
+                $isFavorite,
+                $userText
+            ]
+        );
     }
 
 
-    function deleteCollection(string $idCollection)
+
+    function deleteCollection(string $idCollection): bool
     {
         $sql = SqlConstants::COLLECTIONS_SQL_DELETE_COLLECTION;
-        $this->db->executeQuery($sql, [$idCollection]);
-        $this ->deleteCollectionlessMovies();
+        $stmt = $this->db->executeQuery($sql, [$idCollection]);
+        $this->deleteCollectionlessMovies();
+        return $stmt->rowCount()>0;
     }
+
 
 
     function getAllCollection(): bool|array
     {
         $sql = SqlConstants::COLLECTIONS_SQL_GET_ALL_COLLECTIONS;
-
         return $this->db->getAllResults($sql);
     }
 
@@ -78,7 +90,7 @@ class CollectionModel extends AbstractModel {
         $this->db->executeQuery($sql);
     }
 
-    public function deleteMovieFromCollection($idCollection, $idMovie)
+/*    public function deleteMovieFromCollection($idCollection, $idMovie)
     {
 
         $sql = SqlConstants::MOVIE_COLLECTIONS_SQL_DELETE_MOVIE_COLLECTION;
@@ -86,12 +98,70 @@ class CollectionModel extends AbstractModel {
         $this->db->executeQuery($sql, $params);
         $this ->deletecollectionlessMovies();
 
+    }*/
+
+    public function deleteMovieFromCollection(int $idCollection, int $idMovie): bool
+    {
+        try {
+            $sql = SqlConstants::MOVIE_COLLECTIONS_SQL_DELETE_MOVIE_COLLECTION;
+            $params = [$idCollection, $idMovie];
+            $stmt = $this->db->executeQuery($sql, $params);
+            $this->deletecollectionlessMovies();
+            return true;
+        } catch (\PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
     }
 
-    public function editCollection(string $idCollection, string $collection_name, $userId = null, $isFavorite = null, $createdAt = null, $userText = null) {
+
+
+/*    public function editCollection(
+        string $idCollection,
+        string $collection_name,
+               $userId = null,
+               $isFavorite = null,
+               $userText = null
+    ) {
         $sql = SqlConstants::COLLECTIONS_SQL_UPDATE_COLLECTION;
-        $this->db->executeQuery($sql, [$collection_name, $userId, $isFavorite, $userText, $idCollection]);
+        $this->db->executeQuery(
+            $sql,
+            [
+                $collection_name,
+                $userId,
+                $isFavorite,
+                $userText,
+                $idCollection
+            ]
+        );
+    }*/
+
+    public function editCollection(
+        string $idCollection,
+        string $collectionName,
+               $userId = null,
+               $isFavorite = null,
+               $userText = null
+    ): bool {
+        try {
+            $sql = SqlConstants::COLLECTIONS_SQL_UPDATE_COLLECTION;
+            $params = [
+                $collectionName,
+                $userId,
+                $isFavorite,
+                $userText,
+                $idCollection
+            ];
+            $this->db->executeQuery($sql, $params);
+            return true;
+        } catch (Exception $e) {
+            error_log('Error editing collection: ' . $e->getMessage());
+            return false;
+        }
     }
+
+
+
 
     public function getOneCollection(string $idCollection) {
 
@@ -99,7 +169,6 @@ class CollectionModel extends AbstractModel {
 
         return $this->db->getOneResult($sql, [$idCollection]);
     }
-
 
 
 

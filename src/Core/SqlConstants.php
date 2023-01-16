@@ -27,8 +27,6 @@ class SqlConstants
 
 
 
-
-
     // collections table
     const COLLECTIONS_SQL_GET_COLLECTION_BY_ID =
         'SELECT * FROM Collections WHERE idCollection = ?';
@@ -55,7 +53,6 @@ class SqlConstants
         VALUES (?, COALESCE(?, summary), COALESCE(?, poster), COALESCE(?, releaseYear), COALESCE(?, internetRating), COALESCE(?, userRating), COALESCE(?, userText), COALESCE(?, isFavorite), NOW(), ?);
         INSERT INTO moviecollections (movieId, collectionId) VALUES (LAST_INSERT_ID(), ?);
         COMMIT;";
-
 
 
     const MOVIE_COLLECTIONS_SQL_DELETE_MOVIE_COLLECTION = 'DELETE FROM MovieCollections WHERE collectionId = ? AND movieId = ?';

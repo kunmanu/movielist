@@ -30,27 +30,27 @@
                 </tr>
                 <?php if (isset($collection['movies']) && !empty($collection['movies'])): ?>
                     <?php foreach ($collection['movies'] as $movie): ?>
-                        <tr class="<?='movie'.$movie['movieId'].'-'.'collection'.$collection['idCollection'] ?>">
+                        <tr class="<?='movie'.$movie['idMovie'].'-'.'collection'.$collection['idCollection'] ?>">
                             <td>
-                                <p id="<?="movie".$movie['movieId'] ?>"><?= $movie['title'] ?></p>
+                                <p id="<?="movie".$movie['idMovie'] ?>"><?= $movie['title'] ?></p>
                             </td>
                             <td>
                                 <button data-idCollection="<?=$collection['idCollection'] ?>"
-                                        data-idMovie="<?=$movie['movieId'] ?>"
-                                        data-ajax="<?=buildUrl('delete_movie_from_collection', ['idCollection' => $collection['idCollection'],'movieId' => $movie['movieId'] ]);?>"
+                                        data-idMovie="<?=$movie['idMovie'] ?>"
+                                        data-ajax="<?=buildUrl('delete_movie_from_collection', ['idCollection' => $collection['idCollection'],'idMovie' => $movie['idMovie'] ]);?>"
                                         class="deleteMovieFromCollection-btn"
                                         type="button">
                                     remove from collection
                                 </button>
                                 <button data-idCollection="<?=$collection['idCollection'] ?>"
-                                        data-idMovie="<?=$movie['movieId'] ?>"
-                                        data-ajax="<?=buildUrl('edit_movie', ['movieId' => $movie['movieId']]);?>"
+                                        data-idMovie="<?=$movie['idMovie'] ?>"
+                                        data-ajax="<?=buildUrl('edit_movie', ['idMovie' => $movie['idMovie']]);?>"
                                         class="editMovie-btn" type="button">
                                     edit movie
                                 </button>
-                                <a href="<?=buildUrl('view_movie', ['id' => $movie['movieId']]);?>">
+                                <a href="<?=buildUrl('view_movie', ['id' => $movie['idMovie']]);?>">
                                     <button data-idCollection="<?=$collection['idCollection'] ?>"
-                                            data-idMovie="<?=$movie['movieId'] ?>"
+                                            data-idMovie="<?=$movie['idMovie'] ?>"
                                             class="viewMovie-btn" type="button">
                                         view movie
                                     </button>
