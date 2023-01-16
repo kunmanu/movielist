@@ -1,4 +1,30 @@
 
+export function ajaxDeleteMovie(ajaxUrl){
+    return fetch(ajaxUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success === true) {
+                return data;
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+export function ajaxDeleteMovieFromCollection(ajaxUrl) {
+
+    return fetch(ajaxUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success === true) {
+                return data;
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
 
 export function ajaxDeleteCollection(ajaxUrl){
 
@@ -38,7 +64,6 @@ export  function ajaxEditCollection(ajaxUrl, newName) {
     params.append("collection_name", newName);
 
     let request = ajaxUrl + `&${params.toString()}`;
-
     return fetch(request)
         .then(response => response.json())
         .then(data => {

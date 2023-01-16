@@ -16,7 +16,7 @@ class MovieModel extends AbstractModel{
                $internetRating = null,
                $userRating = null,
                $userText = null,
-               $isFavorite = null
+               $isFavorite = null,
     ) {
         $sql = SqlConstants::MOVIES_SQL_ADD_MOVIE;
         $this->db->executeQuery(
@@ -41,11 +41,11 @@ class MovieModel extends AbstractModel{
         int $userId,
         string|null $summary = null,
         string|null $poster = null,
-        string|null $releaseYear = null,
-        string|null $internetRating = null,
+        int|null $releaseYear = null,
+        int|null $internetRating = null,
         string|null $userRating = null,
         string|null $userText = null,
-        bool|null $isFavorite = null
+        int|null $isFavorite = null
     ) {
         $sql = SqlConstants::MOVIE_COLLECTIONS_SQL_ADD_MOVIE_INTO_COLLECTION;
 
@@ -66,7 +66,7 @@ class MovieModel extends AbstractModel{
         );
 
         $errors = $stmt->errorInfo();
-        var_dump($errors);
+        dump($errors);
 
     }
 

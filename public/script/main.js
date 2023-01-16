@@ -1,45 +1,16 @@
-
-import {createEditMovieForm, createEditCollectionForm} from "./lib/dom.js";
-import {deleteCollectionEvent} from "./lib/event.js";
+import {
+    createEditMovieForm,
+    createEditCollectionForm
+} from "./lib/dom.js";
+import {
+        deleteCollectionEvent,
+        deleteMovieEvent,
+        deleteMovieFromCollectionEvent
+} from "./lib/event.js";
 
 
 
 console.log('main.js');
-
-
-
-//////////DELETE COLLECTION
-
-let deleteCollectionBtn = document.querySelectorAll('.deleteCollection-btn')
-
-if (deleteCollectionBtn){
-deleteCollectionBtn.forEach(btn => {
-    btn.addEventListener('click',  () => {deleteCollectionEvent(btn)});
-});
-
-}
-
-/////DELETE MOVIE FROM LIST
-
-
-let deleteFromCollectionMovieBtn = document.querySelectorAll('.deleteMovieFromCollection-btn')
-if (deleteFromCollectionMovieBtn) {
-    deleteFromCollectionMovieBtn.forEach(btn => {
-        btn.addEventListener('click', async () => {
-            let ajaxUrl = btn.dataset.ajax
-            console.log(ajaxUrl)
-
-            let response = await fetch(ajaxUrl);
-            let data = await response.json();
-
-            if (data.success === true) {
-                console.log(data)
-                document.querySelector(`.movie${data.idMovie}-collection${data.idCollection}`).remove();
-            }
-        });
-    });
-}
-
 
 ////////EDIT MOVIE
 
@@ -52,13 +23,33 @@ if (editMovieButtons) {
 }
 
 
-
-
 ///////EDIT LIST
 let updateCollectionButtons = document.querySelectorAll(".editCollection-btn")
 updateCollectionButtons.forEach((btn) => {
     btn.addEventListener("click", () => createEditCollectionForm(btn));
 });
+
+
+//////////DELETE COLLECTION
+
+let deleteCollectionBtn = document.querySelectorAll('.deleteCollection-btn')
+
+if (deleteCollectionBtn){
+    deleteCollectionBtn.forEach(btn => {
+        btn.addEventListener('click',  () => {deleteCollectionEvent(btn)});
+    });
+}
+
+/////DELETE MOVIE FROM LIST
+
+
+let deleteMovieFromCollectionBtn = document.querySelectorAll('.deleteMovieFromCollection-btn')
+
+if (deleteMovieFromCollectionBtn) {
+    deleteMovieFromCollectionBtn.forEach(btn => {
+        btn.addEventListener('click', () => deleteMovieFromCollectionEvent(btn))
+    })
+
 
 
 
@@ -67,20 +58,11 @@ updateCollectionButtons.forEach((btn) => {
 
 let deleteMovieButtons = document.querySelectorAll(".deleteMovie-btn")
 
-deleteMovieButtons.forEach((btn)=>{
-    btn.addEventListener('click',async () => {
-        let ajaxUrl = btn.dataset.ajax
-        console.log(ajaxUrl)
-        let response = await fetch(ajaxUrl);
+if (deleteMovieButtons){
 
-        let data = await response.json();
-
-        if (data.success === true) {
-            console.log(data)
-            let p= document.createElement('p')
-            p.textContent = 'film supprimé'
-            document.querySelector(`.movie${data.idMovie}`).replaceWith(p);
+    deleteMovieButtons.forEach((btn)=>{
+            btn.addEventListener('click',async () =>deleteMovieEvent(btn));
         }
-    });
-    }
-)
+    )}
+
+}

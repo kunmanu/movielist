@@ -1,8 +1,22 @@
 <div class="collection">
     <table class="<?='collection-'.$collection['idCollection'] ?>">
         <tr>
-            <th colspan="3">
+            <th colspan="4">
                 <h3 id="collection-<?=$collection['idCollection'] ?>"><?= $collection['title'] ?></h3>
+            </th>
+            <td>
+                <p><?= $collection['userId'] ?></p>
+            </td>
+            <td>
+                <p><?= $collection['isFavorite'] ?></p>
+            </td>
+            <td>
+                <p><?= $collection['createdAt'] ?></p>
+            </td>
+            <td>
+                <p><?= $collection['userText'] ?></p>
+            </td>
+            <td>
                 <button data-idCollection="<?=$collection['idCollection'] ?>"
                         data-ajax="<?=buildUrl('delete_collection', ['idCollection' => $collection['idCollection']]);?>"
                         class="deleteCollection-btn" type="button">
@@ -18,46 +32,80 @@
                         view collection
                     </button>
                 </a>
-
-            </th>
+            </td>
         </tr>
         <tr>
             <th>Movie</th>
+            <th>summary</th>
+            <th>poster</th>
+            <th>releaseYear</th>
+            <th>internetRating</th>
+            <th>userRating</th>
+            <th>userText</th>
+            <th>isFavorite</th>
+            <th>createdAt</th>
+            <th>userId</th>
             <th>Action</th>
         </tr>
         <?php if (isset($movies)): ?>
-            <?php foreach ($movies as $movie): ?>
-                <tr class="<?='movie.phtml'.$movie['idMovie'].'-'.'collection'.$collection['idCollection'] ?>">
-                    <td>
-                        <p id="<?=$movie['idMovie'] ?>"><?= $movie['title'] ?></p>
-                    </td>
-                    <td>
-                        <button data-idCollection="<?=$collection['idCollection'] ?>"
-                                data-idMovie="<?=$movie['movieId'] ?>"
-                                data-ajax="<?=buildUrl('delete_movie_from_collection', ['idCollection' => $collection['idCollection'],'movieId' => $movie['movieId'] ]);?>"
-                                class="deleteMovieFromCollection-btn"
-                                type="button">
-                            remove from collection
-                        </button>
-                        <button data-idCollection="<?=$collection['idCollection'] ?>"
-                                data-idMovie="<?=$movie['movieId'] ?>"
-                                data-ajax="<?=buildUrl('edit_movie', ['movieId' => $movie['movieId']]);?>"
-                                class="editMovie-btn" type="button">
-                            edit movie
-                        </button>
-                        <a href="<?=buildUrl('view_movie', ['id' => $movie['movieId']]);?>">
-                            <button data-idCollection="<?=$collection['idCollection'] ?>"
-                                    data-idMovie="<?=$movie['movieId'] ?>"
-                                    class="viewMovie-btn" type="button">
-                                view movie
-                            </button>
-                        </a>
-                    </td>
-                </tr>
+        <?php foreach ($movies as $movie): ?>
+        <tr class="<?='movie.phtml'.$movie['idMovie'].'-'.'collection'.$collection['idCollection'] ?>">
+            <td>
+                <p id="<?=$movie['idMovie'] ?>"><?= $movie['title'] ?></p>
+            </td>
+            <td>
+                <p><?= $movie['summary'] ?></p>
+            </td>
+            <td>
+                <p><?= $movie['poster'] ?></p>
+            </td>
+            <td>
+                <p><?= $movie['releaseYear'] ?></p>
+            </td>
+            <td>
+                <p><?= $movie['internetRating'] ?></p>
+            <td>
+                <p><?= $movie['userRating'] ?></p>
+            </td>
+            <td>
+                <p><?= $movie['userText'] ?></p>
+            </td>
+            <td>
+                <p><?= $movie['isFavorite'] ?></p>
+            </td>
+            <td>
+                <p><?= $movie['createdAt'] ?></p>
+            </td>
+            <td>
+                <p><?= $movie['userId'] ?></p>
+            </td>
+            <td>
+                <button data-idCollection="<?=$collection['idCollection'] ?>"
+                        data-idMovie="<?=$movie['movieId'] ?>"
+                        data-ajax="<?=buildUrl('delete_movie_from_collection', ['idCollection' => $collection['idCollection'],'movieId' => $movie['movieId'] ]);?>"
+                        class="deleteMovieFromCollection-btn"
+                        type="button">
+                    remove from collection
+                </button>
+                <button data-idCollection="<?=$collection['idCollection'] ?>"
+                        data-idMovie="<?=$movie['movieId'] ?>"
+                        data-ajax="<?=buildUrl('edit_movie', ['movieId' => $movie['movieId']]);?>"
+                        class="editMovie-btn" type="button">
+                    edit movie
+                </button>
+                <a href="<?=buildUrl('view_movie', ['id' => $movie['movieId']]);?>">
+                    <button data-idCollection="<?=$collection['idCollection'] ?>"
+                            data-idMovie="<?=$movie['movieId'] ?>"
+                            class="viewMovie-btn" type="button">
+                        view movie
+                    </button>
+                </a>
+            </td>
+        </tr>
             <?php endforeach ?>
         <?php else: ?>
             <tr>
-                <td colspan="3">
+                <td colspan="11">
                     <p>No movies in this collection</p>
                 </td>
             </tr>

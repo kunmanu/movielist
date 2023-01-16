@@ -1,28 +1,39 @@
 <?php
 require_once '../autoload.php';
 
-$user = $_SESSION['user']['id'];
+$userId = $_SESSION['user']['id'];
 
 $errors = [];
 
 if (!empty($_POST)) {
-    $movieTitle = strip_tags(trim($_POST['movie_title']));
-    $collectionId = strip_tags(trim($_POST['collection']));
+    $title = strip_tags(trim($_POST['movieTitle']));
+    $releaseYear = strip_tags(trim($_POST['movieYear']));
+    $userRating = strip_tags(trim($_POST['movieRating']));
+    $summary = strip_tags(trim($_POST['movieSummary']));
+    $isFavorite = isset($_POST['movieIsFavorite']) ? strip_tags(trim($_POST['movieIsFavorite'])) : 0;
+
+    $collectionId = strip_tags(trim($_POST['movieCollection']));
+    $internetRating = 2;
+    $poster = "";
 
 
-    if (!$movieTitle OR !$collectionId) {
-        $errors = 'error';
-    }
+    $movieModel = new MovieModel();
 
-    if (empty($errors)) {
-        $movieModel = new MovieModel();
-        try {
-            $movieModel->addMovieIntoCollection($movieTitle, $collectionId, $user);
-        } catch (Exception $e) {
+    $movieModel->addMovieIntoCollection(
+        $title,
+        $collectionId,
+        $userId,
+        $summary,
+        $poster,
+        $releaseYear,
+        $internetRating,
+        $userRating,
+        $summary,
+        $isFavorite,
+    );
 
-        }
-    }
-
-        header('Location: ' . buildUrl('all_collection'));
-
+    header('Location: ' . buildUrl('all_collection'));
 }
+
+
+

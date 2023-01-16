@@ -49,19 +49,19 @@ class CollectionModel extends AbstractModel {
 
 
     function createCollection(
-        string $name,
+        string $title,
         string $user,
-               $isFavorite = null,
-               $userText = null
+        $isFavorite = null,
+        $description = null
     ) {
         $sql = SqlConstants::COLLECTIONS_SQL_ADD_COLLECTION;
         $this->db->executeQuery(
             $sql,
             [
-                $name,
+                $title,
                 $user,
                 $isFavorite,
-                $userText
+                $description
             ]
         );
     }

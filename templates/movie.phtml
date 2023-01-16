@@ -4,6 +4,33 @@
             <p id="<?="movie".$movie['idMovie'] ?>"><?= $movie['title'] ?></p>
         </td>
         <td>
+            <p><?= $movie['summary'] ?></p>
+        </td>
+        <td>
+            <p><?= $movie['poster'] ?></p>
+        </td>
+        <td>
+            <p><?= $movie['releaseYear'] ?></p>
+        </td>
+        <td>
+            <p><?= $movie['internetRating'] ?></p>
+        </td>
+        <td>
+            <p><?= $movie['userRating'] ?></p>
+        </td>
+        <td>
+            <p><?= $movie['userText'] ?></p>
+        </td>
+        <td>
+            <p><?= $movie['isFavorite'] ?></p>
+        </td>
+        <td>
+            <p><?= $movie['createdAt'] ?></p>
+        </td>
+        <td>
+            <p><?= $movie['userId'] ?></p>
+        </td>
+        <td>
             <button data-idMovie="<?=$movie['idMovie'] ?>"
                     data-ajax="<?=buildUrl('delete_movie', ['idMovie' => $movie['idMovie'] ]);?>"
                     class="deleteMovie-btn"
@@ -23,7 +50,5 @@
             </a>
         </td>
     </tr>
-
-
 </table>
 

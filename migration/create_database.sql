@@ -20,7 +20,7 @@ CREATE TABLE Movies (
     title VARCHAR(255) NOT NULL,
     summary varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     poster varchar(255) COLLATE utf8mb4_unicode_ci,
-    releaseYear YEAR COLLATE utf8mb4_unicode_ci,
+    releaseYear int(255) COLLATE utf8mb4_unicode_ci,
     internetRating TINYINT unsigned,
     userRating TINYINT unsigned,
     userText varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -29,6 +29,9 @@ CREATE TABLE Movies (
     userId int not null,
         foreign key (userId) references Users(idUser)
 );
+
+
+
 
 
 CREATE TABLE Collections (

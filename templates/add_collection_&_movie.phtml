@@ -1,20 +1,46 @@
-<fieldset>
     <form action="<?= buildUrl('add_collection')?>" method="post" >
-        <label for="collection">Collection</label><br>
-        <input type="text" id="collection" name="collection"><br>
-        <button type="submit">Add</button>
-    </form>
-</fieldset>
+        <fieldset>
+            <legend>Add List:</legend>
+            <label for="collectionTitle">Title</label><br>
+            <input type="text" id="collectionTitle" name="collectionTitle"><br>
 
-<fieldset>
-    <form action="<?= buildUrl('add_movie')?>" method="post" >
-        <label for="movie">Movie:</label><br>
-        <input type="text" id="movie" name="movie_title"><br>
-        <select name="collection">
-            <?php foreach ($collections as $collection) :?>
-                <option value= "<?=htmlspecialchars($collection['idCollection']);?>" ><?=htmlspecialchars($collection['title']);?></option>
-            <?php endforeach; ?>
-        </select>
-        <button type="submit">Add</button>
+            <label for="collectionDescription" >Description</label><br>
+            <textarea name="collectionDescription" id="collectionDescription"></textarea><br>
+
+            <input type="checkbox" id="collectionIsFavorite" name="collectionIsFavorite" value="1" >
+            <label for="collectionIsFavorite">Add to favorites</label><br>
+            <button type="submit">Add</button>
+        </fieldset>
     </form>
-</fieldset>
+
+    <form action="<?= buildUrl('add_movie')?>" method="post" >
+        <fieldset>
+
+            <label for="movieTitle">Movie:</label><br>
+            <input type="text" id="movieTitle" name="movieTitle"><br>
+
+            <label for="movieYear">Year:</label><br>
+            <input type="number" id="movieYear" name="movieYear"><br>
+
+            <label for="movieRating">Rating:</label><br>
+            <input type="number" id="movieRating" name="movieRating"><br>
+
+            <label for="movieSummary" >Summary:</label><br>
+            <textarea name="movieSummary" id="movieSummary"></textarea><br>
+
+            <label for="movieImg" >Add a poster :</label><br>
+            <input type="file" name="movieImg" id="movieImg"></input><br>
+
+            <input type="checkbox" id="movieIsFavorite" name="movieIsFavorite" value="1" >
+            <label for="movieIsFavorite">Add to favorites</label><br>
+
+            <label for="movieCollection">Add into :</label><br>
+            <select name="movieCollection" id="movieCollection" name="movieCollection">
+                <?php foreach ($collections as $collection) :?>
+                    <option value= "<?=htmlspecialchars($collection['idCollection']);?>" ><?=htmlspecialchars($collection['title']);?></option>
+                <?php endforeach; ?>
+            </select><br>
+
+            <button type="submit">Add</button>
+        </fieldset>
+    </form>

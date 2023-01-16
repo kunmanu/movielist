@@ -1,6 +1,49 @@
-import {editMovieDom, editCollectionDom, deleteCollectionDom} from "./dom.js";
-import {ajaxDeleteCollection, ajaxEditCollection, ajaxEditMovie} from "./ajax.js";
+import {
+        editMovieDom,
+        editCollectionDom,
+        deleteCollectionDom,
+        deleteMovieFromCollectionDom,
+        deleteMovieDom
+} from "./dom.js";
+import {
+        ajaxDeleteCollection,
+        ajaxEditCollection,
+        ajaxEditMovie,
+        ajaxDeleteMovieFromCollection,
+        ajaxDeleteMovie
+} from "./ajax.js";
 
+
+
+export  const deleteMovieEvent = async (btn) => {
+        let ajaxUrl = btn.dataset.ajax
+
+        try {
+                let data = await ajaxDeleteMovie(ajaxUrl);
+
+                if (data) {
+                        deleteMovieDom(data);
+                }
+        }
+        catch (error) {
+                console.log(error);
+        }
+}
+
+export const deleteMovieFromCollectionEvent = async (btn) =>{
+        let ajaxUrl = btn.dataset.ajax
+
+        try {
+                let data = await ajaxDeleteMovieFromCollection(ajaxUrl);
+
+                if (data) {
+                        deleteMovieFromCollectionDom(data);
+                }
+        }
+        catch (error) {
+                console.log(error);
+        }
+}
 
 export const deleteCollectionEvent = async (btn) => {
         let ajaxUrl = btn.dataset.ajax
