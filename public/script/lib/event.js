@@ -1,5 +1,22 @@
-import {editMovieDom} from "./dom.js";
-import {ajaxEditMovie} from "./ajax.js";
+import {editMovieDom, editCollectionDom} from "./dom.js";
+import {ajaxEditCollection, ajaxEditMovie} from "./ajax.js";
+
+export const editCollectionEvent =  async (form) => {
+        let newName = form.name.value;
+        let ajaxUrl = form.dataset.ajax
+
+        try {
+                let data = await ajaxEditCollection(ajaxUrl, newName);
+
+                if (data) {
+                        editCollectionDom(form, data);
+                }
+        }
+        catch (error) {
+                console.log(error);
+        }
+
+}
 
 
 export const editMovieEvent = async (form) => {
@@ -16,3 +33,5 @@ export const editMovieEvent = async (form) => {
                 console.log(error);
         }
 };
+
+

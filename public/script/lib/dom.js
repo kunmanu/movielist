@@ -1,12 +1,26 @@
 import {createElement} from "./utilities.js";
 
-import {editMovieEvent} from "./event.js";
+import {editMovieEvent, editCollectionEvent} from "./event.js";
+
+export const editCollectionDom = (form, data) => {
+
+    console.log(data)
+
+    let h3 = createElement('h3', {id : `collection-${data.idCollection}`}).appendChildren(data.name)
+
+    form.replaceWith(h3);
+}
+
 
 export const editMovieDom = (form, idMovie, newName) => {
     let p = createElement("p",{id:`movie${idMovie}`}).appendChildren(newName);
     form.replaceWith(p);
 
 };
+
+
+
+
 
 export let createEditMovieForm = (btn) => {
 
@@ -33,3 +47,23 @@ export let createEditMovieForm = (btn) => {
     return form
 };
 
+
+export let createEditCollectionForm = (btn) => {
+    let idCollection = btn.dataset.idcollection;
+    let ajaxUrl = btn.dataset.ajax;
+    let collectionNameElement = document.querySelector(`.collection-${idCollection} h3`)
+    let collectionName = collectionNameElement.textContent;
+    let form = createElement(
+        "form",
+        {class: "update-collection-form", "data-ajax":ajaxUrl},
+        {submit: (e) => {e.preventDefault();editCollectionEvent(form);}})
+        .appendChildren(
+            [
+                createElement("input", { type: "text", name: "name", value: collectionName }),
+                createElement("input", { type: "hidden", name: "id", value: idCollection }),
+                createElement("button", { type: "submit" })
+                    .appendChildren("ok")])
+
+    collectionNameElement.replaceWith(form);
+    return form
+};
