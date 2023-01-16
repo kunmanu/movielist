@@ -63,6 +63,6 @@ if (!empty($_POST)) {
     }
 }
 
-$script =  includeJavascript(['main', "ajax"]);
+$script =  includeJavascript(['main']);
 $template = 'signup';
 include "../templates/base.phtml";

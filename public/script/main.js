@@ -1,28 +1,23 @@
-import {createElement} from "./lib/utilities.js";
-import {ajaxEditMovie} from "./lib/ajax.js";
+
 import {createEditMovieForm, createEditCollectionForm} from "./lib/dom.js";
-import {editMovieEvent} from "./lib/event.js";
+import {deleteCollectionEvent} from "./lib/event.js";
+
+
 
 console.log('main.js');
 
 
 
-//////////DELETE LIST
+//////////DELETE COLLECTION
 
 let deleteCollectionBtn = document.querySelectorAll('.deleteCollection-btn')
+
+if (deleteCollectionBtn){
 deleteCollectionBtn.forEach(btn => {
-    btn.addEventListener('click',  async () => {
-
-        let ajaxUrl = btn.dataset.ajax
-        let response = await fetch(ajaxUrl);
-        let data = await response.json();
-
-        if (data.success === true) {
-            document.querySelector(`.collection-${data.id}`).remove();
-        }
-
-    });
+    btn.addEventListener('click',  () => {deleteCollectionEvent(btn)});
 });
+
+}
 
 /////DELETE MOVIE FROM LIST
 
@@ -73,7 +68,7 @@ updateCollectionButtons.forEach((btn) => {
 let deleteMovieButtons = document.querySelectorAll(".deleteMovie-btn")
 
 deleteMovieButtons.forEach((btn)=>{
-    btn.addEventListener('click',async (e) => {
+    btn.addEventListener('click',async () => {
         let ajaxUrl = btn.dataset.ajax
         console.log(ajaxUrl)
         let response = await fetch(ajaxUrl);

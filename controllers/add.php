@@ -12,6 +12,6 @@ $collectionModel = new CollectionModel();
 $collections = $collectionModel->getAllCollectionsFromUser($user);
 
 
-$script = includeJavascript(['main', "ajax"]);
+$script = includeJavascript(['main']);
 $template = 'add_collection_&_movie';
 include '../templates/base.phtml';

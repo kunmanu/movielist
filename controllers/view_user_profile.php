@@ -11,7 +11,7 @@ $user = $model ->getUserById($_SESSION['user']['id']);
 
 dump($user);
 
-$script =  includeJavascript(['main', "ajax"]);
+$script =  includeJavascript(['main']);
 $template = 'user_profile';
 include '../templates/base.phtml';
 

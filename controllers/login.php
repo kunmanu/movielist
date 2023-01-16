@@ -31,6 +31,6 @@ if (!empty($_POST)) {
     $error = 'Identifiants incorrects';
 }
 
-$script =  includeJavascript(['main', "ajax"]);
+$script =  includeJavascript(['main']);
 $template = 'login';
 include "../templates/base.phtml";

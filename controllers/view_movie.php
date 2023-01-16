@@ -12,7 +12,7 @@ if (!$movie){
     exit;
 }
 
-$script = includeJavascript(['main', 'ajax']);
+$script = includeJavascript(['main']);
 
 $template = "movie";
 include '../templates/base.phtml';

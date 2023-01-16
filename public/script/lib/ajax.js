@@ -1,5 +1,19 @@
 
 
+export function ajaxDeleteCollection(ajaxUrl){
+
+     return fetch(ajaxUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success === true) {
+                return data;
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
 export function ajaxEditMovie(ajaxUrl, newName){
 
     let params = new URLSearchParams();

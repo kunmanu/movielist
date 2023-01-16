@@ -1,16 +1,18 @@
 import {createElement} from "./utilities.js";
-
 import {editMovieEvent, editCollectionEvent} from "./event.js";
 
+
+
+export const deleteCollectionDom = (data) => {
+    document.querySelector(`.collection-${data.id}`).remove()
+};
+
 export const editCollectionDom = (form, data) => {
-
     console.log(data)
-
     let h3 = createElement('h3', {id : `collection-${data.idCollection}`}).appendChildren(data.name)
 
     form.replaceWith(h3);
 }
-
 
 export const editMovieDom = (form, idMovie, newName) => {
     let p = createElement("p",{id:`movie${idMovie}`}).appendChildren(newName);
@@ -18,11 +20,7 @@ export const editMovieDom = (form, idMovie, newName) => {
 
 };
 
-
-
-
-
-export let createEditMovieForm = (btn) => {
+export const createEditMovieForm = (btn) => {
 
     let idMovie = btn.dataset.idmovie;
     let movieTitleElement = document.getElementById(`movie${idMovie}`);
@@ -47,8 +45,7 @@ export let createEditMovieForm = (btn) => {
     return form
 };
 
-
-export let createEditCollectionForm = (btn) => {
+export const createEditCollectionForm = (btn) => {
     let idCollection = btn.dataset.idcollection;
     let ajaxUrl = btn.dataset.ajax;
     let collectionNameElement = document.querySelector(`.collection-${idCollection} h3`)

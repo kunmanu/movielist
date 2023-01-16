@@ -16,7 +16,7 @@ $collection = $collectionModel->getOneCollection($idCollection);
 $movies = $collectionModel->getMoviesFromCollection($idCollection);
 
 
-$script =  includeJavascript(['main', "ajax"]);
+$script =  includeJavascript(['main']);
 $template = 'collection';
 include '../templates/base.phtml';
 

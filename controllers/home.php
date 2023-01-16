@@ -10,7 +10,7 @@ if (!isConnected()){
 
 
 
-$script =  includeJavascript(['main', "ajax"]);
+$script =  includeJavascript(['main']);
 
 $template = 'home';
 include '../templates/base.phtml';

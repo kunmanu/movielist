@@ -14,6 +14,6 @@ if (!isConnected()){
 
 //    dump($collections);
 
-    $script =  includeJavascript(['main', "ajax"]);
+    $script =  includeJavascript(['main']);
     $template = 'all_user_collections';
     include '../templates/base.phtml';
