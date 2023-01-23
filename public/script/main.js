@@ -8,8 +8,6 @@ import {
         deleteMovieFromCollectionEvent
 } from "./lib/event.js";
 
-
-
 console.log('main.js');
 
 ////////EDIT MOVIE
@@ -25,9 +23,11 @@ if (editMovieButtons) {
 
 ///////EDIT LIST
 let updateCollectionButtons = document.querySelectorAll(".editCollection-btn")
-updateCollectionButtons.forEach((btn) => {
-    btn.addEventListener("click", () => createEditCollectionForm(btn));
-});
+if (updateCollectionButtons){
+    updateCollectionButtons.forEach((btn) => {
+        btn.addEventListener("click", () => createEditCollectionForm(btn));
+    });
+}
 
 
 //////////DELETE COLLECTION

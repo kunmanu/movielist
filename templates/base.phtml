@@ -7,6 +7,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>🎬 movietheque</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <script src="https://kit.fontawesome.com/0f005014e4.js" crossorigin="anonymous"></script>
     <?php if (isset ($script)):?>
         <?= $script;?>
     <?php endif;?>
@@ -16,16 +18,42 @@
 <body>
 
 
-    <nav class="siteNav">
-        <a href="<?=buildUrl('home');?>">home</a>
-        <a href="<?=buildUrl('all_collection');?>">all collection</a>
-        <a href="<?=buildUrl('signup');?>">sign up</a>
-        <a href="<?=buildUrl('login');?>">login</a>
-        <a href="<?=buildUrl('logout');?>">logout</a>
-        <a href="<?=buildUrl('all_collection_from_user');?>">all user collections</a>
-        <a href="<?=buildUrl('user_profile');?>">user profile</a>
-        <a href="<?=buildUrl('add');?>">add page</a>
-    </nav>
+<nav class="siteNav">
+    <ul class="siteNav-list">
+        <li class="siteNav-item">
+            <a href="<?=buildUrl('home');?>" class="siteNav-link">
+                <i class="fa-solid fa-circle siteNav-icon"></i>home
+            </a>
+        </li>
+        <li class="siteNav-item">
+            <a href="<?=buildUrl('all_collection');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>all collection</a>
+        </li>
+        <li class="siteNav-item">
+            <a href="<?=buildUrl('signup');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>sign up</a>
+        </li>
+        <li class="siteNav-item">
+
+            <a href="<?=buildUrl('login');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>login</a>
+        </li>
+        <li class="siteNav-item">
+            <a href="<?=buildUrl('logout');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>logout</a>
+        </li>
+        <li class="siteNav-item">
+            <a href="<?=buildUrl('all_collection_from_user');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>all user collections</a>
+        </li>
+        <li class="siteNav-item">
+            <a href="<?=buildUrl('user_profile');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>user profile</a>
+        </li>
+        <li class="siteNav-item">
+            <a href="<?=buildUrl('add');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>add page</a>
+        </li>
+    </ul>
+</nav>
+
+
+
+<p>heelo</p>
+
 
 
     <?php if (isset($template)) {

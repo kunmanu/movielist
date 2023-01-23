@@ -1,21 +1,24 @@
-<table>
-    <tr>
-        <th colspan="2" >user</th>
-        <th>action</th>
-    </tr>
-    <tr>
-        <th>Name</th>
-        <td><?= $user['pseudonym']?></td>
-        <td>
-            <button>Edit pseudo</button>
-        </td>
-    </tr>
-
-    <tr>
-        <th>mail</th>
-        <td><?= $user['email']  ?></td>
-        <td>
-            <button>Edit mail</button>
-        </td>
-    </tr>
-</table>
+<div class="user-info">
+    <table>
+        <tr>
+            <th>Pseudonym</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Created At</th>
+        </tr>
+        <tr>
+            <td>
+                <p><?= $user['pseudonym'] ?></p>
+            </td>
+            <td>
+                <p><?= $user['email'] ?></p>
+            </td>
+            <td>
+                <p><?= $user['role'] ?></p>
+            </td>
+            <td>
+                <p><?= $user['createdAt'] ?></p>
+            </td>
+        </tr>
+    </table>
+</div>

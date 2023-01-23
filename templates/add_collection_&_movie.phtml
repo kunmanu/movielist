@@ -13,7 +13,7 @@
         </fieldset>
     </form>
 
-    <form action="<?= buildUrl('add_movie')?>" method="post" >
+    <form action="<?= buildUrl('add_movie')?>" method="post" enctype="multipart/form-data" >
         <fieldset>
 
             <label for="movieTitle">Movie:</label><br>
@@ -29,7 +29,7 @@
             <textarea name="movieSummary" id="movieSummary"></textarea><br>
 
             <label for="movieImg" >Add a poster :</label><br>
-            <input type="file" name="movieImg" id="movieImg"></input><br>
+            <input type="file" name="movieImg" id="movieImg"><br>
 
             <input type="checkbox" id="movieIsFavorite" name="movieIsFavorite" value="1" >
             <label for="movieIsFavorite">Add to favorites</label><br>

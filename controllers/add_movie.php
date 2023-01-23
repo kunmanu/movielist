@@ -1,5 +1,6 @@
 <?php
 require_once '../autoload.php';
+require_once '../app/config.php';
 
 $userId = $_SESSION['user']['id'];
 
@@ -17,6 +18,19 @@ if (!empty($_POST)) {
     $poster = "";
 
 
+
+    $upload = $_FILES["movieImg"];
+    $tempFile = $upload["tmp_name"];
+    $originalFileName = pathinfo($upload["name"], PATHINFO_FILENAME);
+    $fileExtension = pathinfo($upload["name"], PATHINFO_EXTENSION);
+
+    $finalFileName = $originalFileName . '_' . uniqid() . '.' . $fileExtension;
+    $targetFile = MOVIE_POSTER_PATH . $finalFileName;
+
+    move_uploaded_file($tempFile, $targetFile);
+
+
+
     $movieModel = new MovieModel();
 
     $movieModel->addMovieIntoCollection(
@@ -24,7 +38,7 @@ if (!empty($_POST)) {
         $collectionId,
         $userId,
         $summary,
-        $poster,
+        $finalFileName,
         $releaseYear,
         $internetRating,
         $userRating,
