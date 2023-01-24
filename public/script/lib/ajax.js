@@ -76,3 +76,27 @@ export  function ajaxEditCollection(ajaxUrl, newName) {
         });
 
 }
+
+export function ajaxAddCollection (ajaxUrl, title, description, isFav) {
+
+    let params = new URLSearchParams();
+    params.append("collection_name", title);
+    params.append("collection_description", description);
+    params.append("collection_isFavorite",isFav );
+
+
+    let request = ajaxUrl + `&${params.toString()}`;
+
+    console.log(request)
+    return fetch(request)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success === true) {
+                return data;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+}

@@ -16,3 +16,15 @@ export function createElement(tag, attributes = {}, events = {}) {
     });
     return element;
 }
+
+export function buildUrl(path, params) {
+    let searchParams = new URLSearchParams();
+
+    Object.entries(params).forEach(([key, value]) => {
+        searchParams.append(key, value);
+    });
+
+    const baseUrl = 'index.php?page=';
+    const url = baseUrl + path  + `&${searchParams.toString()}`
+    return url
+    }

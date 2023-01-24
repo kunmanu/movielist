@@ -20,41 +20,51 @@
 
 <nav class="siteNav">
     <ul class="siteNav-list">
-        <li class="siteNav-item">
-            <a href="<?=buildUrl('home');?>" class="siteNav-link">
-                <i class="fa-solid fa-circle siteNav-icon"></i>home
-            </a>
-        </li>
-        <li class="siteNav-item">
-            <a href="<?=buildUrl('all_collection');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>all collection</a>
-        </li>
-        <li class="siteNav-item">
-            <a href="<?=buildUrl('signup');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>sign up</a>
-        </li>
-        <li class="siteNav-item">
 
-            <a href="<?=buildUrl('login');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>login</a>
-        </li>
-        <li class="siteNav-item">
-            <a href="<?=buildUrl('logout');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>logout</a>
-        </li>
-        <li class="siteNav-item">
-            <a href="<?=buildUrl('all_collection_from_user');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>all user collections</a>
-        </li>
-        <li class="siteNav-item">
-            <a href="<?=buildUrl('user_profile');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>user profile</a>
-        </li>
-        <li class="siteNav-item">
-            <a href="<?=buildUrl('add');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>add page</a>
-        </li>
+        <?php if (isConnected()): ?>
+            <li class="siteNav-item">
+                <a href="<?=buildUrl('home');?>" class="siteNav-link">
+                    <i class="fa-solid fa-circle siteNav-icon"></i>Home
+                </a>
+            </li>
+            <li class="siteNav-item">
+                <a href="<?=buildUrl('all_collection_from_user');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>Collections</a>
+            </li>
+            <li class="siteNav-item">
+                <a href="<?=buildUrl('user_profile');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>Profile</a>
+            </li>
+            <li class="siteNav-item">
+                <a href="<?=buildUrl('logout');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>Logout</a>
+            </li>
+        <?php endif; ?>
+        <?php if (isConnected() && isAdmin()): ?>
+
+        <?php endif; ?>
+
+
+        <?php if (!isConnected()): ?>
+            <li class="siteNav-item">
+                <a href="<?=buildUrl('signup');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>sign up</a>
+            </li>
+            <li class="siteNav-item">
+                <a href="<?=buildUrl('login');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>login</a>
+            </li>
+
+        <?php endif; ?>
+
+
+<!--        <li class="siteNav-item">-->
+<!--            <a href="--><?php //=buildUrl('all_collection');?><!--" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>all collection</a>-->
+<!--        </li>-->
+<!--        <li class="siteNav-item">-->
+<!--            <a href="--><?php //=buildUrl('add');?><!--" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>add page</a>-->
+<!--        </li>-->
     </ul>
 </nav>
 
 
 
-<p>heelo</p>
-
-
+<div class="background"></div>
 
     <?php if (isset($template)) {
         include '../templates/' . $template . '.phtml';

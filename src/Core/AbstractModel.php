@@ -1,11 +1,8 @@
 <?php
-//namespace MyProject\Core;
+
 
 include_once "database.php";
-/**
- * Classe abstraite qui sera parente des classes de modèles
- * Elle permet de mutualiser la propriété $db qui stocke l'objet Database
- */
+
 abstract class AbstractModel {
 
     protected Database $db;

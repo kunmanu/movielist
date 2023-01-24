@@ -1,14 +1,14 @@
-<form action="<?php  buildUrl('home')?>" method="POST">
+<form action="<?php  buildUrl('home')?>" method="POST" class="formLogin">
     <?php if (isset($error)): ?>
-        <p class="error"><?=htmlspecialchars($error);?></p>
+        <p class="formLogin-error"><?=htmlspecialchars($error);?></p>
     <?php endif; ?>
     <div>
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email" value="<?=htmlspecialchars($email);?>">
+        <label for="email" class="formLogin-label">Email</label>
+        <input type="text" id="email" name="email" value="<?=htmlspecialchars($email);?>" class="formLogin-input">
     </div>
     <div>
-        <label for="password">Mot de passe</label>
-        <input type="password" id="password" name="password">
+        <label for="password" class="formLogin-label">Mot de passe</label>
+        <input type="password" id="password" name="password" class="formLogin-input">
     </div>
-    <input type="submit" value="Connexion">
+    <input type="submit" value="Connexion" class="formLogin-submit">
 </form>

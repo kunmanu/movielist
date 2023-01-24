@@ -1,6 +1,6 @@
 import {
     createEditMovieForm,
-    createEditCollectionForm
+    createEditCollectionForm, createAddCollectionForm
 } from "./lib/dom.js";
 import {
         deleteCollectionEvent,
@@ -52,8 +52,6 @@ if (deleteMovieFromCollectionBtn) {
 
 
 
-
-
 ////////DELETE MOVIE
 
 let deleteMovieButtons = document.querySelectorAll(".deleteMovie-btn")
@@ -64,5 +62,16 @@ if (deleteMovieButtons){
             btn.addEventListener('click',async () =>deleteMovieEvent(btn));
         }
     )}
+
+}
+
+///////ADD COLLECTION
+
+let addCollectionBtn =  document.querySelectorAll(".addCollection-btn")
+
+if (addCollectionBtn) {
+    addCollectionBtn.forEach((btn)=>{
+        btn.addEventListener('click', () => createAddCollectionForm(btn))
+    })
 
 }

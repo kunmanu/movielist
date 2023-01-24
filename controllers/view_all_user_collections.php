@@ -6,13 +6,13 @@ if (!isConnected()){
 
 
 
-
     $user = $_SESSION['user']['id'];
 
     $model = new CollectionModel();
     $collections = $model->getAllCollectionWithMoviesFromUser($user);
 
-//    dump($collections);
+
+
 
     $script =  includeJavascript(['main']);
     $template = 'all_user_collections';

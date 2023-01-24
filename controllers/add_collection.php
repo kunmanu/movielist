@@ -4,27 +4,34 @@ require_once '../autoload.php';
 $errors = [];
 $user = $_SESSION['user']['id'];
 
-if (!empty($_POST)) {
-    var_dump($_POST['collection']);
-    $title = strip_tags(trim($_POST['collectionTitle']));
-    $description = strip_tags(trim($_POST['collectionDescription']));
-    $isFavorite = strip_tags(trim($_POST['collectionIsFavorite']));
+$data = $_GET;
 
-
-
-    if (empty($errors)) {
-        $collectionModel = new CollectionModel();
-        $collectionModel->createCollection($title, $user, $isFavorite, $description);
-    }
-
-    header('Location: ' . buildUrl('all_collection_from_user'));
-    exit;
+$title = strip_tags(trim($data['collection_name']));
+$description = strip_tags(trim($data['collection_description']));
+$isFavorite = 0;
+if (isset($data['collection_isFavorite'])){
+    $isFavorite = strip_tags(trim($data['collection_isFavorite']));
 }
 
+try {
+    $collectionModel = new CollectionModel();
+    $newCollection = $collectionModel->createCollection($title,$user,$isFavorite,$description);
 
+    if ($newCollection) {
+        echo json_encode([
+            'success' => true,
+            'message' => 'Collection created successfully',
+            'collection'=> $newCollection,
+        ]);
+    } else {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => 'Error ading collection']);
+    }
+    exit;
 
-/*TODO
-add collection in ajax
-
-
-*/
+} catch (Exception $e) {
+    error_log('Error editing collection: ' . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    exit;
+}

@@ -3,19 +3,20 @@ import {
         editCollectionDom,
         deleteCollectionDom,
         deleteMovieFromCollectionDom,
-        deleteMovieDom
+        deleteMovieDom, AddCollectionDom,
 } from "./dom.js";
 import {
         ajaxDeleteCollection,
         ajaxEditCollection,
         ajaxEditMovie,
         ajaxDeleteMovieFromCollection,
-        ajaxDeleteMovie
+        ajaxDeleteMovie,
+        ajaxAddCollection
 } from "./ajax.js";
 
 
 
-export  const deleteMovieEvent = async (btn) => {
+export const deleteMovieEvent = async (btn) => {
         let ajaxUrl = btn.dataset.ajax
 
         try {
@@ -46,6 +47,7 @@ export const deleteMovieFromCollectionEvent = async (btn) =>{
 }
 
 export const deleteCollectionEvent = async (btn) => {
+        console.log(btn)
         let ajaxUrl = btn.dataset.ajax
         try {
                 let data = await ajaxDeleteCollection(ajaxUrl);
@@ -93,4 +95,29 @@ export const editMovieEvent = async (form) => {
         }
 };
 
+
+
+
+
+export const addCollectionEvent = async (form) => {
+        let ajaxUrl = form.dataset.ajax;
+        let title = form.collectionTitle.value;
+        let description = form.collectionDescription.value
+        let isFav = form.collectionIsFavorite.value
+
+        console.log(ajaxUrl, title, description, isFav)
+
+        try {
+                let data = await ajaxAddCollection(ajaxUrl, title, description, isFav);
+
+                if (data) {
+                        console.log(data.collection)
+                        AddCollectionDom(form, data.collection);
+                }
+        } catch (error) {
+                console.log(error)
+
+        }
+
+}
 

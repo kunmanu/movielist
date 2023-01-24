@@ -12,6 +12,10 @@ class Database {
         }
     }
 
+    public function getPDO(){
+        return self::$pdo;
+    }
+
     /**
      * Création d'une connexion PDO à la base de données
      */

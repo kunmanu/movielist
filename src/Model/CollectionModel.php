@@ -25,8 +25,6 @@ class CollectionModel extends AbstractModel {
         return $this->db->getAllResults($sql, [$userId]);
     }
 
-
-
     function getMoviesFromCollection($idCollection): bool|array
     {
         $sql = SqlConstants::COLLECTION_SQL_GET_MOVIES_FROM_COLLECTION;
@@ -51,20 +49,36 @@ class CollectionModel extends AbstractModel {
     function createCollection(
         string $title,
         string $user,
-        $isFavorite = null,
-        $description = null
-    ) {
+               $isFavorite = null,
+               $description = null
+    ): array
+    {
         $sql = SqlConstants::COLLECTIONS_SQL_ADD_COLLECTION;
-        $this->db->executeQuery(
-            $sql,
-            [
-                $title,
-                $user,
-                $isFavorite,
-                $description
-            ]
-        );
+        try {
+            $this->db->executeQuery(
+                $sql,
+                [
+                    $title,
+                    $user,
+                    $isFavorite,
+                    $description
+                ]
+            );
+
+
+            $insertId = $this->db->getPDO()->lastInsertId();
+            $insert =  $this->getOneCollection($insertId);
+            $movies = $this -> getMoviesFromCollection($insertId);
+            $insert['movies'] = $movies;
+            return $insert;
+        } catch (\Exception $e) {
+            // log the error message
+            dump($e->getMessage());
+
+            return [] ;
+        }
     }
+
 
 
 
