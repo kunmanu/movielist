@@ -3,15 +3,11 @@
 
 
 <div class="layout">
-    <aside>
+    <aside class="layout-aside">
         <button
             class="addCollection-btn"
             data-ajax="<?=buildUrl('add_collection')?>"
-
-
-        >
-            Create a new collection
-
+        >Create a new collection
         </button>
 
 
@@ -42,6 +38,7 @@
                         <?= $collection['title'] ?>
                     </h3>
                     <p><?= $collection['userText'] ?></p>
+
 
                     <?php if (count($collection['movies'])>0) : ?>
                         <p> Contain <?= count($collection['movies']); ?> movies</p>

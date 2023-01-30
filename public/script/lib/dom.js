@@ -3,8 +3,7 @@ import {
     editMovieEvent,
     editCollectionEvent,
     addCollectionEvent,
-    deleteMovieEvent,
-    deleteCollectionEvent
+    deleteCollectionEvent, addMovieEvent
 } from "./event.js";
 
 export const deleteMovieDom = (data) => {
@@ -17,7 +16,6 @@ export const deleteMovieDom = (data) => {
 export const deleteMovieFromCollectionDom = (data) => document.querySelector(`.movie${data.idMovie}-collection${data.idCollection}`).remove();
 
 export const deleteCollectionDom = (data) => document.querySelector(`.collection-${data.id}`).remove()
-
 
 export const editCollectionDom = (form, data) => {
     console.log(data)
@@ -123,7 +121,6 @@ container.insertBefore(form, container.firstChild)
 }
 
 
-
 export const AddCollectionDom = (form, collection) => {
     console.log(form)
 
@@ -184,3 +181,210 @@ export const AddCollectionDom = (form, collection) => {
     form.replaceWith(collectionContainer)
 
 };
+
+export const createAddMovieForm = (btn) => {
+    let container = document.querySelector('.movieCardsContainer')
+    let idCollection = btn.dataset.collection
+    let form = createElement(
+        'form',
+        {
+            class : 'movieCardsContainer-movieCard',
+            enctype :'multipart/form-data',
+            'data-ajax' : btn.dataset.ajax,
+        },
+        {'submit' : (e)=> {
+                e.preventDefault();
+                addMovieEvent(form);}}
+
+            ).appendChildren(
+                [
+                createElement(
+                    'input',
+                    {
+                        type : 'text',
+                        name : 'movieTitle',
+                        id : 'movieTitle',
+                        placeholder : "Movie Title" }),
+                createElement(
+                    'input',
+                    {
+                        type : 'number',
+                        name : 'releaseYear',
+                        id : 'releaseYear',
+                        placeholder : "Release year"}),
+                createElement(
+                    'input',
+                    {
+                        type : 'number',
+                        name : 'movieRating',
+                        id : 'movieRating',
+                        placeholder : 'Movie rating'
+                    }),
+                createElement(
+                    'textarea',
+                    {
+                        name : 'movieSummary',
+                        id : 'movieSummary',
+                        placeholder : 'movie Summary'
+                    }),
+                createElement(
+                    'input',
+                    {
+                        type : 'file',
+                        name : 'movieImg',
+                        id : 'movieImg',
+                        placeholder : 'Movie poster'
+                    }),
+                createElement(
+                    'input',
+                    {
+                        type : 'checkbox',
+                        value : 1,
+                        name : 'movieIsFavorite',
+                        id : 'movieIsFavorite',
+                    }),
+                createElement(
+                    'input',
+                    {
+                        type : 'hidden',
+                        value : idCollection,
+                        name : 'idCollection',
+                        id : 'idCollection',
+                    }),
+
+                createElement(
+                    'button',
+                    {
+                        type : 'submit',
+                    }).appendChildren('Add a new movie'),
+
+            ])
+
+
+    container.insertBefore(form, container.firstChild)
+
+}
+
+export const addMovieDom = (form, movie) => {
+
+    console.log(form)
+    console.log(movie)
+
+
+    const movieContainer = createElement(
+        'div',
+        {class:`movieCardsContainer-movieCard movie-${movie.idMovie}`});
+
+
+    const img = createElement(
+        'img',
+        {
+            class : "movieCardsContainer-movieCard-moviePoster",
+            src : '../public/img/movie_posters/'+movie.poster
+        }
+    )
+
+    const movieDetails = createElement(
+        'div',
+        {
+            class : 'movieCardsContainer-movieCard-movieDetails'
+        }
+    )
+
+
+    const title = createElement(
+        'h2',
+        {id : `movie${movie.idMovie}` }).appendChildren(`${movie.title}`);
+
+    const summary = createElement(
+        'p',
+    ).appendChildren(`${movie.summary}`)
+
+
+    const movieMetaContainer =  createElement('div',{class : "movieCardsContainer-movieCard-movieMeta"})
+    const userRating = createElement('span', {}).appendChildren(`Rating: ${movie.userRating}`);
+    const releasedDate = createElement('span', {}).appendChildren(`released in: ${movie.releaseYear}`);
+    const isFavorite = createElement('span', {}).appendChildren(`Is Favorite: ${movie.isFavorite}`);
+    const internetRating = createElement('span', {}).appendChildren(`internet rate ${movie.internetRating}`);
+    const userText = createElement('span', {}).appendChildren(`internet rate ${movie.internetRating}`);
+
+
+    movieMetaContainer.append(releasedDate,internetRating,userRating,userText,isFavorite)
+
+    // Add button to delete movie
+    // const deleteBtn = createElement(
+    //     'button',
+    //     {
+    //         'data-idMovie': movie.idMovie,
+    //         'data-ajax': buildUrl('delete_movie', {'idMovie': movie.idMovie}),
+    //         class: 'deleteMovie-btn',
+    //         type: 'button'
+    //     },
+    // ).appendChildren([createElement('i', {class: "fa-solid fa-trash"})]);
+    // movieContainer.appendChild(deleteBtn);
+    //
+    // // Add button to edit movie
+    // const editBtn = createElement(
+    //     'button',
+    //     {
+    //         'data-idMovie': movie.idMovie,
+    //         'data-ajax': buildUrl('edit_movie', {'idMovie': movie.idMovie}),
+    //         class: 'editMovie-btn',
+    //         type: 'button'
+    //     }).appendChildren([createElement('i', {class: "fa-solid fa-pen"})])
+    // movieContainer.appendChild(editBtn);
+    //
+    // const viewBtn = createElement('a', { href: buildUrl('view_movie', { 'id': movie.idMovie }) });
+    // const viewBtnInner = createElement('button', {
+    //     'data-idMovie': movie.idMovie,
+    //     class: 'viewMovie-btn',
+    //     type: 'button'
+    // }).appendChildren('View Movie');
+    //
+    // viewBtn.appendChild(viewBtnInner);
+    // movieContainer.appendChild(viewBtn);
+    // movieContainer.appendChild(deleteBtn);
+    //
+    //
+    // deleteBtn.addEventListener('click',()=>deleteMovieEvent(deleteBtn))
+    // editBtn.addEventListener('click', ()=>createEditMovieForm(editBtn))
+    movieDetails.append(title, summary,movieMetaContainer)
+    movieContainer.append(img, movieDetails)
+    form.replaceWith(movieContainer)
+}
+
+
+export const searchTmdbDom = (data) => {
+
+    let resultContainer = document.querySelector(".resultContainer");
+    // data.forEach(movie => {
+    //     console.log(movie)
+    //     console.log(movie.title)
+    //     console.log(movie.id)
+    //     console.log(movie.poster_path)
+    //     console.log(movie.overview)
+    //     console.log(movie.release_date)
+    //     console.log(movie.vote_average)
+    // });
+    data.forEach(movie => {
+
+        const movieCard = createElement("div", { class: "movie-card" });
+        const title = createElement('h3', {}, {}).appendChildren(`${movie.title}`)
+        const overview = createElement('p', {}, {}).appendChildren(`${movie.overview}`)
+        const poster = movie.poster_path === null ?
+            createElement("img", { src: '../public/img/movie_posters/missing.jpg' }) :
+            createElement("img", { src: `https://image.tmdb.org/t/p/w300/${movie.poster_path}` });
+        const releaseDate = createElement("p" ).appendChildren(`Release date: ${movie.release_date}`);
+        const voteAverage = createElement("p", {}, ).appendChildren(`Vote average: ${movie.vote_average}`);
+        const addBtn = createElement('button').appendChildren('add to a collection')
+        movieCard.appendChildren([
+            title,
+            poster,
+            overview,
+            releaseDate,
+            voteAverage,
+            addBtn,
+        ]);
+        resultContainer.appendChild(movieCard);
+    });
+}

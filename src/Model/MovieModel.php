@@ -8,31 +8,70 @@ require_once '../lib/functions.php';
 
 class MovieModel extends AbstractModel{
 
-    function addMovie(
-        string $title,
-               $summary = null,
-               $poster = null,
-               $releaseYear = null,
-               $internetRating = null,
-               $userRating = null,
-               $userText = null,
-               $isFavorite = null,
-    ) {
-        $sql = SqlConstants::MOVIES_SQL_ADD_MOVIE;
-        $this->db->executeQuery(
-            $sql,
-            [
-                $title,
-                $summary,
-                $poster,
-                $releaseYear,
-                $internetRating,
-                $userRating,
-                $userText,
-                $isFavorite
-            ]
-        );
-    }
+//    function addMovie(
+//        string $title,
+//               $summary = null,
+//               $poster = null,
+//               $releaseYear = null,
+//               $internetRating = null,
+//               $userRating = null,
+//               $userText = null,
+//               $isFavorite = null,
+//    ) {
+//        $sql = SqlConstants::MOVIES_SQL_ADD_MOVIE;
+//        $this->db->executeQuery(
+//            $sql,
+//            [
+//                $title,
+//                $summary,
+//                $poster,
+//                $releaseYear,
+//                $internetRating,
+//                $userRating,
+//                $userText,
+//                $isFavorite
+//            ]
+//        );
+//    }
+
+
+//    public function addMovieIntoCollection(
+//        string $title,
+//        int $collectionId,
+//        int $userId,
+//        string|null $summary = null,
+//        string|null $poster = null,
+//        int|null $releaseYear = null,
+//        int|null $internetRating = null,
+//        string|null $userRating = null,
+//        string|null $userText = null,
+//        int|null $isFavorite = null
+//    ) {
+//        $sql = SqlConstants::MOVIE_COLLECTIONS_SQL_ADD_MOVIE_INTO_COLLECTION;
+//
+//        $stmt = $this->db->executeQuery(
+//            $sql,
+//            [
+//                $title,
+//                $summary,
+//                $poster,
+//                $releaseYear,
+//                $internetRating,
+//                $userRating,
+//                $userText,
+//                $isFavorite,
+//                $userId,
+//                $collectionId
+//            ]
+//        );
+//        $stmt->closeCursor();
+//        $insertId = $this->db->getPDO()->lastInsertId();
+//
+//        $insert = $this->getOneMovie($insertId);
+//        dump($insertId);
+//        dump($insert);
+//        return $insert;
+//    }
 
 
     public function addMovieIntoCollection(
@@ -47,8 +86,8 @@ class MovieModel extends AbstractModel{
         string|null $userText = null,
         int|null $isFavorite = null
     ) {
-        $sql = SqlConstants::MOVIE_COLLECTIONS_SQL_ADD_MOVIE_INTO_COLLECTION;
-
+        // Insert movie into movies table
+        $sql = SqlConstants::MOVIE_SQL_ADD_MOVIE;
         $stmt = $this->db->executeQuery(
             $sql,
             [
@@ -61,16 +100,18 @@ class MovieModel extends AbstractModel{
                 $userText,
                 $isFavorite,
                 $userId,
-                $collectionId
             ]
         );
+        $insertId = $this->db->getPDO()->lastInsertId();
 
-        $errors = $stmt->errorInfo();
-        dump($errors);
+        // Insert relationship between movie and collection into moviecollections table
+        $sql2 = SqlConstants::MOVIE_COLLECTIONS_SQL_ADD_MOVIE_COLLECTION;
+        $stmt = $this->db->executeQuery($sql2, [$insertId, $collectionId]);
 
+        //        dump($insertId);
+//        dump($insert);
+        return $this->getOneMovie($insertId);
     }
-
-
 
 
 
@@ -120,16 +161,7 @@ class MovieModel extends AbstractModel{
 
 
 
-/*    function deleteMovie(int $id)
-    {
-        // Delete records from movies_collections table that have a movie_id value that references the movie
-        $sql = SqlConstants::MOVIE_COLLECTIONS_SQL_DELETE_BY_MOVIE_ID;
-        $this->db->executeQuery($sql, [$id]);
 
-        // Delete movie from movies table
-        $sql = SqlConstants::MOVIES_SQL_DELETE_MOVIE;
-        $this->db->executeQuery($sql, [$id]);
-    }*/
 
     function deleteMovie(int $id): bool
     {

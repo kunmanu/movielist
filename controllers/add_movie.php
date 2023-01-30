@@ -1,53 +1,105 @@
 <?php
-require_once '../autoload.php';
-require_once '../app/config.php';
+//require_once '../autoload.php';
+//require_once '../app/config.php';
+//
+//$userId = $_SESSION['user']['id'];
+//
+//$errors = [];
+//
+//if (!empty($_GET)) {
+//    $title = strip_tags(trim($_GET['movieTitle']));
+//    $releaseYear = strip_tags(trim($_GET['movieYear']));
+//    $userRating = strip_tags(trim($_GET['movieRating']));
+//    $summary = strip_tags(trim($_GET['movieSummary']));
+//    $isFavorite = isset($_GET['movieIsFavorite']) ? strip_tags(trim($_POST['movieIsFavorite'])) : 0;
+//
+//    $collectionId = strip_tags(trim($_GET['movieCollection']));
+//    $internetRating = 2;
+//    $poster = "";
+//
+//
+//
+//
+//
+//
+//
+//
+//    $movieModel = new MovieModel();
+//
+//    $movieModel->addMovieIntoCollection(
+//        $title,
+//        $collectionId,
+//        $userId,
+//        $summary,
+//        $poster,
+//        $releaseYear,
+//        $internetRating,
+//        $userRating,
+//        $summary,
+//        $isFavorite,
+//    );
+//
+//    header('Location: ' . buildUrl('all_collection'));
+//}
+//
+//
+//
 
-$userId = $_SESSION['user']['id'];
+require_once '../autoload.php';
 
 $errors = [];
+$user = $_SESSION['user']['id'];
 
-if (!empty($_POST)) {
-    $title = strip_tags(trim($_POST['movieTitle']));
-    $releaseYear = strip_tags(trim($_POST['movieYear']));
-    $userRating = strip_tags(trim($_POST['movieRating']));
-    $summary = strip_tags(trim($_POST['movieSummary']));
-    $isFavorite = isset($_POST['movieIsFavorite']) ? strip_tags(trim($_POST['movieIsFavorite'])) : 0;
+$data = $_GET;
 
-    $collectionId = strip_tags(trim($_POST['movieCollection']));
-    $internetRating = 2;
-    $poster = "";
+$title = strip_tags(trim($data['movieTitle']));
+$summary = strip_tags(trim($data['movieSummary']));
+$rating = strip_tags(trim($data['movieRating']));
+$imgPath = strip_tags(trim($data['movieImg']));
+$isFavorite = 0;
 
+if (isset($data['movieIsFavorite'])) {
+   $isFavorite=  strip_tags(trim($data['movieIsFavorite']));
 
-
-    $upload = $_FILES["movieImg"];
-    $tempFile = $upload["tmp_name"];
-    $originalFileName = pathinfo($upload["name"], PATHINFO_FILENAME);
-    $fileExtension = pathinfo($upload["name"], PATHINFO_EXTENSION);
-
-    $finalFileName = $originalFileName . '_' . uniqid() . '.' . $fileExtension;
-    $targetFile = MOVIE_POSTER_PATH . $finalFileName;
-
-    move_uploaded_file($tempFile, $targetFile);
-
-
-
-    $movieModel = new MovieModel();
-
-    $movieModel->addMovieIntoCollection(
-        $title,
-        $collectionId,
-        $userId,
-        $summary,
-        $finalFileName,
-        $releaseYear,
-        $internetRating,
-        $userRating,
-        $summary,
-        $isFavorite,
-    );
-
-    header('Location: ' . buildUrl('all_collection'));
 }
 
+$idCollection = strip_tags(trim($data['idCollection']));
+$releaseYear = strip_tags(trim($data['releaseYear']));
 
+$userText = 'good movie';
 
+$internetRating = 5;
+
+try {
+    $movieModel = new MovieModel();
+    $newMovie = $movieModel->addMovieIntoCollection(
+        $title,
+        $idCollection,
+        $user,
+        $summary,
+        $imgPath,
+        $releaseYear,
+        $internetRating,
+        $rating,
+        $userText,
+        $isFavorite
+    );
+
+    if ($newMovie) {
+        echo json_encode([
+            'success' => true,
+            'message' => 'Movie added successfully',
+            'movie' => $newMovie,
+        ]);
+    } else {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => 'Error adding movie']);
+    }
+    exit;
+
+} catch (Exception $e) {
+    error_log('Error adding movie: ' . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    exit;
+}

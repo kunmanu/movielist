@@ -25,6 +25,7 @@ export function buildUrl(path, params) {
     });
 
     const baseUrl = 'index.php?page=';
-    const url = baseUrl + path  + `&${searchParams.toString()}`
-    return url
+    return baseUrl + path + `&${searchParams.toString()}`
     }
+
+

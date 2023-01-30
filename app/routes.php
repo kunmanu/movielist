@@ -17,7 +17,9 @@ $routes = [
     'view_collection' => 'view_collection.php',
     'view_movie' => 'view_movie.php',
     'user_profile' => 'view_user_profile.php',
-    'add' => 'add.php'
+    'add' => 'add.php',
+    'upload_img'=>'upload_img.php',
+    'search_page'=>'search_page.php'
 ];
 
 

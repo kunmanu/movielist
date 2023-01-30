@@ -3,7 +3,7 @@ import {
         editCollectionDom,
         deleteCollectionDom,
         deleteMovieFromCollectionDom,
-        deleteMovieDom, AddCollectionDom,
+        deleteMovieDom, AddCollectionDom, addMovieDom, searchTmdbDom,
 } from "./dom.js";
 import {
         ajaxDeleteCollection,
@@ -11,7 +11,8 @@ import {
         ajaxEditMovie,
         ajaxDeleteMovieFromCollection,
         ajaxDeleteMovie,
-        ajaxAddCollection
+        ajaxAddCollection,
+        uploadImg, ajaxAddMovie, searchTmdbAjax,
 } from "./ajax.js";
 
 
@@ -31,6 +32,7 @@ export const deleteMovieEvent = async (btn) => {
         }
 }
 
+
 export const deleteMovieFromCollectionEvent = async (btn) =>{
         let ajaxUrl = btn.dataset.ajax
 
@@ -45,6 +47,7 @@ export const deleteMovieFromCollectionEvent = async (btn) =>{
                 console.log(error);
         }
 }
+
 
 export const deleteCollectionEvent = async (btn) => {
         console.log(btn)
@@ -96,9 +99,6 @@ export const editMovieEvent = async (form) => {
 };
 
 
-
-
-
 export const addCollectionEvent = async (form) => {
         let ajaxUrl = form.dataset.ajax;
         let title = form.collectionTitle.value;
@@ -121,3 +121,42 @@ export const addCollectionEvent = async (form) => {
 
 }
 
+
+
+export const addMovieEvent = async (form) => {
+        let ajaxUrl = form.dataset.ajax;
+        let title = form.movieTitle.value;
+        let summary = form.movieSummary.value;
+        let rating = form.movieRating.value;
+        let poster = form.movieImg.files[0];
+        let releaseYear = form.releaseYear.value
+        let isFavorite = form.movieIsFavorite.value;
+        let idCollection = form.idCollection.value;
+
+        //Upload the image to the server
+        let imgPath = await uploadImg(poster);
+        // use the imgPath to make a GET request to the server
+        try {
+                let data = await ajaxAddMovie(ajaxUrl,
+                    title,
+                    summary,
+                    rating,
+                    imgPath,
+                    releaseYear,
+                    isFavorite,
+                    idCollection);
+                if (data) {
+                        console.log(data.movie);
+                        addMovieDom(form, data.movie);
+                }
+        } catch (error) {
+                console.log(error);
+        }
+};
+
+
+export const searchTmdbEvent = async (form) => {
+        let searchInput = form.searchInput.value
+        let data = await searchTmdbAjax(searchInput)
+        if (data){searchTmdbDom(data)}
+}

@@ -1,11 +1,11 @@
 import {
     createEditMovieForm,
-    createEditCollectionForm, createAddCollectionForm
+    createEditCollectionForm, createAddCollectionForm, createAddMovieForm
 } from "./lib/dom.js";
 import {
-        deleteCollectionEvent,
-        deleteMovieEvent,
-        deleteMovieFromCollectionEvent
+    deleteCollectionEvent,
+    deleteMovieEvent,
+    deleteMovieFromCollectionEvent, searchTmdbEvent,
 } from "./lib/event.js";
 
 console.log('main.js');
@@ -73,5 +73,36 @@ if (addCollectionBtn) {
     addCollectionBtn.forEach((btn)=>{
         btn.addEventListener('click', () => createAddCollectionForm(btn))
     })
+
+}
+
+
+//////ADD MOVIE
+
+let addMovieBtn = document.querySelectorAll('.addMovie-btn')
+
+if (addMovieBtn) {
+
+    addMovieBtn.forEach((btn=>{
+        btn.addEventListener('click',()=> createAddMovieForm(btn))
+    }))
+}
+
+
+
+////// API
+/////search TMDB
+
+let movieSearchForm = document.querySelector('.movieSearchForm')
+
+if (movieSearchForm){
+
+    movieSearchForm.addEventListener("submit",  (e)=> {
+        e.preventDefault()
+
+        searchTmdbEvent(movieSearchForm)
+        }
+    )
+
 
 }

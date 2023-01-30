@@ -1,0 +1,14 @@
+<?php
+include_once '../app/config.php';
+include_once '../autoload.php';
+
+
+
+if (!empty($_POST["searchString"])){
+    $searchString = $_POST["searchString"];
+    $request = BASE_URL . API_KEY . "&language=en-US&query=". $searchString."&page=1&include_adult=false";
+    $data = file_get_contents($request);
+    $json = json_decode($data, true);
+    $results = $json['results'];
+    echo json_encode($results);
+}
