@@ -1,7 +1,4 @@
 <?php
-//use MyProject\Core;
-//use MyProject\Model\UserModel;
-//use MyProject\Lib;
 
 include_once "../lib/functions.php";
 include_once "../autoload.php";

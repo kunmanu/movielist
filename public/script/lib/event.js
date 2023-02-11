@@ -156,7 +156,11 @@ export const addMovieEvent = async (form) => {
 
 
 export const searchTmdbEvent = async (form) => {
+
+        document.querySelector(".resultContainer").innerHTML=""
+
         let searchInput = form.searchInput.value
+
         let data = await searchTmdbAjax(searchInput)
         if (data){searchTmdbDom(data)}
 }

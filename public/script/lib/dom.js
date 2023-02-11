@@ -25,7 +25,7 @@ export const editCollectionDom = (form, data) => {
 }
 
 export const editMovieDom = (form, idMovie, newName) => {
-    let p = createElement("p",{id:`movie${idMovie}`}).appendChildren(newName);
+    let p = createElement("h2",{id:`movie${idMovie}`}).appendChildren(newName);
     form.replaceWith(p);
 
 };
@@ -368,22 +368,64 @@ export const searchTmdbDom = (data) => {
     // });
     data.forEach(movie => {
 
-        const movieCard = createElement("div", { class: "movie-card" });
-        const title = createElement('h3', {}, {}).appendChildren(`${movie.title}`)
-        const overview = createElement('p', {}, {}).appendChildren(`${movie.overview}`)
-        const poster = movie.poster_path === null ?
-            createElement("img", { src: '../public/img/movie_posters/missing.jpg' }) :
-            createElement("img", { src: `https://image.tmdb.org/t/p/w300/${movie.poster_path}` });
-        const releaseDate = createElement("p" ).appendChildren(`Release date: ${movie.release_date}`);
-        const voteAverage = createElement("p", {}, ).appendChildren(`Vote average: ${movie.vote_average}`);
-        const addBtn = createElement('button').appendChildren('add to a collection')
-        movieCard.appendChildren([
+        const movieCard = createElement(
+            "div", {
+                class: "resultContainer-movieCard"
+            });
+
+        const title = createElement(
+            'h3', {
+                class: "resultContainer-movieCard-movieDetails-title"
+            }, {}
+        ).appendChildren(`${movie.title}`)
+
+        const overview = createElement(
+            'p', {
+            class: "resultContainer-movieCard-movieDetails-overview"
+        }, {}).appendChildren(`${movie.overview.substring(0,150)}...`)
+
+        const poster = createElement('div', {class :" resultContainer-movieCard-poster" })
+
+        const posterImg = movie.poster_path === null ?
+             createElement("img", {
+                src: '../public/img/movie_posters/missing.jpg',
+            }) :
+            createElement("img", {
+                src: `https://image.tmdb.org/t/p/w300/${movie.poster_path}`,
+            });
+
+        const releaseDate = createElement("p", {
+            class: "resultContainer-movieCard-movieDetails-releaseDate"
+        }).appendChildren(`Release date: ${movie.release_date}`);
+
+        const voteAverage = createElement("p", {
+            class: "resultContainer-movieCard-movieDetails-voteAverage"
+        }, ).appendChildren(`Vote average: ${movie.vote_average}`);
+
+        const addBtn = createElement('button', {
+            class: "resultContainer-movieCard-movieDetails-addBtn",
+            'data-movieId': movie.id
+        }).appendChildren('add to a collection')
+
+
+        const movieDetails = createElement("div", {
+            class: "resultContainer-movieCard-movieDetails"
+        })
+
+
+        poster.appendChildren([posterImg])
+        movieDetails.appendChildren([
             title,
-            poster,
             overview,
             releaseDate,
             voteAverage,
-            addBtn,
+            addBtn
+        ])
+        movieCard.appendChildren([
+
+            poster,
+            movieDetails,
+
         ]);
         resultContainer.appendChild(movieCard);
     });

@@ -1,6 +1,8 @@
 import {
     createEditMovieForm,
-    createEditCollectionForm, createAddCollectionForm, createAddMovieForm
+    createEditCollectionForm,
+    createAddCollectionForm,
+    createAddMovieForm,
 } from "./lib/dom.js";
 import {
     deleteCollectionEvent,
@@ -103,6 +105,10 @@ if (movieSearchForm){
         searchTmdbEvent(movieSearchForm)
         }
     )
-
-
 }
+
+
+/////Get One Movie
+
+
+let addMovieBtnApi = document.querySelectorAll('.resultContainer-movieCard -movieDetails-addBtn')

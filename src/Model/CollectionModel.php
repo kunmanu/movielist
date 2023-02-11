@@ -177,7 +177,7 @@ class CollectionModel extends AbstractModel {
 
 
 
-    public function getOneCollection(string $idCollection) {
+    public function getOneCollection(string $idCollection) { 
 
         $sql = SqlConstants::COLLECTIONS_SQL_GET_COLLECTION_BY_ID;
 
