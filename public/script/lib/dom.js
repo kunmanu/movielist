@@ -3,7 +3,7 @@ import {
     editMovieEvent,
     editCollectionEvent,
     addCollectionEvent,
-    deleteCollectionEvent, addMovieEvent
+    deleteCollectionEvent, addMovieEvent, addFromTmdbEvent
 } from "./event.js";
 
 export const deleteMovieDom = (data) => {
@@ -412,6 +412,10 @@ export const searchTmdbDom = (data) => {
             class: "resultContainer-movieCard-movieDetails"
         })
 
+
+        addBtn.addEventListener('click', ()=>{
+            addFromTmdbEvent(addBtn)
+        })
 
         poster.appendChildren([posterImg])
         movieDetails.appendChildren([

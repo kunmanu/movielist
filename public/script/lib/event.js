@@ -14,6 +14,7 @@ import {
         ajaxAddCollection,
         uploadImg, ajaxAddMovie, searchTmdbAjax,
 } from "./ajax.js";
+import {buildUrl} from "./utilities.js";
 
 
 
@@ -146,7 +147,7 @@ export const addMovieEvent = async (form) => {
                     isFavorite,
                     idCollection);
                 if (data) {
-                        console.log(data.movie);
+
                         addMovieDom(form, data.movie);
                 }
         } catch (error) {
@@ -163,4 +164,56 @@ export const searchTmdbEvent = async (form) => {
 
         let data = await searchTmdbAjax(searchInput)
         if (data){searchTmdbDom(data)}
+}
+
+
+
+export const addFromTmdbEvent =  async (addBtn) => {
+        const overlay = document.getElementById('overlay');
+        const movieImg = document.querySelector('.movie-img');
+        const movieTitle = document.getElementById('movie-title');
+        const movieDescription = document.getElementById('movie-description');
+        const movieRating = document.getElementById('movie-rating');
+        const movieGenre = document.getElementById('movie-genre');
+        const closeOverlay = document.getElementById('close-overlay');
+        const addToCollection = document.getElementById('add-to-collection');
+
+
+
+
+        try {
+                // Use fetch to retrieve the movie information from the server
+                const response = await fetch(buildUrl('tmdb_get_one_movie', {'id': addBtn.dataset.movieid}));
+                const movie = await response.json();
+
+                // Update the overlay with the movie information
+                console.log(movie)
+                movieTitle.innerHTML = movie.title;
+                movieDescription.innerHTML = movie.overview;
+                movieImg.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+                movieRating.innerHTML = `rating : ${movie.vote_average}`
+
+                let genreNames = '';
+
+                movie.genres.forEach(genre => {
+                        genreNames += genre.name + ', ';
+                });
+
+                        // Remove the trailing comma and space
+                genreNames = genreNames.slice(0, -2);
+
+                        // Update the movie-genre element with the genre names
+                movieGenre.innerHTML = genreNames;
+
+
+                // Show the overlay
+                overlay.style.display = 'block';
+        } catch (error) {
+                console.error(error);
+        }
+
+
+        // Show the overlay
+        overlay.style.display = 'block';
+
 }

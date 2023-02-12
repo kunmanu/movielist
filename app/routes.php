@@ -19,7 +19,8 @@ $routes = [
     'user_profile' => 'view_user_profile.php',
     'add' => 'add.php',
     'upload_img'=>'upload_img.php',
-    'search_page'=>'search_page.php'
+    'search_page'=>'search_page.php',
+    'tmdb_get_one_movie'=>'tmdb_get_one_movie.php'
 ];
 
 

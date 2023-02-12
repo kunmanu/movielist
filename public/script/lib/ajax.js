@@ -186,3 +186,6 @@ export function searchTmdbAjax(searchString){
             console.log(error);
         });
 }
+
+
+

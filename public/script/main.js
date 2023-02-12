@@ -9,6 +9,7 @@ import {
     deleteMovieEvent,
     deleteMovieFromCollectionEvent, searchTmdbEvent,
 } from "./lib/event.js";
+import {buildUrl} from "./lib/utilities.js";
 
 console.log('main.js');
 
@@ -111,4 +112,53 @@ if (movieSearchForm){
 /////Get One Movie
 
 
-let addMovieBtnApi = document.querySelectorAll('.resultContainer-movieCard -movieDetails-addBtn')
+//done when the card are build in dom.js
+
+// let addMovieBtnApi = document.querySelectorAll('.resultContainer-movieCard-movieDetails-addBtn')
+//
+// if (addMovieBtnApi) {
+//     addMovieBtnApi.forEach((btn=>{
+//        btn.addEventListener('click',()=>{
+//            console.log('hey')
+//        })
+//
+//     }))}
+
+
+// Get references to the HTML elements
+const buttons = document.querySelectorAll('.resultContainer-movieCard-movieDetails-addBtn');
+const overlay = document.getElementById('overlay');
+const closeOverlay = document.getElementById('close-overlay');
+const info = document.querySelector('.movie-info')
+
+
+// Add click event listeners to the "Add to Collection" buttons
+buttons.forEach(button => {
+    button.addEventListener('click', async () => {
+
+        info.innerHTML = button.dataset.movieid
+        try {
+            // Use fetch to retrieve the movie information from the server
+            const response = await fetch(buildUrl('tmdb_get_one_movie', {'id': button.dataset.movieid}));
+            const movie = await response.json();
+
+            // Update the overlay with the movie information
+            movieTitle.innerHTML = movie.title;
+            movieDescription.innerHTML = movie.description;
+
+            // Show the overlay
+            overlay.style.display = 'block';
+        } catch (error) {
+            console.error(error);
+        }
+
+
+        // Show the overlay
+        overlay.style.display = 'block';
+
+    })})
+
+// Add a click event listener to the close button
+closeOverlay.addEventListener('click', () => {
+    overlay.style.display = 'none';
+});

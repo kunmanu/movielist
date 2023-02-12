@@ -6,7 +6,7 @@ include_once '../autoload.php';
 
 if (!empty($_POST["searchString"])){
     $searchString = $_POST["searchString"];
-    $request = BASE_URL_SEARCH . API_KEY . "&language=en-US&query=". $searchString."&page=1&include_adult=false";
+    $request = BASE_URL_SEARCH . API_KEY . "&language=en-US&query=". $searchString."&page=1";
     $data = file_get_contents($request);
     $json = json_decode($data, true);
 
@@ -15,7 +15,7 @@ if (!empty($_POST["searchString"])){
     if ($json['total_pages']>=1){
 
         for ($x = 1; $x <= $json['total_pages']; $x++) {
-            $request = BASE_URL_SEARCH . API_KEY . "&language=en-US&query=". $searchString."&page=".$x."&include_adult=false";
+            $request = BASE_URL_SEARCH . API_KEY . "&language=en-US&query=". $searchString."&page=".$x;
             $data = file_get_contents($request);
             $json = json_decode($data, true);
             $allPages = array_merge($allPages, $json['results']);
