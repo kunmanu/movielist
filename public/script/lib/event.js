@@ -1,21 +1,26 @@
 import {
-        editMovieDom,
-        editCollectionDom,
+        AddCollectionDom,
+        addMovieDom,
         deleteCollectionDom,
+        deleteMovieDom,
         deleteMovieFromCollectionDom,
-        deleteMovieDom, AddCollectionDom, addMovieDom, searchTmdbDom,
+        editCollectionDom,
+        editMovieDom,
+        searchTmdbDom, showOverlay, updateOverlayWithMovieInfo,
 } from "./dom.js";
 import {
+        ajaxAddCollection,
+        ajaxAddMovie,
         ajaxDeleteCollection,
+        ajaxDeleteMovie,
+        ajaxDeleteMovieFromCollection,
         ajaxEditCollection,
         ajaxEditMovie,
-        ajaxDeleteMovieFromCollection,
-        ajaxDeleteMovie,
-        ajaxAddCollection,
-        uploadImg, ajaxAddMovie, searchTmdbAjax,
+        fetchMovieData,
+        searchTmdbAjax,
+        uploadImg,
 } from "./ajax.js";
 import {buildUrl} from "./utilities.js";
-
 
 
 export const deleteMovieEvent = async (btn) => {
@@ -128,26 +133,39 @@ export const addMovieEvent = async (form) => {
         let ajaxUrl = form.dataset.ajax;
         let title = form.movieTitle.value;
         let summary = form.movieSummary.value;
-        let rating = form.movieRating.value;
+        let rating = form.userRating.value;
         let poster = form.movieImg.files[0];
         let releaseYear = form.releaseYear.value
-        let isFavorite = form.movieIsFavorite.value;
         let idCollection = form.idCollection.value;
+        let genres = form.movieGenre.value
+
+        // console.log("ajaxUrl: ", ajaxUrl);
+        // console.log("title: ", title);
+        // console.log("summary: ", summary);
+        // console.log("rating: ", rating);
+        // console.log("poster: ", poster);
+        // console.log("releaseYear: ", releaseYear);
+        // console.log("idCollection: ", idCollection);
+        // console.log("genres: ", genres);
+
+
 
         //Upload the image to the server
         let imgPath = await uploadImg(poster);
         // use the imgPath to make a GET request to the server
         try {
-                let data = await ajaxAddMovie(ajaxUrl,
+                let data = await ajaxAddMovie(
+                    ajaxUrl,
                     title,
                     summary,
                     rating,
                     imgPath,
                     releaseYear,
-                    isFavorite,
+                    genres,
                     idCollection);
+                console.log(data)
                 if (data) {
-
+                        document.querySelector('.addMovieOverlay').style.display = 'none';
                         addMovieDom(form, data.movie);
                 }
         } catch (error) {
@@ -168,52 +186,8 @@ export const searchTmdbEvent = async (form) => {
 
 
 
-export const addFromTmdbEvent =  async (addBtn) => {
-        const overlay = document.getElementById('overlay');
-        const movieImg = document.querySelector('.movie-img');
-        const movieTitle = document.getElementById('movie-title');
-        const movieDescription = document.getElementById('movie-description');
-        const movieRating = document.getElementById('movie-rating');
-        const movieGenre = document.getElementById('movie-genre');
-        const closeOverlay = document.getElementById('close-overlay');
-        const addToCollection = document.getElementById('add-to-collection');
 
 
 
 
-        try {
-                // Use fetch to retrieve the movie information from the server
-                const response = await fetch(buildUrl('tmdb_get_one_movie', {'id': addBtn.dataset.movieid}));
-                const movie = await response.json();
 
-                // Update the overlay with the movie information
-                console.log(movie)
-                movieTitle.innerHTML = movie.title;
-                movieDescription.innerHTML = movie.overview;
-                movieImg.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-                movieRating.innerHTML = `rating : ${movie.vote_average}`
-
-                let genreNames = '';
-
-                movie.genres.forEach(genre => {
-                        genreNames += genre.name + ', ';
-                });
-
-                        // Remove the trailing comma and space
-                genreNames = genreNames.slice(0, -2);
-
-                        // Update the movie-genre element with the genre names
-                movieGenre.innerHTML = genreNames;
-
-
-                // Show the overlay
-                overlay.style.display = 'block';
-        } catch (error) {
-                console.error(error);
-        }
-
-
-        // Show the overlay
-        overlay.style.display = 'block';
-
-}

@@ -80,13 +80,12 @@ class MovieModel extends AbstractModel{
         int $userId,
         string|null $summary = null,
         string|null $poster = null,
-        int|null $releaseYear = null,
-        int|null $internetRating = null,
+        string|null $releaseYear = null,
+        string|null $genres = null,
+        string|null $internetRating = null,
         string|null $userRating = null,
-        string|null $userText = null,
-        int|null $isFavorite = null
     ) {
-        // Insert movie into movies table
+
         $sql = SqlConstants::MOVIE_SQL_ADD_MOVIE;
         $stmt = $this->db->executeQuery(
             $sql,
@@ -95,10 +94,9 @@ class MovieModel extends AbstractModel{
                 $summary,
                 $poster,
                 $releaseYear,
+                $genres,
                 $internetRating,
                 $userRating,
-                $userText,
-                $isFavorite,
                 $userId,
             ]
         );

@@ -2,7 +2,7 @@ import {
     createEditMovieForm,
     createEditCollectionForm,
     createAddCollectionForm,
-    createAddMovieForm,
+    createAddMovieForm, updateOverlayWithMovieInfo,
 } from "./lib/dom.js";
 import {
     deleteCollectionEvent,
@@ -10,6 +10,7 @@ import {
     deleteMovieFromCollectionEvent, searchTmdbEvent,
 } from "./lib/event.js";
 import {buildUrl} from "./lib/utilities.js";
+import {fetchMovieData} from "./lib/ajax.js";
 
 console.log('main.js');
 
@@ -82,7 +83,7 @@ if (addCollectionBtn) {
 
 //////ADD MOVIE
 
-let addMovieBtn = document.querySelectorAll('.addMovie-btn')
+let addMovieBtn = document.querySelectorAll('.addMovieForm-btn')
 
 if (addMovieBtn) {
 
@@ -90,6 +91,8 @@ if (addMovieBtn) {
         btn.addEventListener('click',()=> createAddMovieForm(btn))
     }))
 }
+
+
 
 
 
@@ -109,56 +112,51 @@ if (movieSearchForm){
 }
 
 
-/////Get One Movie
+//Add from tmdb
+
+const addMovieFromTmdbBtn = document.querySelector('.addMovieFromTmdbBtn')
+
+addMovieFromTmdbBtn.addEventListener('click',async (e) => {
+    e.preventDefault()
+    const collectionId = document.getElementById('movieCollection').value
+    const movie = await fetchMovieData(addMovieFromTmdbBtn.dataset.movieid)
+    console.log(movie)
+
+    const title = movie.title;
+    const genreNames = movie.genres.map(genre => genre.name).join(', ');
+    const releaseDate = movie.release_date;
+    const rating = movie.vote_average;
+    const overview = movie.overview;
+    const imgPath = movie.poster_path
 
 
-//done when the card are build in dom.js
 
-// let addMovieBtnApi = document.querySelectorAll('.resultContainer-movieCard-movieDetails-addBtn')
-//
-// if (addMovieBtnApi) {
-//     addMovieBtnApi.forEach((btn=>{
-//        btn.addEventListener('click',()=>{
-//            console.log('hey')
-//        })
-//
-//     }))}
+    console.log(collectionId)
+    console.log(`Title: ${title}`);
+    console.log(`Genres: ${genreNames}`);
+    console.log(`Release date: ${releaseDate}`);
+    console.log(`Rating: ${rating}`);
+    console.log(`Overview: ${overview}`);
 
 
-// Get references to the HTML elements
-const buttons = document.querySelectorAll('.resultContainer-movieCard-movieDetails-addBtn');
-const overlay = document.getElementById('overlay');
-const closeOverlay = document.getElementById('close-overlay');
-const info = document.querySelector('.movie-info')
+    const params = {
+        movieTitle: title,
+        movieSummary: overview,
+        movieRating: rating,
+        movieImg: imgPath,
+        movieGenre: genreNames,
+        idCollection: collectionId,
+        releaseYear: releaseDate
+    };
+
+    const url = buildUrl('add_movie', params);
+
+    const response = await fetch(url);
 
 
-// Add click event listeners to the "Add to Collection" buttons
-buttons.forEach(button => {
-    button.addEventListener('click', async () => {
-
-        info.innerHTML = button.dataset.movieid
-        try {
-            // Use fetch to retrieve the movie information from the server
-            const response = await fetch(buildUrl('tmdb_get_one_movie', {'id': button.dataset.movieid}));
-            const movie = await response.json();
-
-            // Update the overlay with the movie information
-            movieTitle.innerHTML = movie.title;
-            movieDescription.innerHTML = movie.description;
-
-            // Show the overlay
-            overlay.style.display = 'block';
-        } catch (error) {
-            console.error(error);
-        }
+    console.log(url, response)
 
 
-        // Show the overlay
-        overlay.style.display = 'block';
 
-    })})
 
-// Add a click event listener to the close button
-closeOverlay.addEventListener('click', () => {
-    overlay.style.display = 'none';
-});
+})

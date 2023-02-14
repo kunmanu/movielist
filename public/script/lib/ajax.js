@@ -1,3 +1,4 @@
+import {buildUrl} from "./utilities.js";
 
 
 export function ajaxDeleteMovie(ajaxUrl){
@@ -109,7 +110,7 @@ export const ajaxAddMovie = async (
     rating,
     imgPath,
     releaseYear,
-    isFavorite,
+    movieGenre,
     idCollection
 ) => {
     try {
@@ -118,12 +119,15 @@ export const ajaxAddMovie = async (
         params.append("movieSummary", summary);
         params.append("movieRating", rating);
         params.append("movieImg", imgPath);
-        params.append("movieIsFavorite", isFavorite);
+        params.append("movieGenre", movieGenre)
         params.append("idCollection", idCollection);
         params.append('releaseYear',releaseYear)
 
         let request = ajaxUrl + `&${params.toString()}`;
+
+
         console.log(request)
+
         return fetch(request)
             .then(response => response.json())
             .then(data => {
@@ -187,5 +191,8 @@ export function searchTmdbAjax(searchString){
         });
 }
 
-
+export async function fetchMovieData(movieId) {
+    const response = await fetch(buildUrl('tmdb_get_one_movie', {'id': movieId}));
+    return response.json();
+}
 

@@ -45,30 +45,110 @@
 //
 //
 
+//require_once '../autoload.php';
+//
+//$errors = [];
+//$user = $_SESSION['user']['id'];
+//
+//$data = $_GET;
+//
+//$title = strip_tags(trim($data['movieTitle']));
+//$summary = strip_tags(trim($data['movieSummary']));
+//$rating = strip_tags(trim($data['movieRating']));
+//$imgPath = strip_tags(trim($data['movieImg']));
+//$isFavorite = 0;
+//
+//if (isset($data['movieIsFavorite'])) {
+//   $isFavorite=  strip_tags(trim($data['movieIsFavorite']));
+//
+//}
+//
+//$idCollection = strip_tags(trim($data['idCollection']));
+//$releaseYear = strip_tags(trim($data['releaseYear']));
+//
+//$userText = 'good movie';
+//
+//$internetRating = 5;
+//
+//try {
+//    $movieModel = new MovieModel();
+//    $newMovie = $movieModel->addMovieIntoCollection(
+//        $title,
+//        $idCollection,
+//        $user,
+//        $summary,
+//        $imgPath,
+//        $releaseYear,
+//        $internetRating,
+//        $rating,
+//        $userText,
+//        $isFavorite
+//    );
+//
+//    if ($newMovie) {
+//        echo json_encode([
+//            'success' => true,
+//            'message' => 'Movie added successfully',
+//            'movie' => $newMovie,
+//        ]);
+//    } else {
+//        http_response_code(500);
+//        echo json_encode(['success' => false, 'message' => 'Error adding movie']);
+//    }
+//    exit;
+//
+//} catch (Exception $e) {
+//    error_log('Error adding movie: ' . $e->getMessage());
+//    http_response_code(500);
+//    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+//    exit;
+//}
+
+
 require_once '../autoload.php';
 
 $errors = [];
-$user = $_SESSION['user']['id'];
+$user = $_SESSION['user']['id'] ;
 
 $data = $_GET;
 
-$title = strip_tags(trim($data['movieTitle']));
-$summary = strip_tags(trim($data['movieSummary']));
-$rating = strip_tags(trim($data['movieRating']));
-$imgPath = strip_tags(trim($data['movieImg']));
-$isFavorite = 0;
+$title = isset($data['movieTitle']) ? strip_tags(trim($data['movieTitle'])) : null;
+$summary = isset($data['movieSummary']) ? strip_tags(trim($data['movieSummary'])) : null;
+$rating = isset($data['movieRating']) ? strip_tags(trim($data['movieRating'])) : null;
+$imgPath = isset($data['movieImg']) ? strip_tags(trim($data['movieImg'])) : null;
+$idCollection = isset($data['idCollection']) ? strip_tags(trim($data['idCollection'])) : null;
+$releaseYear = isset($data['releaseYear']) ? strip_tags(trim($data['releaseYear'])) : null;
+$internetRating = isset($data['internetRating']) ? strip_tags(trim($data['internetRating'])) : null;
+$genres = isset($data['movieGenre']) ? strip_tags(trim($data['movieGenre'])) : null;
 
-if (isset($data['movieIsFavorite'])) {
-   $isFavorite=  strip_tags(trim($data['movieIsFavorite']));
 
-}
+//echo "title: ";
+//dump($title);
+//
+//echo "Collection: ";
+//dump($idCollection);
+//
+//echo "User: ";
+//dump($user);
+//
+//echo "summary: ";
+//dump($summary);
+//
+//echo "imgPath: ";
+//dump($imgPath);
+//
+//echo "releaseYear: ";
+//dump($releaseYear);
+//
+//echo "internetRating: ";
+//dump($internetRating);
+//
+//echo "rating: ";
+//dump($rating);
+//
+//echo "genres: ";
+//dump($genres);
 
-$idCollection = strip_tags(trim($data['idCollection']));
-$releaseYear = strip_tags(trim($data['releaseYear']));
-
-$userText = 'good movie';
-
-$internetRating = 5;
 
 try {
     $movieModel = new MovieModel();
@@ -79,10 +159,9 @@ try {
         $summary,
         $imgPath,
         $releaseYear,
+        $genres,
         $internetRating,
         $rating,
-        $userText,
-        $isFavorite
     );
 
     if ($newMovie) {

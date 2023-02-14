@@ -1,27 +1,28 @@
 
 <main class="layout2">
     <form class="movieSearchForm" action="" method="post">
-        <label for="searchInput" > Search : </label>
-        <input name="searchInput" id="searchInput" class="apiSearchInput" type="text">
+        <label for="searchInput">Search: </label>
+        <input name="searchInput" id="searchInput" class="apiSearchInput" type="text" value="Inception">
         <input class="submitBtn" type="submit" value="Search">
     </form>
 
 
+
     <div class="resultContainer">
-        <div class="resultContainer-movieCard">
-            <div class="resultContainer-movieCard-poster">
-                <img src="https://image.tmdb.org/t/p/w300//gh4cZbhZxyTbgxQPxD0dOudNPTn.jpg">
-            </div>
-            <div class="resultContainer-movieCard-movieDetails">
-                <h3 class="resultContainer-movieCard-movieDetails-title">Spider-Man</h3>
-                <p class="resultContainer-movieCard-movieDetails-overview">
-                    After being bitten by a genetically altered spider at Oscorp, nerdy but endearing high school student Peter Parker is endowed with amazing powers to become the superhero known as Spider-Man.
-                </p>
-                <p class="resultContainer-movieCard-movieDetails-releaseDate">Release date: 2002-05-01</p>
-                <p class="resultContainer-movieCard-movieDetails-voteAverage">Vote average: 7.3</p>
-                <button data-movieid ='557' class="resultContainer-movieCard-movieDetails-addBtn">add to a collection</button>
-            </div>
-        </div>
+<!--        <div class="resultContainer-movieCard">-->
+<!--            <div class="resultContainer-movieCard-poster">-->
+<!--                <img src="https://image.tmdb.org/t/p/w300//gh4cZbhZxyTbgxQPxD0dOudNPTn.jpg">-->
+<!--            </div>-->
+<!--            <div class="resultContainer-movieCard-movieDetails">-->
+<!--                <h3 class="resultContainer-movieCard-movieDetails-title">Spider-Man</h3>-->
+<!--                <p class="resultContainer-movieCard-movieDetails-overview">-->
+<!--                    After being bitten by a genetically altered spider at Oscorp, nerdy but endearing high school student Peter Parker is endowed with amazing powers to become the superhero known as Spider-Man.-->
+<!--                </p>-->
+<!--                <p class="resultContainer-movieCard-movieDetails-releaseDate">Release date: 2002-05-01</p>-->
+<!--                <p class="resultContainer-movieCard-movieDetails-voteAverage">Vote average: 7.3</p>-->
+<!--                <button data-movieid ='557' class="resultContainer-movieCard-movieDetails-addBtn">add to a collection</button>-->
+<!--            </div>-->
+<!--        </div>-->
 
 
 
@@ -223,10 +224,20 @@
             <div class="movie-info">
                 <h2 id="movie-title"></h2>
                 <p id="movie-description"></p>
+                <p id="movie-release-date"></p>
                 <p id="movie-rating"></p>
                 <p id="movie-genre"></p>
                 <button id="close-overlay">Close</button>
-                <button id="add to collection">Close</button>
+                <form action="">
+                    <label for="movieCollection"></label>
+                    <select name="movieCollection" id="movieCollection" name="movieCollection">
+                        <?php foreach ($collections as $collection) :?>
+                            <option value= "<?=htmlspecialchars($collection['idCollection']);?>" ><?=htmlspecialchars($collection['title']);?></option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <input class="addMovieFromTmdbBtn" type="submit" value="Submit">
+                </form>
             </div>
         </div>
     </div>

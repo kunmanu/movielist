@@ -25,7 +25,17 @@ class SqlConstants
 
     const COLLECTION_SQL_DELETE_COLLECTIONLESS_MOVIES = 'DELETE m FROM Movies m LEFT JOIN MovieCollections mc ON m.idMovie = mc.movieId WHERE mc.movieId IS NULL';
 
-    const MOVIE_SQL_ADD_MOVIE = "INSERT INTO movies (title, summary, poster, releaseYear, internetRating, userRating, userText, isFavorite, createdAt, userId) VALUES (?, COALESCE(?, summary), COALESCE(?, poster), COALESCE(?, releaseYear), COALESCE(?, internetRating), COALESCE(?, userRating), COALESCE(?, userText), COALESCE(?, isFavorite), NOW(), ?)";
+//    const MOVIE_SQL_ADD_MOVIE =
+//        "INSERT INTO movies (title, summary, poster, releaseYear, genres, internetRating, userRating, createdAt, userId)
+//    VALUES (?, COALESCE(?, summary), COALESCE(?, poster), COALESCE(?, releaseYear),
+//            ?, COALESCE(?, internetRating), COALESCE(?, userRating), NOW(), ?)";
+
+    const MOVIE_SQL_ADD_MOVIE =
+        "INSERT INTO movies (title, summary, poster, releaseYear, genres, internetRating, userRating, createdAt, userId) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
+
+
+
 
 
 
@@ -36,11 +46,12 @@ class SqlConstants
         'SELECT * FROM Collections';
     const COLLECTIONS_SQL_ADD_COLLECTION =
         'INSERT INTO Collections (title, userId, isFavorite, createdAt, userText) VALUES (?,?,?,NOW(),?)';
-    const COLLECTIONS_SQL_UPDATE_COLLECTION = 'UPDATE Collections SET title = ?, userId = COALESCE(?, userId), isFavorite = COALESCE(?, isFavorite), createdAt = COALESCE(NOW(), createdAt), userText = COALESCE(?, userText) WHERE idCollection = ?';
+    const COLLECTIONS_SQL_UPDATE_COLLECTION = 'UPDATE Collections SET title = ?, userId = COALESCE(?, userId), isFavorite = COALESCE(?, isFavorite), createdAt = COALESCE(NOW(), createdAt), userText = COALESCE(?, userText) WHERE idCollection = ? ';
 
-    const COLLECTION_SQL_GET_MOVIES_FROM_COLLECTION = 'SELECT * FROM Movies m INNER JOIN MovieCollections mc ON m.idMovie = mc.movieId WHERE mc.collectionId = ?';
+    const COLLECTION_SQL_GET_MOVIES_FROM_COLLECTION = 'SELECT * FROM Movies m INNER JOIN MovieCollections mc ON m.idMovie = mc.movieId WHERE mc.collectionId = ? ORDER BY createdAt DESC';
 
-    const COLLECTION_SQL_GET_ALL_COLLECTIONS_FROM_USER = 'SELECT * FROM Collections WHERE userId = ?';
+//    const COLLECTION_SQL_GET_ALL_COLLECTIONS_FROM_USER = 'SELECT * FROM Collections WHERE userId = ?';
+    const COLLECTION_SQL_GET_ALL_COLLECTIONS_FROM_USER = 'SELECT * FROM Collections WHERE userId = ? ORDER BY createdAt DESC';
 
 
     const COLLECTIONS_SQL_DELETE_COLLECTION = 'DELETE FROM Collections WHERE idCollection = ?';
