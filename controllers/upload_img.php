@@ -7,11 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die();
 }
 
-// Verify that the uploaded file is an image
-//if (!isset($_FILES['poster']) || !preg_match('/^image\/.*$/', $_FILES['poster']['type'])) {
-//    http_response_code(400);
-//    die();
-//}
 
 
 $upload = $_FILES["poster"];

@@ -1,13 +1,14 @@
 import {
-    createEditMovieForm,
-    createEditCollectionForm,
     createAddCollectionForm,
-    createAddMovieForm, updateOverlayWithMovieInfo,
+    createAddMovieForm,
+    createEditCollectionForm,
+    createEditMovieForm,
 } from "./lib/dom.js";
 import {
     deleteCollectionEvent,
     deleteMovieEvent,
-    deleteMovieFromCollectionEvent, searchTmdbEvent,
+    deleteMovieFromCollectionEvent,
+    searchTmdbEvent,
 } from "./lib/event.js";
 import {buildUrl} from "./lib/utilities.js";
 import {fetchMovieData} from "./lib/ajax.js";
@@ -116,6 +117,12 @@ if (movieSearchForm){
 
 const addMovieFromTmdbBtn = document.querySelector('.addMovieFromTmdbBtn')
 
+async function downloadImg(imgPath) {
+    const response = await fetch(`../controllers/download_img.php?img=${imgPath}`);
+    return await response.text();
+}
+
+
 addMovieFromTmdbBtn.addEventListener('click',async (e) => {
     e.preventDefault()
     const collectionId = document.getElementById('movieCollection').value
@@ -129,6 +136,8 @@ addMovieFromTmdbBtn.addEventListener('click',async (e) => {
     const overview = movie.overview;
     const imgPath = movie.poster_path
 
+    console.log(imgPath)
+
 
 
     console.log(collectionId)
@@ -139,11 +148,13 @@ addMovieFromTmdbBtn.addEventListener('click',async (e) => {
     console.log(`Overview: ${overview}`);
 
 
+    const imgLocalPath = await downloadImg(imgPath)
+
     const params = {
         movieTitle: title,
         movieSummary: overview,
         movieRating: rating,
-        movieImg: imgPath,
+        movieImg: imgLocalPath,
         movieGenre: genreNames,
         idCollection: collectionId,
         releaseYear: releaseDate

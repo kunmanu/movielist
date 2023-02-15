@@ -19,7 +19,7 @@ CREATE TABLE Movies (
     idMovie INTEGER PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
     summary varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    poster varchar(255) COLLATE utf8mb4_unicode_ci,
+    poster varchar(1000) COLLATE utf8mb4_unicode_ci,
     releaseYear varchar(255) COLLATE utf8mb4_unicode_ci,
     genres VARCHAR(255),
     internetRating TINYINT unsigned,
