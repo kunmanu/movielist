@@ -5,7 +5,7 @@ include_once '../autoload.php';
 
 
 if (!empty($_POST["searchString"])){
-    $searchString = $_POST["searchString"];
+    $searchString = urlencode($_POST["searchString"]);
     $request = BASE_URL_SEARCH . API_KEY . "&language=en-US&query=". $searchString."&page=1";
     $data = file_get_contents($request);
     $json = json_decode($data, true);

@@ -42,10 +42,15 @@ export function ajaxDeleteCollection(ajaxUrl){
         });
 }
 
-export function ajaxEditMovie(ajaxUrl, newName){
-
+export const ajaxEditMovie = (ajaxUrl, movie_name, summary, poster, releaseYear,  userRating, idMovie) => {
     let params = new URLSearchParams();
-    params.append("movie_name", newName);
+    params.append('movie_name', movie_name);
+    params.append('summary', summary);
+    params.append('poster', poster);
+    params.append('releaseYear', releaseYear);
+    // params.append('internetRating', internetRating);
+    params.append('userRating', userRating);
+    params.append('idMovie', idMovie);
 
     let request = ajaxUrl + `&${params.toString()}`;
     return fetch(request)
@@ -58,7 +63,8 @@ export function ajaxEditMovie(ajaxUrl, newName){
         .catch(error => {
             console.log(error);
         });
-}
+};
+
 
 export  function ajaxEditCollection(ajaxUrl, newName) {
 
@@ -84,7 +90,7 @@ export function ajaxAddCollection (ajaxUrl, title, description, isFav) {
     let params = new URLSearchParams();
     params.append("collection_name", title);
     params.append("collection_description", description);
-    params.append("collection_isFavorite",isFav );
+    // params.append("collection_isFavorite",isFav );
 
 
     let request = ajaxUrl + `&${params.toString()}`;
@@ -191,8 +197,12 @@ export function searchTmdbAjax(searchString){
         });
 }
 
-export async function fetchMovieData(movieId) {
+export async function fetchMovieDataFromTmdb(movieId) {
     const response = await fetch(buildUrl('tmdb_get_one_movie', {'id': movieId}));
     return response.json();
 }
 
+export async function fetchMovieDataLocal(movieId) {
+    const response = await fetch(buildUrl('get_one_movie', {'id': movieId}));
+    return response.json();
+}

@@ -13,20 +13,7 @@
 
 
 
-<!--        <form action="--><?php //= buildUrl('add_collection')?><!--" method="post" >-->
-<!--            <fieldset>-->
-<!--                <legend>Add List:</legend>-->
-<!--                <label for="collectionTitle">Title</label><br>-->
-<!--                <input type="text" id="collectionTitle" name="collectionTitle"><br>-->
-<!---->
-<!--                <label for="collectionDescription" >Description</label><br>-->
-<!--                <textarea name="collectionDescription" id="collectionDescription"></textarea><br>-->
-<!---->
-<!--                <input type="checkbox" id="collectionIsFavorite" name="collectionIsFavorite" value="1" >-->
-<!--                <label for="collectionIsFavorite">Add to favorites</label><br>-->
-<!--                <button type="submit">Add</button>-->
-<!--            </fieldset>-->
-<!--        </form>-->
+
     </aside>
 
 
@@ -70,74 +57,3 @@
 
 </div>
 
-<!--<div class="allCollection">-->
-<!--    --><?php //if (isset($collections)): ?>
-<!--        --><?php //foreach ($collections as $collection): ?>
-<!---->
-<!--            <table class="--><?php //='collection-'.$collection['idCollection'] ?><!--">-->
-<!--                <tr>-->
-<!--                    <th colspan="3">-->
-<!--                        <h3 id="collection---><?php //=$collection['idCollection'] ?><!--">--><?php //= $collection['title'] ?><!--</h3>-->
-<!--                        <button data-idCollection="--><?php //=$collection['idCollection'] ?><!--"-->
-<!--                                data-ajax="--><?php //=buildUrl('delete_collection', ['idCollection' => $collection['idCollection']]);?><!--"-->
-<!--                                class="deleteCollection-btn" type="button">-->
-<!--                            delete collection-->
-<!--                        </button>-->
-<!--                        <button data-idCollection="--><?php //=$collection['idCollection'] ?><!--"-->
-<!--                                data-ajax="--><?php //=buildUrl('edit_collection', ['idCollection' => $collection['idCollection']]);?><!--"-->
-<!--                                class="editCollection-btn" type="button">-->
-<!--                            edit collection-->
-<!--                        </button>-->
-<!--                        <a href="--><?php //=buildUrl('view_collection', ['id' => $collection['idCollection']]);?><!--">-->
-<!--                            <button data-idCollection="--><?php //=$collection['idCollection'] ?><!--" class="viewCollection-btn" type="button">-->
-<!--                                view collection-->
-<!--                            </button>-->
-<!--                        </a>-->
-<!---->
-<!--                    </th>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <th>Movie</th>-->
-<!--                    <th>Action</th>-->
-<!--                </tr>-->
-<!--                --><?php //if (isset($collection['movies']) && !empty($collection['movies'])): ?>
-<!--                    --><?php //foreach ($collection['movies'] as $movie): ?>
-<!--                        <tr class="--><?php //='movie'.$movie['idMovie'].'-'.'collection'.$collection['idCollection'] ?><!--">-->
-<!--                            <td>-->
-<!--                                <p id="--><?php //="movie".$movie['idMovie'] ?><!--">--><?php //= $movie['title'] ?><!--</p>-->
-<!--                            </td>-->
-<!--                            <td>-->
-<!--                                <button data-idCollection="--><?php //=$collection['idCollection'] ?><!--"-->
-<!--                                        data-idMovie="--><?php //=$movie['idMovie'] ?><!--"-->
-<!--                                        data-ajax="--><?php //=buildUrl('delete_movie_from_collection', ['idCollection' => $collection['idCollection'],'idMovie' => $movie['idMovie'] ]);?><!--"-->
-<!--                                        class="deleteMovieFromCollection-btn"-->
-<!--                                        type="button">-->
-<!--                                    remove from collection-->
-<!--                                </button>-->
-<!--                                <button data-idCollection="--><?php //=$collection['idCollection'] ?><!--"-->
-<!--                                        data-idMovie="--><?php //=$movie['idMovie'] ?><!--"-->
-<!--                                        data-ajax="--><?php //=buildUrl('edit_movie', ['idMovie' => $movie['idMovie']]);?><!--"-->
-<!--                                        class="editMovie-btn" type="button">-->
-<!--                                    edit movie-->
-<!--                                </button>-->
-<!--                                <a href="--><?php //=buildUrl('view_movie', ['id' => $movie['idMovie']]);?><!--">-->
-<!--                                    <button data-idCollection="--><?php //=$collection['idCollection'] ?><!--"-->
-<!--                                            data-idMovie="--><?php //=$movie['idMovie'] ?><!--"-->
-<!--                                            class="viewMovie-btn" type="button">-->
-<!--                                        view movie-->
-<!--                                    </button>-->
-<!--                                </a>-->
-<!--                            </td>-->
-<!--                        </tr>-->
-<!--                    --><?php //endforeach ?>
-<!--                --><?php //else: ?>
-<!--                    <tr>-->
-<!--                        <td colspan="3">-->
-<!--                            <p>No movies in this collection</p>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                --><?php //endif ?>
-<!--            </table>-->
-<!--        --><?php //endforeach ?>
-<!--    --><?php //endif; ?>
-<!--</div>-->

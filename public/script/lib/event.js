@@ -16,7 +16,7 @@ import {
         ajaxDeleteMovieFromCollection,
         ajaxEditCollection,
         ajaxEditMovie,
-        fetchMovieData,
+        fetchMovieDataFromTmdb,
         searchTmdbAjax,
         uploadImg,
 } from "./ajax.js";
@@ -109,12 +109,12 @@ export const addCollectionEvent = async (form) => {
         let ajaxUrl = form.dataset.ajax;
         let title = form.collectionTitle.value;
         let description = form.collectionDescription.value
-        let isFav = form.collectionIsFavorite.value
+        // let isFav = form.collectionIsFavorite.value
 
-        console.log(ajaxUrl, title, description, isFav)
+        console.log(ajaxUrl, title, description)
 
         try {
-                let data = await ajaxAddCollection(ajaxUrl, title, description, isFav);
+                let data = await ajaxAddCollection(ajaxUrl, title, description);
 
                 if (data) {
                         console.log(data.collection)

@@ -5,7 +5,7 @@ import {
     addCollectionEvent,
     deleteCollectionEvent, addMovieEvent,
 } from "./event.js";
-import {fetchMovieData} from "./ajax.js";
+import {ajaxEditMovie, fetchMovieDataFromTmdb, fetchMovieDataLocal} from "./ajax.js";
 
 export const deleteMovieDom = (data) => {
     console.log(data)
@@ -31,29 +31,52 @@ export const editMovieDom = (form, idMovie, newName) => {
 
 };
 
-export const createEditMovieForm = (btn) => {
+export const displayEditMovieForm = async (btn) => {
+    let ajaxUrl = btn.dataset.ajax
+    console.log(btn.dataset.idmovie);
+    document.querySelector('.editMovieOverlay').style.display = 'block';
+    let closeEditMovieOverlay = document.querySelector('.closeEditMovieOverlay');
 
-    let idMovie = btn.dataset.idmovie;
-    let movieTitleElement = document.getElementById(`movie${idMovie}`);
-    let movieTitle = document.getElementById(`movie${idMovie}`).textContent;
-    let ajaxUrl = btn.dataset.ajax;
+    closeEditMovieOverlay.addEventListener('click', () => {
+        document.querySelector('.editMovieOverlay').style.display = 'none';
+    });
 
-    let form = createElement(
-        "form",
-        {class : "update-movie-form", "data-ajax" : ajaxUrl},
-        {"submit" : (e) => {e.preventDefault();editMovieEvent(form);}})
-        .appendChildren(
-            [
-                createElement('input', {type :"text", name : "title", value : movieTitle}),
-                createElement("input", {type :"hidden", name : "id", value : idMovie}),
-                createElement('button', {type : 'submit',})
-                    .appendChildren("ok")
-            ]);
+    let movieInfo = await fetchMovieDataLocal(btn.dataset.idmovie);
+
+    document.querySelector('#movie_name').value = movieInfo.title;
+    document.querySelector('#summary').value = movieInfo.summary;
+    document.querySelector('#currentPoster').src = `../public/img/movie_posters/${movieInfo.poster}`;
+    document.querySelector('#releaseYear').value = movieInfo.releaseYear;
+    // document.querySelector('#internetRating').value = movieInfo.internetRating;
+    document.querySelector('#userRating').value = movieInfo.userRating;
+    document.querySelector('#idMovie').value = btn.dataset.idmovie
+    console.log(movieInfo.poster)
 
 
-    movieTitleElement.replaceWith(form);
-    return form
+    document.querySelector('.editMovieBtn').addEventListener('click', (event, ) => {
+        event.preventDefault();
+        console.log(movieInfo.poster)
+        let movie_name = document.querySelector('#movie_name').value;
+        let summary = document.querySelector('#summary').value;
+        let poster = document.querySelector('#poster').files[0] ? document.querySelector('#poster').files[0] : movieInfo.poster ;
+        let releaseYear = document.querySelector('#releaseYear').value;
+        // let internetRating = document.querySelector('#internetRating').value;
+        let userRating = document.querySelector('#userRating').value;
+        let idMovie = document.querySelector('#idMovie').value;
+
+        ajaxEditMovie(
+            ajaxUrl,
+            movie_name,
+            summary,
+            poster,
+            releaseYear,
+            // internetRating,
+            userRating,
+            idMovie
+        );
+    });
 };
+
 
 export const createEditCollectionForm = (btn) => {
     let idCollection = btn.dataset.idcollection;
@@ -102,14 +125,6 @@ export const createAddCollectionForm = (btn) => {
                         name : 'collectionDescription',
                         id : 'collectionDescription',
                         placeholder : "Collection description"}),
-                createElement(
-                    'input',
-                    {
-                        type : 'checkbox',
-                        value : 1,
-                        name : 'collectionIsFavorite',
-                        id : 'collectionIsFavorite',
-                    }),
                 createElement(
                     'button',
                     {
@@ -317,12 +332,12 @@ export const addMovieDom = (form, movie) => {
     const movieMetaContainer =  createElement('div',{class : "movieCardsContainer-movieCard-movieMeta"})
     const userRating = createElement('span', {}).appendChildren(`Rating: ${movie.userRating}`);
     const releasedDate = createElement('span', {}).appendChildren(`released in: ${movie.releaseYear}`);
-    const isFavorite = createElement('span', {}).appendChildren(`Is Favorite: ${movie.isFavorite}`);
+    // const isFavorite = createElement('span', {}).appendChildren(`Is Favorite: ${movie.isFavorite}`);
     const internetRating = createElement('span', {}).appendChildren(`internet rate ${movie.internetRating}`);
     const userText = createElement('span', {}).appendChildren(`internet rate ${movie.internetRating}`);
 
 
-    movieMetaContainer.append(releasedDate,internetRating,userRating,userText,isFavorite)
+    movieMetaContainer.append(releasedDate,internetRating,userRating,userText)
 
     movieDetails.append(title, summary,movieMetaContainer)
     movieContainer.append(img, movieDetails)
@@ -415,7 +430,7 @@ export const displayOneMovieFromTmdb = async (addBtn) => {
     const overlay = document.getElementById('overlay');
 
     try {
-        const movieData = await fetchMovieData(addBtn.dataset.movieid);
+        const movieData = await fetchMovieDataFromTmdb(addBtn.dataset.movieid);
         updateOverlayWithMovieInfo(movieData);
         showOverlay(overlay);
     } catch (error) {

@@ -122,19 +122,17 @@ class MovieModel extends AbstractModel{
 
 
     public function editMovie(
-        int $id,
-        string $title = null,
-        string $summary = null,
-        string $poster = null,
-        int $releaseYear = null,
-        int $internetRating = null,
-        int $userRating = null,
-        string $userText = null,
-        bool $isFavorite = null
+        int $idMovie,
+        string $title ,
+        string $summary ,
+        string $poster ,
+        string $releaseYear ,
+        int $userRating ,
+
     ): bool
     {
         try {
-            if (empty($id)) {
+            if (empty($idMovie)) {
                 throw new Exception("Missing movie id");
             }
             $sql = SqlConstants::MOVIES_SQL_UPDATE_MOVIE;
@@ -143,15 +141,14 @@ class MovieModel extends AbstractModel{
                 $summary,
                 $poster,
                 $releaseYear,
-                $internetRating,
+//                $internetRating,
                 $userRating,
-                $userText,
-                $isFavorite,
-                $id
+                $idMovie
             ];
             $this->db->executeQuery($sql, $params);
             return true;
         } catch (Exception $e) {
+            error_log('Error editing movie $ ' . $e->getMessage());
             return false;
         }
     }

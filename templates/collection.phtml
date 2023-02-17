@@ -19,6 +19,40 @@
 
 
     <main>
+        <div class="editMovieOverlay overlay">
+            <div class="editMovieOverlay-container">
+                <button class="closeEditMovieOverlay">Close</button>
+                <form id="edit-movie-form">
+                    <div>
+                        <label for="movie_name">Movie Title:</label>
+                        <input type="text" id="movie_name" name="movie_name" required>
+                    </div>
+                    <div>
+                        <label for="summary">Summary:</label>
+                        <textarea id="summary" name="summary"></textarea>
+                    </div>
+                    <div>
+                        <img id="currentPoster" src="" alt="Current Poster">
+                    </div>
+                    <div>
+                        <label for="poster">Poster:</label>
+                        <input type="file" id="poster" name="poster">
+                    </div>
+                    <div>
+                        <label for="releaseYear">Release Year:</label>
+                        <input type="text" id="releaseYear" name="releaseYear">
+                    </div>
+                    <div>
+                        <label for="userRating">User Rating:</label>
+                        <input type="text" id="userRating" name="userRating">
+                    </div>
+                    <input type="hidden" id="idMovie" name="idMovie">
+                    <button class="editMovieBtn" type="submit">Edit Movie</button>
+                </form>
+            </div>
+
+
+        </div>
         <div class="addMovieOverlay">
             <div class="addMovieOverlay-Container">
                 <button class="closeAddMovieOverlay">Close</button>
@@ -60,7 +94,6 @@
         <div class="movieCardsContainer">
 
             <?php foreach($movies as $movie) :?>
-<!--            <div class="--><?php //='movie'.$movie['idMovie'] ?><!--">-->
                 <div class="movieCardsContainer-movieCard  <?='movie'.$movie['idMovie'] ?>">
                     <img class="movieCardsContainer-movieCard-moviePoster"
                          src="<?= MOVIE_POSTER_PATH. $movie['poster'] ?>"
@@ -94,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-<!--            </div>-->
+
             <?php endforeach ?>
 
 

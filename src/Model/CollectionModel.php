@@ -49,7 +49,6 @@ class CollectionModel extends AbstractModel {
     function createCollection(
         string $title,
         string $user,
-               $isFavorite = null,
                $description = null
     ): array
     {
@@ -60,7 +59,6 @@ class CollectionModel extends AbstractModel {
                 [
                     $title,
                     $user,
-                    $isFavorite,
                     $description
                 ]
             );
@@ -154,7 +152,7 @@ class CollectionModel extends AbstractModel {
         string $idCollection,
         string $collectionName,
                $userId = null,
-               $isFavorite = null,
+//               $isFavorite = null,
                $userText = null
     ): bool {
         try {
@@ -162,7 +160,7 @@ class CollectionModel extends AbstractModel {
             $params = [
                 $collectionName,
                 $userId,
-                $isFavorite,
+//                $isFavorite,
                 $userText,
                 $idCollection
             ];

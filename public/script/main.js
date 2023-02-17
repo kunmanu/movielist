@@ -2,7 +2,7 @@ import {
     createAddCollectionForm,
     createAddMovieForm,
     createEditCollectionForm,
-    createEditMovieForm,
+    displayEditMovieForm,
 } from "./lib/dom.js";
 import {
     deleteCollectionEvent,
@@ -11,7 +11,7 @@ import {
     searchTmdbEvent,
 } from "./lib/event.js";
 import {buildUrl} from "./lib/utilities.js";
-import {fetchMovieData} from "./lib/ajax.js";
+import {fetchMovieDataFromTmdb} from "./lib/ajax.js";
 
 console.log('main.js');
 
@@ -21,7 +21,7 @@ let editMovieButtons = document.querySelectorAll(".editMovie-btn");
 
 if (editMovieButtons) {
     editMovieButtons.forEach((btn) => {
-        btn.addEventListener("click", () => createEditMovieForm(btn));
+        btn.addEventListener("click", () => displayEditMovieForm(btn));
     });
 }
 
@@ -126,7 +126,7 @@ async function downloadImg(imgPath) {
 addMovieFromTmdbBtn.addEventListener('click',async (e) => {
     e.preventDefault()
     const collectionId = document.getElementById('movieCollection').value
-    const movie = await fetchMovieData(addMovieFromTmdbBtn.dataset.movieid)
+    const movie = await fetchMovieDataFromTmdb(addMovieFromTmdbBtn.dataset.movieid)
     console.log(movie)
 
     const title = movie.title;
@@ -136,16 +136,16 @@ addMovieFromTmdbBtn.addEventListener('click',async (e) => {
     const overview = movie.overview;
     const imgPath = movie.poster_path
 
-    console.log(imgPath)
-
-
-
-    console.log(collectionId)
-    console.log(`Title: ${title}`);
-    console.log(`Genres: ${genreNames}`);
-    console.log(`Release date: ${releaseDate}`);
-    console.log(`Rating: ${rating}`);
-    console.log(`Overview: ${overview}`);
+    // console.log(imgPath)
+    //
+    //
+    //
+    // console.log(collectionId)
+    // console.log(`Title: ${title}`);
+    // console.log(`Genres: ${genreNames}`);
+    // console.log(`Release date: ${releaseDate}`);
+    // console.log(`Rating: ${rating}`);
+    // console.log(`Overview: ${overview}`);
 
 
     const imgLocalPath = await downloadImg(imgPath)
@@ -165,9 +165,6 @@ addMovieFromTmdbBtn.addEventListener('click',async (e) => {
     const response = await fetch(url);
 
 
-    console.log(url, response)
-
-
-
+    // console.log(url, response)
 
 })

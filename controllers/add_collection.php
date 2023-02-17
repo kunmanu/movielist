@@ -8,14 +8,11 @@ $data = $_GET;
 
 $title = strip_tags(trim($data['collection_name']));
 $description = strip_tags(trim($data['collection_description']));
-$isFavorite = 0;
-if (isset($data['collection_isFavorite'])){
-    $isFavorite = strip_tags(trim($data['collection_isFavorite']));
-}
+
 
 try {
     $collectionModel = new CollectionModel();
-    $newCollection = $collectionModel->createCollection($title,$user,$isFavorite,$description);
+    $newCollection = $collectionModel->createCollection($title,$user,$description);
 
     if ($newCollection) {
         echo json_encode([
