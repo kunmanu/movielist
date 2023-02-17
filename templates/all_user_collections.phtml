@@ -18,6 +18,23 @@
 
 
     <main>
+        <div class="editCollectionOverlay overlay">
+            <div class="editCollectionOverlay-container">
+                <button class="closeEditCollectionOverlay">Close</button>
+                <form id="edit-collection-form">
+                    <div>
+                        <label for="collectionTitle">Title:</label>
+                        <input type="text" id="collectionTitle" name="collectionTitle" required>
+                    </div>
+                    <div>
+                        <label for="collectionDescription">Description:</label>
+                        <textarea id="collectionDescription" name="collectionDescription"></textarea>
+                    </div>
+                    <input type="hidden" id="idCollection" name="idCollection">
+                    <button class="editCollectionBtn" type="submit">Edit Collection</button>
+                </form>
+            </div>
+        </div>
         <div class="collectionsContainer">
             <?php foreach ($collections as $collection): ?>
                 <div class="<?='collection-'.$collection['idCollection'] ?> collectionsContainer-collection">
@@ -54,6 +71,5 @@
 
         </div>
     </main>
-
 </div>
 

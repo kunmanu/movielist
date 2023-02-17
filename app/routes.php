@@ -21,7 +21,9 @@ $routes = [
     'upload_img'=>'upload_img.php',
     'search_page'=>'search_page.php',
     'tmdb_get_one_movie'=>'tmdb_get_one_movie.php',
-    'get_one_movie'=>'get_one_movie.php'
+    'get_one_movie'=>'get_one_movie.php',
+    'get_one_collection'=>'get_one_collection.php'
+
 ];
 
 

@@ -150,17 +150,13 @@ class CollectionModel extends AbstractModel {
 
     public function editCollection(
         string $idCollection,
-        string $collectionName,
-               $userId = null,
-//               $isFavorite = null,
-               $userText = null
+        string $collectionTitle,
+               $userText
     ): bool {
         try {
             $sql = SqlConstants::COLLECTIONS_SQL_UPDATE_COLLECTION;
             $params = [
-                $collectionName,
-                $userId,
-//                $isFavorite,
+                $collectionTitle,
                 $userText,
                 $idCollection
             ];

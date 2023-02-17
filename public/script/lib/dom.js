@@ -5,7 +5,13 @@ import {
     addCollectionEvent,
     deleteCollectionEvent, addMovieEvent,
 } from "./event.js";
-import {ajaxEditMovie, fetchMovieDataFromTmdb, fetchMovieDataLocal} from "./ajax.js";
+import {
+    ajaxEditCollection,
+    ajaxEditMovie,
+    fetchCollectionData,
+    fetchMovieDataFromTmdb,
+    fetchMovieDataLocal,
+} from "./ajax.js";
 
 export const deleteMovieDom = (data) => {
     console.log(data)
@@ -78,25 +84,59 @@ export const displayEditMovieForm = async (btn) => {
 };
 
 
-export const createEditCollectionForm = (btn) => {
+export const createEditCollectionForm = async (btn) => {
+
+    //open close form
+    document.querySelector('.editCollectionOverlay').style.display = 'block'
+    let closeEditMovieOverlay = document.querySelector('.closeEditCollectionOverlay');
+    closeEditMovieOverlay.addEventListener('click', () => {
+        document.querySelector('.editCollectionOverlay').style.display = 'none';
+    });
+
+    //preload form
+
+
     let idCollection = btn.dataset.idcollection;
     let ajaxUrl = btn.dataset.ajax;
-    let collectionNameElement = document.querySelector(`.collection-${idCollection} h3`)
-    let collectionName = collectionNameElement.textContent;
+    console.log(idCollection, ajaxUrl)
+    let collectionData= await fetchCollectionData(idCollection);
 
-    let form = createElement(
-        "form",
-        {class: "update-collection-form", "data-ajax":ajaxUrl},
-        {submit: (e) => {e.preventDefault();editCollectionEvent(form);}})
-        .appendChildren(
-            [
-                createElement("input", { type: "text", name: "name", value: collectionName }),
-                createElement("input", { type: "hidden", name: "id", value: idCollection }),
-                createElement("button", { type: "submit" })
-                    .appendChildren("ok")])
+    console.log(collectionData)
 
-    collectionNameElement.replaceWith(form);
-    return form
+    document.querySelector('#collectionTitle').value = collectionData.title;
+    document.querySelector('#collectionDescription').value = collectionData.userText;
+    document.querySelector('#idCollection').value = collectionData.idCollection;
+
+    document.querySelector('.editCollectionBtn').addEventListener('click', (event) => {
+        event.preventDefault();
+        let collectionTitle = document.querySelector('#collectionTitle').value;
+        let collectionDescription = document.querySelector('#collectionDescription').value;
+        // let idCollection = document.querySelector('#idCollection').value;
+
+        ajaxEditCollection(
+            ajaxUrl,
+            collectionTitle,
+            collectionDescription,
+        );
+    });
+
+
+    // let collectionNameElement = document.querySelector(`.collection-${idCollection} h3`)
+    // let collectionName = collectionNameElement.textContent;
+    //
+    // let form = createElement(
+    //     "form",
+    //     {class: "update-collection-form", "data-ajax":ajaxUrl},
+    //     {submit: (e) => {e.preventDefault();editCollectionEvent(form);}})
+    //     .appendChildren(
+    //         [
+    //             createElement("input", { type: "text", name: "name", value: collectionName }),
+    //             createElement("input", { type: "hidden", name: "id", value: idCollection }),
+    //             createElement("button", { type: "submit" })
+    //                 .appendChildren("ok")])
+    //
+    // collectionNameElement.replaceWith(form);
+    // return form
 };
 
 

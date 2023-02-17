@@ -52,7 +52,14 @@ class SqlConstants
         'SELECT * FROM Collections';
     const COLLECTIONS_SQL_ADD_COLLECTION =
         'INSERT INTO Collections (title, userId, createdAt, userText) VALUES (?,?,NOW(),?)';
-    const COLLECTIONS_SQL_UPDATE_COLLECTION = 'UPDATE Collections SET title = ?, userId = COALESCE(?, userId), isFavorite = COALESCE(?, isFavorite), createdAt = COALESCE(NOW(), createdAt), userText = COALESCE(?, userText) WHERE idCollection = ? ';
+    const COLLECTIONS_SQL_UPDATE_COLLECTION = '
+            UPDATE Collections 
+            SET title = ?, 
+                createdAt = NOW(), 
+                userText = ? 
+            WHERE idCollection = ? 
+';
+
 
     const COLLECTION_SQL_GET_MOVIES_FROM_COLLECTION = 'SELECT * FROM Movies m INNER JOIN MovieCollections mc ON m.idMovie = mc.movieId WHERE mc.collectionId = ? ORDER BY createdAt DESC';
 

@@ -66,10 +66,11 @@ export const ajaxEditMovie = (ajaxUrl, movie_name, summary, poster, releaseYear,
 };
 
 
-export  function ajaxEditCollection(ajaxUrl, newName) {
+export  function ajaxEditCollection(ajaxUrl, name, description) {
 
     let params = new URLSearchParams();
-    params.append("collection_name", newName);
+    params.append("collection_name", name);
+    params.append("collection_description", description);
 
     let request = ajaxUrl + `&${params.toString()}`;
     return fetch(request)
@@ -204,5 +205,10 @@ export async function fetchMovieDataFromTmdb(movieId) {
 
 export async function fetchMovieDataLocal(movieId) {
     const response = await fetch(buildUrl('get_one_movie', {'id': movieId}));
+    return response.json();
+}
+
+export async function fetchCollectionData(collectionId) {
+    const response = await fetch(buildUrl('get_one_collection', {'id': collectionId }));
     return response.json();
 }
