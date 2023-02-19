@@ -1,5 +1,6 @@
 <?php
 include_once "../autoload.php";
+include_once '../lib/functions.php';
 
 $userModel = new UserModel();
 $collectionModel = new CollectionModel();
@@ -14,6 +15,6 @@ $userModel->deleteUser($idUser);
 
 }
 
-$template = 'login';
-include "../templates/base.phtml";
+logout();
+header("Location: " . buildUrl('home'));
 exit;

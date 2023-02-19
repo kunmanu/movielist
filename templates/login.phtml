@@ -4,7 +4,7 @@
     <?php endif; ?>
     <div>
         <label for="email" class="formLogin-label">Email</label>
-        <input type="text" id="email" name="email" value="<?=htmlspecialchars($email);?>" class="formLogin-input">
+        <input type="text" id="email" name="email" value="<?=htmlspecialchars($email ?? "");?>" class="formLogin-input">
     </div>
     <div>
         <label for="password" class="formLogin-label">Mot de passe</label>
