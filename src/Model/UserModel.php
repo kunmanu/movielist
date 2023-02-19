@@ -4,6 +4,11 @@ include_once "../src/core/SqlConstants.php";
 
 
 class UserModel extends AbstractModel {
+    function deleteUser(int $id) {
+        $sql = SqlConstants::USERS_SQL_DELETE_USER;
+
+        $this->db->executeQuery($sql, [$id]);
+    }
 
 
     function getUserById(int $id)
@@ -23,8 +28,7 @@ class UserModel extends AbstractModel {
 
 
     function addUser(
-        string $firstname,
-        string $lastname,
+        string $username,
         string $email,
         string $role,
         string $hash
@@ -34,11 +38,10 @@ class UserModel extends AbstractModel {
         $this->db->executeQuery(
             $sql,
             [
-                $firstname,
-                $lastname,
+                $username,
                 $email,
-                $role,
-                $hash
+                $hash,
+                $role
             ]
         );
     }
@@ -51,13 +54,7 @@ class UserModel extends AbstractModel {
         return $user && password_verify($password, $user['hash']) ? $user : false;
     }
 
-//    function checkUser(string $email, string $password) {
-//        $user = $this->getUserByEmail($email);
-//        if (!$user) {
-//            return false;
-//        }
-//        return password_verify($password, $user['hash']);
-//    }
+
 
 
 }

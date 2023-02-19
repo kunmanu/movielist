@@ -4,7 +4,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 TRUNCATE Users;
 
-INSERT INTO Users (pseudonym, email, hash, createdAt, role)
+INSERT INTO Users (username, email, hash, createdAt, role)
 VALUES ('admin', 'admin@admin.ad', '$2a$12$C1lAEN9md/exmC4hnE.4te/vnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'ADMIN'),
        ('Maud ', 'Maud@gmail.com', '$2a$12$C1lAEN9md/exmC4hnE.4te/vnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'USER'),
        ('Pearl ', 'Pearl@gmail.com', '$2a$12$C1lAEN9md/exmC4hnE.4te/vnSPS7ekTUMaNLH19AcGIiYEu8bSlq', NOW(), 'USER'),

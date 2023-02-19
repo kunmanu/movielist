@@ -5,7 +5,7 @@ class SqlConstants
     //users table
     const USERS_SQL_GET_USER_BY_ID = 'SELECT * FROM Users WHERE idUser = ?';
     const USERS_SQL_GET_USER_BY_EMAIL = 'SELECT * FROM Users WHERE email = ?';
-    const USERS_SQL_ADD_USER = 'INSERT INTO Users (pseudonym, email, hash, createdAt, role) VALUES (?,?,?,NOW(),?)';
+    const USERS_SQL_ADD_USER = 'INSERT INTO Users (username, email, hash, createdAt, role) VALUES (?,?,?,NOW(),?)';
     const USERS_SQL_UPDATE_USER = 'UPDATE Users SET pseudonym = ?, email = ?, hash = ?, createdAt = NOW(), role = ? WHERE idUser = ?';
     const USERS_SQL_DELETE_USER = 'DELETE FROM Users WHERE idUser = ?';
     const USERS_SQL_GET_ALL_USERS = 'SELECT * FROM Users';

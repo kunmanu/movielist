@@ -9,7 +9,6 @@ $routes = [
     'edit_collection' => 'edit_collection.php',
     'edit_movie' => 'edit_movie.php',
     'home' => 'home.php',
-    'all_collection' => 'view_all_collections.php',
     'login' => 'login.php',
     'logout' => 'logout.php',
     'signup' => 'signup.php',
@@ -17,12 +16,12 @@ $routes = [
     'view_collection' => 'view_collection.php',
     'view_movie' => 'view_movie.php',
     'user_profile' => 'view_user_profile.php',
-    'add' => 'add.php',
     'upload_img'=>'upload_img.php',
     'search_page'=>'search_page.php',
     'tmdb_get_one_movie'=>'tmdb_get_one_movie.php',
     'get_one_movie'=>'get_one_movie.php',
-    'get_one_collection'=>'get_one_collection.php'
+    'get_one_collection'=>'get_one_collection.php',
+    'delete_user'=>'delete_user.php'
 
 ];
 

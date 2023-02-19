@@ -21,7 +21,7 @@ if (!empty($_POST)) {
     if ($user) {
 
         // Enregistrement du user en session
-        registerUser($user['idUser'], $user['pseudonym'], $user['email'], $user['role']);
+        registerUser($user['idUser'], $user['username'], $user['email'], $user['role']);
     
         // Redirection pour le moment vers la page d'accueil du site
         header('Location: ' . buildUrl('home'));

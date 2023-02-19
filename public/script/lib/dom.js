@@ -10,7 +10,7 @@ import {
     ajaxEditMovie,
     fetchCollectionData,
     fetchMovieDataFromTmdb,
-    fetchMovieDataLocal,
+    fetchMovieDataLocal, uploadImg,
 } from "./ajax.js";
 
 export const deleteMovieDom = (data) => {
@@ -59,22 +59,26 @@ export const displayEditMovieForm = async (btn) => {
     console.log(movieInfo.poster)
 
 
-    document.querySelector('.editMovieBtn').addEventListener('click', (event, ) => {
+    document.querySelector('.editMovieBtn').addEventListener('click', async (event,) => {
         event.preventDefault();
         console.log(movieInfo.poster)
         let movie_name = document.querySelector('#movie_name').value;
         let summary = document.querySelector('#summary').value;
-        let poster = document.querySelector('#poster').files[0] ? document.querySelector('#poster').files[0] : movieInfo.poster ;
+        let poster = document.querySelector('#poster').files[0] ? document.querySelector('#poster').files[0] : movieInfo.poster;
         let releaseYear = document.querySelector('#releaseYear').value;
         // let internetRating = document.querySelector('#internetRating').value;
         let userRating = document.querySelector('#userRating').value;
         let idMovie = document.querySelector('#idMovie').value;
+        console.log(document.querySelector('#poster').files[0])
+
+        let imgPath = poster === document.querySelector('#poster').files[0] ?  await uploadImg(poster) : poster
+
 
         ajaxEditMovie(
             ajaxUrl,
             movie_name,
             summary,
-            poster,
+            imgPath,
             releaseYear,
             // internetRating,
             userRating,
@@ -121,22 +125,6 @@ export const createEditCollectionForm = async (btn) => {
     });
 
 
-    // let collectionNameElement = document.querySelector(`.collection-${idCollection} h3`)
-    // let collectionName = collectionNameElement.textContent;
-    //
-    // let form = createElement(
-    //     "form",
-    //     {class: "update-collection-form", "data-ajax":ajaxUrl},
-    //     {submit: (e) => {e.preventDefault();editCollectionEvent(form);}})
-    //     .appendChildren(
-    //         [
-    //             createElement("input", { type: "text", name: "name", value: collectionName }),
-    //             createElement("input", { type: "hidden", name: "id", value: idCollection }),
-    //             createElement("button", { type: "submit" })
-    //                 .appendChildren("ok")])
-    //
-    // collectionNameElement.replaceWith(form);
-    // return form
 };
 
 
@@ -199,9 +187,7 @@ export const AddCollectionDom = (form, collection) => {
         collectionContainer.appendChild(noMovies);
     }
 
-    // let urltest = buildUrl('delete_collection', { 'idCollection': collection.idCollection })
 
-    // console.log(urltest)
 
     const deleteBtn = createElement(
         'button',
@@ -261,77 +247,7 @@ export const createAddMovieForm = () => {
 
 
 
-    // let container = document.querySelector('.movieCardsContainer')
-    // let idCollection = btn.dataset.collection
-    // let form = createElement(
-    //     'form',
-    //     {
-    //         class : 'movieCardsContainer-movieCard',
-    //         enctype :'multipart/form-data',
-    //         'data-ajax' : btn.dataset.ajax,
-    //     },
-    //     {'submit' : (e)=> {
-    //             e.preventDefault();
-    //             addMovieEvent(form);}}
-    //
-    //         ).appendChildren(
-    //             [
-    //             createElement(
-    //                 'input',
-    //                 {
-    //                     type : 'text',
-    //                     name : 'movieTitle',
-    //                     id : 'movieTitle',
-    //                     placeholder : "Movie Title" }),
-    //             createElement(
-    //                 'input',
-    //                 {
-    //                     type : 'text',
-    //                     name : 'releaseYear',
-    //                     id : 'releaseYear',
-    //                     placeholder : "Release date"}),
-    //             createElement(
-    //                 'input',
-    //                 {
-    //                     type : 'text',
-    //                     name : 'movieRating',
-    //                     id : 'movieRating',
-    //                     placeholder : 'Movie rating'
-    //                 }),
-    //             createElement(
-    //                 'textarea',
-    //                 {
-    //                     name : 'movieSummary',
-    //                     id : 'movieSummary',
-    //                     placeholder : 'movie Summary'
-    //                 }),
-    //             createElement(
-    //                 'input',
-    //                 {
-    //                     type : 'file',
-    //                     name : 'movieImg',
-    //                     id : 'movieImg',
-    //                     placeholder : 'Movie poster'
-    //                 }),
-    //             createElement(
-    //                 'input',
-    //                 {
-    //                     type : 'hidden',
-    //                     value : idCollection,
-    //                     name : 'idCollection',
-    //                     id : 'idCollection',
-    //                 }),
-    //
-    //             createElement(
-    //                 'button',
-    //                 {
-    //                     type : 'submit',
-    //                 }).appendChildren('Add a new movie'),
-    //
-    //         ])
-    //
-    //
-    // container.insertBefore(form, container.firstChild)
+
 
 }
 

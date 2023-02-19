@@ -1,62 +1,55 @@
-<?php 
+<?php
 include_once '../autoload.php';
-// Initialisations
+
+// Initializations
 $errors = [];
-$firstname = '';
-$lastname = '';
+$username = '';
 $email = '';
 
-// Création de l'objet UserModel
+// Create UserModel object
 $userModel = new UserModel();
 
-
-// Si le formulaire est soumis...
+// If the form is submitted...
 if (!empty($_POST)) {
 
-    // On récupère les données du formulaire
-    $firstname = strip_tags(trim($_POST['firstname']));
-    $lastname = strip_tags(trim($_POST['lastname']));
+    // Get form data
+    $username = strip_tags(trim($_POST['username']));
     $email = strip_tags(trim($_POST['email']));
     $password = $_POST['password'];
     $passwordConfirm = $_POST['password-confirm'];
 
-    // On valide les données (titre et contenu obligatoires)
-    if (!strlen($firstname)) {
-        $errors['firstname'] = 'Le champ "Prénom" est obligatoire';
-    }
-
-    if (!strlen($lastname)) {
-        $errors['lastname'] = 'Le champ "Nom" est obligatoire';
+    // Validate data (username and email are required)
+    if (!strlen($username)) {
+        $errors['username'] = 'The "Username" field is required';
     }
 
     if (!strlen($email)) {
-        $errors['email'] = 'Le champ "Email" est obligatoire';
+        $errors['email'] = 'The "Email" field is required';
     }
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors['email'] = 'Email invalide';
+        $errors['email'] = 'Invalid email';
     }
     elseif ($userModel->getUserByEmail($email)) {
-        $errors['email'] = 'Un compte existe déjà avec cet email';
+        $errors['email'] = 'An account already exists with this email';
     }
 
     if (strlen($password) < 8) {
-        $errors['password'] = 'Le mot de passe doit comporter au moins 8 caractères';
+        $errors['password'] = 'Password must be at least 8 characters long';
     }
     elseif ($password != $passwordConfirm) {
-        $errors['password-confirm'] = 'Le mot de passe de confirmation ne correspond pas';
+        $errors['password-confirm'] = 'Password confirmation does not match';
     }
 
-    // Si tout est OK (pas d'erreurs)...
+    // If everything is OK (no errors)...
     if (empty($errors)) {
 
-        // Hashage du mot de passe
+        // Hash password
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
-        // On enregistre l'article
-        $userModel->addUser($firstname, $lastname, $email, 'USER', $hash);
-        // @TODO stocker 'USER' dans une constante de configuration 
+        // Register user
+        $userModel->addUser($username, $email,'USER', $hash);
 
-        // On redirige l'internaute (pour l'instant vers une page de confirmation)
+        // Redirect user (for now to a confirmation page)
         header('Location: ' . buildUrl('home'));
 
         exit;

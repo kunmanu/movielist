@@ -136,16 +136,6 @@ addMovieFromTmdbBtn.addEventListener('click',async (e) => {
     const overview = movie.overview;
     const imgPath = movie.poster_path
 
-    // console.log(imgPath)
-    //
-    //
-    //
-    // console.log(collectionId)
-    // console.log(`Title: ${title}`);
-    // console.log(`Genres: ${genreNames}`);
-    // console.log(`Release date: ${releaseDate}`);
-    // console.log(`Rating: ${rating}`);
-    // console.log(`Overview: ${overview}`);
 
 
     const imgLocalPath = await downloadImg(imgPath)
@@ -165,6 +155,5 @@ addMovieFromTmdbBtn.addEventListener('click',async (e) => {
     const response = await fetch(url);
 
 
-    // console.log(url, response)
 
 })

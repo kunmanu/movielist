@@ -3,12 +3,11 @@ create database movietheque;
 
 use movietheque;
 
-
 CREATE TABLE Users (
     `idUser` integer primary key auto_increment not null,
-    `pseudonym` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
     `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `hash` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `hash` text COLLATE utf8mb4_unicode_ci NOT NULL,
     `createdAt` datetime NOT NULL,
     `role` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL
 );

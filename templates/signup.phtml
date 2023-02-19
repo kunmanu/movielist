@@ -1,16 +1,9 @@
-<form action="<?=buildUrl('signin');?>" method="POST">
+<form action="<?=buildUrl('signup');?>" method="POST">
     <div>
-        <label for="firstname">Prénom</label>
-        <input type="text" id="firstname" name="firstname" value="<?=htmlspecialchars($firstname);?>">
-        <?php if (isset($errors['firstname'])): ?>
-            <p class="error"><?=htmlspecialchars($errors['firstname']);?></p>
-        <?php endif; ?>
-    </div>
-    <div>
-        <label for="lastname">Nom</label>
-        <input type="text" id="lastname" name="lastname" value="<?=htmlspecialchars($firstname);?>">
-        <?php if (isset($errors['lastname'])): ?>
-            <p class="error"><?=htmlspecialchars($errors['lastname']);?></p>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" value="<?=htmlspecialchars($username);?>">
+        <?php if (isset($errors['username'])): ?>
+            <p class="error"><?=htmlspecialchars($errors['username']);?></p>
         <?php endif; ?>
     </div>
     <div>
@@ -21,18 +14,19 @@
         <?php endif; ?>
     </div>
     <div>
-        <label for="password">Mot de passe</label>
+        <label for="password">Password</label>
         <input type="password" id="password" name="password">
         <?php if (isset($errors['password'])): ?>
             <p class="error"><?=htmlspecialchars($errors['password']);?></p>
         <?php endif; ?>
     </div>
     <div>
-        <label for="password-confirm">Mot de passe (confirmation)</label>
+        <label for="password-confirm">Password (confirmation)</label>
         <input type="password" id="password-confirm" name="password-confirm">
         <?php if (isset($errors['password-confirm'])): ?>
             <p class="error"><?=htmlspecialchars($errors['password-confirm']);?></p>
         <?php endif; ?>
     </div>
-    <input type="submit" value="Enregistrer">
+    <input type="submit" value="Sign up">
 </form>
+

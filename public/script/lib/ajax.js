@@ -48,7 +48,6 @@ export const ajaxEditMovie = (ajaxUrl, movie_name, summary, poster, releaseYear,
     params.append('summary', summary);
     params.append('poster', poster);
     params.append('releaseYear', releaseYear);
-    // params.append('internetRating', internetRating);
     params.append('userRating', userRating);
     params.append('idMovie', idMovie);
 
@@ -86,7 +85,7 @@ export  function ajaxEditCollection(ajaxUrl, name, description) {
 
 }
 
-export function ajaxAddCollection (ajaxUrl, title, description, isFav) {
+export function ajaxAddCollection (ajaxUrl, title, description,) {
 
     let params = new URLSearchParams();
     params.append("collection_name", title);
