@@ -102,7 +102,11 @@ try {
         echo json_encode([
             'success' => true,
             "message" => "Movie edited successfully",
-            'name' => $movieTitle,
+            'title' => $movieTitle,
+            'summary' => $summary,
+            'poster' => $poster,
+            'releaseYear' => $releaseYear,
+            'userRating' => $userRating,
             'idMovie' => $idMovie
         ]);
 

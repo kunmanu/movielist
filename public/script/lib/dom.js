@@ -1,131 +1,27 @@
 import {createElement, buildUrl,} from "./utilities.js";
 import {
     editMovieEvent,
-    editCollectionEvent,
     addCollectionEvent,
-    deleteCollectionEvent, addMovieEvent,
+    deleteCollectionEvent, addMovieEvent, editCollectionEvent, deleteMovieEvent, deleteMovieFromCollectionEvent,
 } from "./event.js";
 import {
-    ajaxEditCollection,
-    ajaxEditMovie,
-    fetchCollectionData,
+
     fetchMovieDataFromTmdb,
-    fetchMovieDataLocal, uploadImg,
+
 } from "./ajax.js";
 
 export const deleteMovieDom = (data) => {
     console.log(data)
     let p = createElement("p").appendChildren('film supprimé')
     document.querySelector(`.movie${data.idMovie}`).replaceWith(p);
+    // document.querySelector(`movie${movie.idMovie}`).replaceWith(p);
+
 
 }
 
 export const deleteMovieFromCollectionDom = (data) => document.querySelector(`.movie${data.idMovie}-collection${data.idCollection}`).remove();
 
 export const deleteCollectionDom = (data) => document.querySelector(`.collection-${data.id}`).remove()
-
-export const editCollectionDom = (form, data) => {
-    console.log(data)
-    let h3 = createElement('h3', {id : `collection-${data.idCollection}`}).appendChildren(data.name)
-
-    form.replaceWith(h3);
-}
-
-export const editMovieDom = (form, idMovie, newName) => {
-    let p = createElement("h2",{id:`movie${idMovie}`}).appendChildren(newName);
-    form.replaceWith(p);
-
-};
-
-export const displayEditMovieForm = async (btn) => {
-    let ajaxUrl = btn.dataset.ajax
-    console.log(btn.dataset.idmovie);
-    document.querySelector('.editMovieOverlay').style.display = 'block';
-    let closeEditMovieOverlay = document.querySelector('.closeEditMovieOverlay');
-
-    closeEditMovieOverlay.addEventListener('click', () => {
-        document.querySelector('.editMovieOverlay').style.display = 'none';
-    });
-
-    let movieInfo = await fetchMovieDataLocal(btn.dataset.idmovie);
-
-    document.querySelector('#movie_name').value = movieInfo.title;
-    document.querySelector('#summary').value = movieInfo.summary;
-    document.querySelector('#currentPoster').src = `../public/img/movie_posters/${movieInfo.poster}`;
-    document.querySelector('#releaseYear').value = movieInfo.releaseYear;
-    // document.querySelector('#internetRating').value = movieInfo.internetRating;
-    document.querySelector('#userRating').value = movieInfo.userRating;
-    document.querySelector('#idMovie').value = btn.dataset.idmovie
-    console.log(movieInfo.poster)
-
-
-    document.querySelector('.editMovieBtn').addEventListener('click', async (event,) => {
-        event.preventDefault();
-        console.log(movieInfo.poster)
-        let movie_name = document.querySelector('#movie_name').value;
-        let summary = document.querySelector('#summary').value;
-        let poster = document.querySelector('#poster').files[0] ? document.querySelector('#poster').files[0] : movieInfo.poster;
-        let releaseYear = document.querySelector('#releaseYear').value;
-        // let internetRating = document.querySelector('#internetRating').value;
-        let userRating = document.querySelector('#userRating').value;
-        let idMovie = document.querySelector('#idMovie').value;
-        console.log(document.querySelector('#poster').files[0])
-
-        let imgPath = poster === document.querySelector('#poster').files[0] ?  await uploadImg(poster) : poster
-
-
-        ajaxEditMovie(
-            ajaxUrl,
-            movie_name,
-            summary,
-            imgPath,
-            releaseYear,
-            // internetRating,
-            userRating,
-            idMovie
-        );
-    });
-};
-
-
-export const createEditCollectionForm = async (btn) => {
-
-    //open close form
-    document.querySelector('.editCollectionOverlay').style.display = 'block'
-    let closeEditMovieOverlay = document.querySelector('.closeEditCollectionOverlay');
-    closeEditMovieOverlay.addEventListener('click', () => {
-        document.querySelector('.editCollectionOverlay').style.display = 'none';
-    });
-
-    //preload form
-
-
-    let idCollection = btn.dataset.idcollection;
-    let ajaxUrl = btn.dataset.ajax;
-    console.log(idCollection, ajaxUrl)
-    let collectionData= await fetchCollectionData(idCollection);
-
-    console.log(collectionData)
-
-    document.querySelector('#collectionTitle').value = collectionData.title;
-    document.querySelector('#collectionDescription').value = collectionData.userText;
-    document.querySelector('#idCollection').value = collectionData.idCollection;
-
-    document.querySelector('.editCollectionBtn').addEventListener('click', (event) => {
-        event.preventDefault();
-        let collectionTitle = document.querySelector('#collectionTitle').value;
-        let collectionDescription = document.querySelector('#collectionDescription').value;
-        // let idCollection = document.querySelector('#idCollection').value;
-
-        ajaxEditCollection(
-            ajaxUrl,
-            collectionTitle,
-            collectionDescription,
-        );
-    });
-
-
-};
 
 
 export const createAddCollectionForm = (btn) => {
@@ -168,25 +64,20 @@ container.insertBefore(form, container.firstChild)
 export const AddCollectionDom = (form, collection) => {
     console.log(form)
 
-    // console.log(collection.idCollection)
+
     const collectionContainer = createElement(
         'div',
         { class: `collection-${collection.idCollection} collectionsContainer-collection` });
 
-    const title = createElement('h3', { id: `collection-${collection.idCollection}`}).appendChildren(`${collection.title}`)
-    const userText = createElement('p', {}, {}).appendChildren(`${collection.userText}`);
+    const title = createElement('h3', { id: `collectionTitle-${collection.idCollection}`}).appendChildren(`${collection.title}`)
+    const userText = createElement('p', {id : `collectionDescription-${collection.idCollection}`}, {}).appendChildren(`${collection.userText}`);
     console.log(userText)
 
     collectionContainer.appendChildren([title, userText]);
 
-    if (collection.movies.length > 0) {
-        const movieCount = createElement('p',).appendChildren(`Contain ${collection.movies.length} movies` )
-        collectionContainer.appendChild(movieCount);
-    } else {
-        const noMovies = createElement('p').appendChildren(`No movie yet` )
-        collectionContainer.appendChild(noMovies);
-    }
 
+    const noMovies = createElement('p').appendChildren(`No movie in that list` )
+    collectionContainer.appendChild(noMovies);
 
 
     const deleteBtn = createElement(
@@ -216,10 +107,12 @@ export const AddCollectionDom = (form, collection) => {
         type: 'button'
     }).appendChildren('View Collection');
 
+
+
     viewBtn.appendChild(viewBtnInner);
     collectionContainer.appendChild(viewBtn);
     deleteBtn.addEventListener('click',()=>deleteCollectionEvent(deleteBtn))
-    editBtn.addEventListener('click', ()=>createEditCollectionForm(editBtn))
+    editBtn.addEventListener('click', ()=>editCollectionEvent(editBtn))
     form.replaceWith(collectionContainer)
 
 };
@@ -239,7 +132,6 @@ export const createAddMovieForm = () => {
 
     addMovieButton.addEventListener('click',(e)=>{
         e.preventDefault()
-        console.log(document.querySelector('.addMovieForm'))
         addMovieEvent(document.querySelector('.addMovieForm'))
     })
 
@@ -251,18 +143,21 @@ export const createAddMovieForm = () => {
 
 }
 
+
 export const addMovieDom = (form, movie) => {
+
 
     let movieCardsContainer =  document.querySelector('.movieCardsContainer')
 
     const movieContainer = createElement(
         'div',
-        {class:`movieCardsContainer-movieCard movie-${movie.idMovie}`});
+        {class:`movieCardsContainer-movieCard movie${movie.idMovie}`});
 
 
     const img = createElement(
         'img',
         {
+            id :`moviePoster${movie.idMovie}`,
             class : "movieCardsContainer-movieCard-moviePoster",
             src : '../public/img/movie_posters/'+movie.poster
         }
@@ -278,30 +173,69 @@ export const addMovieDom = (form, movie) => {
 
     const title = createElement(
         'h2',
-        {id : `movie${movie.idMovie}` }).appendChildren(`${movie.title}`);
+        {id : `movieTitle${movie.idMovie}` }).appendChildren(`${movie.title}`);
 
     const summary = createElement(
         'p',
+        {id :`movieSummary${movie.idMovie}`,}
     ).appendChildren(`${movie.summary}`)
 
 
     const movieMetaContainer =  createElement('div',{class : "movieCardsContainer-movieCard-movieMeta"})
-    const userRating = createElement('span', {}).appendChildren(`Rating: ${movie.userRating}`);
-    const releasedDate = createElement('span', {}).appendChildren(`released in: ${movie.releaseYear}`);
-    // const isFavorite = createElement('span', {}).appendChildren(`Is Favorite: ${movie.isFavorite}`);
-    const internetRating = createElement('span', {}).appendChildren(`internet rate ${movie.internetRating}`);
-    const userText = createElement('span', {}).appendChildren(`internet rate ${movie.internetRating}`);
+    const userRating = createElement('span', {id :`movieRating${movie.idMovie}`}).appendChildren(`Rating: ${movie.userRating}`);
+    const releasedDate = createElement('span', {id :`movieReleaseYear${movie.idMovie}`}).appendChildren(`released in: ${movie.releaseYear}`);
 
-
-    movieMetaContainer.append(releasedDate,internetRating,userRating,userText)
+    movieMetaContainer.append(releasedDate,userRating)
 
     movieDetails.append(title, summary,movieMetaContainer)
     movieContainer.append(img, movieDetails)
-    // form.replaceWith(movieContainer)
+
+    const movieActions = createElement('div', {class: "movieCardsContainer-movieCard-movieActions"});
+
+    const deleteBtn = createElement(
+        'button',
+        {
+            class: "deleteMovie-btn",
+            type: "button",
+            "data-idmovie": movie.idMovie,
+            "data-ajax": `index.php?page=delete_movie&idMovie=${movie.idMovie}`
+        }
+    ).appendChildren("delete");
+
+    const editBtn = createElement(
+        'button',
+        {
+            class: "editMovie-btn",
+            type: "button",
+            "data-idmovie": movie.idMovie,
+            "data-ajax": `index.php?page=edit_movie&idMovie=${movie.idMovie}`
+        }
+    ).appendChildren("edit movie");
+
+    const viewBtn = createElement(
+        'a',
+        {
+            href: `index.php?page=view_movie&id=${movie.idMovie}`
+        }
+    ).appendChildren(createElement(
+        'button',
+        {
+            class: "viewMovie-btn",
+            type: "button",
+            "data-idmovie": movie.idMovie
+        }
+    ).appendChildren("view movie"));
+
+
+    editBtn.addEventListener('click', ()=> (editMovieEvent(editBtn)))
+    deleteBtn.addEventListener('click', ()=> deleteMovieEvent(deleteBtn))
+
+
+    movieActions.append(deleteBtn, editBtn, viewBtn);
+    movieDetails.append(title, summary, movieMetaContainer, movieActions);
+    movieContainer.append(img, movieDetails);
     movieCardsContainer.prepend(movieContainer);
-
-
-}
+};
 
 
 export const searchTmdbDom = (data) => {
@@ -419,18 +353,62 @@ export function updateOverlayWithMovieInfo(movieData) {
 }
 
 
+export const editCollectionDom = (data) => {
+    // hide the edit collection overlay
+    hideOverlay('.editCollectionOverlay');
+
+    // select the elements of the collection based on its id
+    let collectionTitle = document.querySelector(`#collectionTitle-${data.idCollection}`);
+    let collectionDescription = document.querySelector(`#collectionDescription-${data.idCollection}`);
+
+    // update the elements with the new name data from the AJAX call
+    collectionTitle.innerHTML = data.name;
+    collectionDescription.innerHTML = data.description;
+};
+
+export const editMovieDom = (data) => {
+    hideOverlay('.editMovieOverlay');
+    console.log(data);
+
+    // const movieContainer = document.querySelector(`.movie-${data.idMovie}`);
+    const movieTitle = document.querySelector(`#movieTitle${data.idMovie}`);
+    const movieSummary = document.querySelector(`#movieSummary${data.idMovie}`);
+    const movieReleaseYear = document.querySelector(`#movieReleaseYear${data.idMovie}`);
+    const movieRating = document.querySelector(`#movieRating${data.idMovie}`);
+    const moviePoster = document.querySelector(`#moviePoster${data.idMovie}`);
+
+    movieTitle.innerText = data.title;
+    movieSummary.innerText = data.summary;
+    movieReleaseYear.innerText = `Released in ${data.releaseYear}`;
+    movieRating.innerText = `Internet rating: ${data.userRating}`;
+    moviePoster.src = `../public/img/movie_posters/${data.poster}`;
+};
 
 
 
-export function showOverlay(overlay) {
+export function showOverlay(overlayClass) {
+    let overlay = document.querySelector(overlayClass);
     overlay.style.display = 'block';
 }
 
 
-const closeOverlay = document.getElementById('close-overlay');
-if (closeOverlay) {
-    closeOverlay.addEventListener('click', () => {
-        const overlay = document.getElementById('overlay');
-        overlay.style.display = 'none';
-    });
+export function hideOverlay(overlayClass) {
+    let overlay = document.querySelector(overlayClass);
+    overlay.style.display = 'none';
 }
+
+
+
+
+// export function showOverlay(overlay) {
+//     overlay.style.display = 'block';
+// }
+
+
+// const closeOverlay = document.getElementById('close-overlay');
+// if (closeOverlay) {
+//     closeOverlay.addEventListener('click', () => {
+//         const overlay = document.getElementById('overlay');
+//         overlay.style.display = 'none';
+//     });
+// }

@@ -38,10 +38,12 @@
         <div class="collectionsContainer">
             <?php foreach ($collections as $collection): ?>
                 <div class="<?='collection-'.$collection['idCollection'] ?> collectionsContainer-collection">
-                    <h3 id="collection-<?=$collection['idCollection'] ?>">
+                    <h3 id="collectionTitle-<?=$collection['idCollection'] ?>">
                         <?= $collection['title'] ?>
                     </h3>
-                    <p><?= $collection['userText'] ?></p>
+                    <p id="collectionDescription-<?=$collection['idCollection'] ?>">
+                        <?= $collection['userText'] ?>
+                    </p>
 
 
                     <?php if (count($collection['movies'])>0) : ?>

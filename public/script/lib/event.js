@@ -4,8 +4,8 @@ import {
         deleteCollectionDom,
         deleteMovieDom,
         deleteMovieFromCollectionDom,
-        editCollectionDom,
-        editMovieDom,
+        editCollectionDom, editMovieDom,
+        hideOverlay,
         searchTmdbDom, showOverlay, updateOverlayWithMovieInfo,
 } from "./dom.js";
 import {
@@ -15,8 +15,8 @@ import {
         ajaxDeleteMovie,
         ajaxDeleteMovieFromCollection,
         ajaxEditCollection,
-        ajaxEditMovie,
-        fetchMovieDataFromTmdb,
+        ajaxEditMovie, fetchCollectionData,
+        fetchMovieDataFromTmdb, fetchMovieDataLocal,
         searchTmdbAjax,
         uploadImg,
 } from "./ajax.js";
@@ -71,37 +71,67 @@ export const deleteCollectionEvent = async (btn) => {
 }
 
 
-export const editCollectionEvent =  async (form) => {
-        let newName = form.name.value;
-        let ajaxUrl = form.dataset.ajax
-
-        try {
-                let data = await ajaxEditCollection(ajaxUrl, newName);
-
-                if (data) {
-                        editCollectionDom(form, data);
-                }
-        }
-        catch (error) {
-                console.log(error);
-        }
-
-}
 
 
-export const editMovieEvent = async (form) => {
-        let ajaxUrl = form.dataset.ajax;
-        let newName = form.title.value;
-        try {
-                let data = await ajaxEditMovie(ajaxUrl, newName);
-                if (data) {
-                        let idMovie = data.idMovie
-                        let name = data.name
-                        editMovieDom(form, idMovie, name);
-                }
-        } catch (error) {
-                console.log(error);
-        }
+export const editMovieEvent = async (btn) => {
+        let ajaxUrl = btn.dataset.ajax
+        console.log(btn.dataset.idmovie);
+
+        showOverlay('.editMovieOverlay')
+
+        let closeEditMovieOverlay = document.querySelector('.closeEditMovieOverlay');
+        closeEditMovieOverlay.addEventListener('click', () => {
+                hideOverlay('.editMovieOverlay')
+        });
+
+
+
+        let movieInfo = await fetchMovieDataLocal(btn.dataset.idmovie);
+
+        document.querySelector('#movie_name').value = movieInfo.title;
+        document.querySelector('#summary').value = movieInfo.summary;
+        document.querySelector('#currentPoster').src = `../public/img/movie_posters/${movieInfo.poster}`;
+        document.querySelector('#releaseYear').value = movieInfo.releaseYear;
+        // document.querySelector('#internetRating').value = movieInfo.internetRating;
+        document.querySelector('#userRating').value = movieInfo.userRating;
+        document.querySelector('#idMovie').value = btn.dataset.idmovie
+        console.log(movieInfo.poster)
+
+
+        document.querySelector('.editMovieBtn').addEventListener('click', async (event,) => {
+
+
+                event.preventDefault();
+                console.log(movieInfo.poster)
+                let movie_name = document.querySelector('#movie_name').value;
+                let summary = document.querySelector('#summary').value;
+                let poster = document.querySelector('#poster').files[0] ? document.querySelector('#poster').files[0] : movieInfo.poster;
+                let releaseYear = document.querySelector('#releaseYear').value;
+                let userRating = document.querySelector('#userRating').value;
+                let idMovie = document.querySelector('#idMovie').value;
+                console.log(document.querySelector('#poster').files[0])
+
+                let imgPath = poster === document.querySelector('#poster').files[0] ?  await uploadImg(poster) : poster
+
+
+                ajaxEditMovie(
+                    ajaxUrl,
+                    movie_name,
+                    summary,
+                    imgPath,
+                    releaseYear,
+                    // internetRating,
+                    userRating,
+                    idMovie
+                )
+                    .then(data => {
+                            editMovieDom(data);
+                    })
+
+                    .catch(error => {
+                            console.error(error);
+                    });
+        });
 };
 
 
@@ -139,15 +169,6 @@ export const addMovieEvent = async (form) => {
         let idCollection = form.idCollection.value;
         let genres = form.movieGenre.value
 
-        // console.log("ajaxUrl: ", ajaxUrl);
-        // console.log("title: ", title);
-        // console.log("summary: ", summary);
-        // console.log("rating: ", rating);
-        // console.log("poster: ", poster);
-        // console.log("releaseYear: ", releaseYear);
-        // console.log("idCollection: ", idCollection);
-        // console.log("genres: ", genres);
-
 
 
         //Upload the image to the server
@@ -163,7 +184,7 @@ export const addMovieEvent = async (form) => {
                     releaseYear,
                     genres,
                     idCollection);
-                console.log(data)
+                console.log('hello',data)
                 if (data) {
                         document.querySelector('.addMovieOverlay').style.display = 'none';
                         addMovieDom(form, data.movie);
@@ -187,7 +208,44 @@ export const searchTmdbEvent = async (form) => {
 
 
 
+export const editCollectionEvent = async (btn) => {
 
+        showOverlay('.editCollectionOverlay');
+
+        let closeEditMovieOverlay = document.querySelector('.closeEditCollectionOverlay');
+        closeEditMovieOverlay.addEventListener('click', () => {
+                hideOverlay('.editCollectionOverlay');
+        });
+
+        let idCollection = btn.dataset.idcollection;
+        let ajaxUrl = btn.dataset.ajax;
+
+        let collectionData = await fetchCollectionData(idCollection);
+
+        document.querySelector('#collectionTitle').value = collectionData.title;
+        document.querySelector('#collectionDescription').value = collectionData.userText;
+        document.querySelector('#idCollection').value = collectionData.idCollection;
+
+
+
+        document.querySelector('.editCollectionBtn').addEventListener('click', (event) => {
+                event.preventDefault();
+                let collectionTitle = document.querySelector('#collectionTitle').value;
+                let collectionDescription = document.querySelector('#collectionDescription').value;
+
+                ajaxEditCollection(
+                    ajaxUrl,
+                    collectionTitle,
+                    collectionDescription,
+                )
+                    .then((data) => {
+                            editCollectionDom(data);
+                    })
+                    .catch((error) => {
+                            console.error(error);
+                    });
+        });
+};
 
 
 

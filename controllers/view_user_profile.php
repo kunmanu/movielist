@@ -5,16 +5,13 @@ if (!isConnected()){
 }
 
 
-//$user = $_SESSION['user'];
 $model = new UserModel();
 $user = $model ->getUserById($_SESSION['user']['id']);
 
-dump($user);
+//dump($user);
 
 $script =  includeJavascript(['main']);
 $template = 'user_profile';
 include '../templates/base.phtml';
 
-/*TODO
 
-*/

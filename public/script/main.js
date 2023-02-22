@@ -1,13 +1,11 @@
 import {
     createAddCollectionForm,
     createAddMovieForm,
-    createEditCollectionForm,
-    displayEditMovieForm,
 } from "./lib/dom.js";
 import {
     deleteCollectionEvent,
     deleteMovieEvent,
-    deleteMovieFromCollectionEvent,
+    deleteMovieFromCollectionEvent, editCollectionEvent, editMovieEvent,
     searchTmdbEvent,
 } from "./lib/event.js";
 import {buildUrl} from "./lib/utilities.js";
@@ -21,16 +19,16 @@ let editMovieButtons = document.querySelectorAll(".editMovie-btn");
 
 if (editMovieButtons) {
     editMovieButtons.forEach((btn) => {
-        btn.addEventListener("click", () => displayEditMovieForm(btn));
+        btn.addEventListener("click", () => editMovieEvent(btn));
     });
 }
 
 
-///////EDIT LIST
-let updateCollectionButtons = document.querySelectorAll(".editCollection-btn")
-if (updateCollectionButtons){
-    updateCollectionButtons.forEach((btn) => {
-        btn.addEventListener("click", () => createEditCollectionForm(btn));
+///////EDIT COLLECTION [X]
+let editCollectionButtons = document.querySelectorAll(".editCollection-btn")
+if (editCollectionButtons){
+    editCollectionButtons.forEach((btn) => {
+        btn.addEventListener("click", () => editCollectionEvent(btn));
     });
 }
 

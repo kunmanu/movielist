@@ -95,16 +95,16 @@
 
             <?php foreach($movies as $movie) :?>
                 <div class="movieCardsContainer-movieCard  <?='movie'.$movie['idMovie'] ?>">
-                    <img class="movieCardsContainer-movieCard-moviePoster"
+                    <img class="movieCardsContainer-movieCard-moviePoster "
+                         id="<?="moviePoster".$movie['idMovie'] ?>"
                          src="<?= MOVIE_POSTER_PATH. $movie['poster'] ?>"
                          alt="<?= $movie['title'] ?>" >
                     <div class="movieCardsContainer-movieCard-movieDetails">
-                        <h2 id="<?="movie".$movie['idMovie'] ?>" ><?= $movie['title'] ?></h2>
-                        <p><?= $movie['summary'] ?></p>
+                        <h2 id="<?="movieTitle".$movie['idMovie'] ?>" ><?= $movie['title'] ?></h2>
+                        <p id="<?="movieSummary".$movie['idMovie'] ?>" ><?= $movie['summary'] ?></p>
                         <div class="movieCardsContainer-movieCard-movieMeta">
-                            <span>Released in <?= $movie['releaseYear'] ?></span>
-                            <span>Internet rating: <?= $movie['internetRating'] ?></span>
-                            <span>User rating: <?= $movie['userRating'] ?></span>
+                            <span id="<?="movieReleaseYear".$movie['idMovie'] ?>" >Released in <?= $movie['releaseYear'] ?></span>
+                            <span id="<?="movieRating".$movie['idMovie'] ?>"  >Internet rating: <?= $movie['userRating'] ?></span>
                         </div>
                         <div class="movieCardsContainer-movieCard-movieActions">
                             <button data-idMovie="<?=$movie['idMovie'] ?>"
