@@ -8,7 +8,6 @@ if (!isConnected()){
 $model = new UserModel();
 $user = $model ->getUserById($_SESSION['user']['id']);
 
-//dump($user);
 
 $script =  includeJavascript(['main']);
 $template = 'user_profile';

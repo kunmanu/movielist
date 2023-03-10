@@ -1,32 +1,34 @@
-<form action="<?=buildUrl('signup');?>" method="POST">
-    <div>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" value="<?=htmlspecialchars($username);?>">
-        <?php if (isset($errors['username'])): ?>
-            <p class="error"><?=htmlspecialchars($errors['username']);?></p>
-        <?php endif; ?>
-    </div>
-    <div>
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email" value="<?=htmlspecialchars($email);?>">
-        <?php if (isset($errors['email'])): ?>
-            <p class="error"><?=htmlspecialchars($errors['email']);?></p>
-        <?php endif; ?>
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password">
-        <?php if (isset($errors['password'])): ?>
-            <p class="error"><?=htmlspecialchars($errors['password']);?></p>
-        <?php endif; ?>
-    </div>
-    <div>
-        <label for="password-confirm">Password (confirmation)</label>
-        <input type="password" id="password-confirm" name="password-confirm">
-        <?php if (isset($errors['password-confirm'])): ?>
-            <p class="error"><?=htmlspecialchars($errors['password-confirm']);?></p>
-        <?php endif; ?>
-    </div>
-    <input type="submit" value="Sign up">
-</form>
+<div class="signupContainer">
+    <form action="<?= buildUrl('signup');?>" method="POST" class="signupContainer-formSignup">
+        <div>
+            <label for="username" class="signupContainer-formSignup-label">Username</label>
+            <input type="text" id="username" name="username" value="<?= htmlspecialchars($username);?>" class="signupContainer-formSignup-input">
+            <?php if (isset($errors['username'])): ?>
+                <p class="signupContainer-formSignup-error"><?= htmlspecialchars($errors['username']);?></p>
+            <?php endif; ?>
+        </div>
+        <div>
+            <label for="email" class="signupContainer-formSignup-label">Email</label>
+            <input type="text" id="email" name="email" value="<?= htmlspecialchars($email);?>" class="signupContainer-formSignup-input">
+            <?php if (isset($errors['email'])): ?>
+                <p class="signupContainer-formSignup-error"><?= htmlspecialchars($errors['email']);?></p>
+            <?php endif; ?>
+        </div>
+        <div>
+            <label for="password" class="signupContainer-formSignup-label">Password</label>
+            <input type="password" id="password" name="password" class="signupContainer-formSignup-input">
+            <?php if (isset($errors['password'])): ?>
+                <p class="signupContainer-formSignup-error"><?= htmlspecialchars($errors['password']);?></p>
+            <?php endif; ?>
+        </div>
+        <div>
+            <label for="password-confirm" class="signupContainer-formSignup-label">Password (confirmation)</label>
+            <input type="password" id="password-confirm" name="password-confirm" class="signupContainer-formSignup-input">
+            <?php if (isset($errors['password-confirm'])): ?>
+                <p class="signupContainer-formSignup-error"><?= htmlspecialchars($errors['password-confirm']);?></p>
+            <?php endif; ?>
+        </div>
+        <input type="submit" value="Sign up" class="signupContainer-formSignup-submit">
+    </form>
+</div>
 

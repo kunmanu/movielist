@@ -27,7 +27,7 @@ try {
     exit;
 
 } catch (Exception $e) {
-    error_log('Error editing collection: ' . $e->getMessage());
+    error_log('Error adding collection: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     exit;

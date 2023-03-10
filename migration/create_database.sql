@@ -1,53 +1,47 @@
-drop database if exists movietheque;
-create database movietheque;
+DROP DATABASE IF EXISTS movietheque;
+CREATE DATABASE movietheque
+    CHARACTER SET utf8
+    COLLATE utf8_general_ci;;
 
-use movietheque;
+USE movietheque;
 
 CREATE TABLE Users (
-    `idUser` integer primary key auto_increment not null,
-    `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `hash` text COLLATE utf8mb4_unicode_ci NOT NULL,
-    `createdAt` datetime NOT NULL,
-    `role` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password TEXT NOT NULL,
+    created_at DATETIME NOT NULL,
+    role VARCHAR(32) NOT NULL
 );
-
-
 
 CREATE TABLE Movies (
-    idMovie INTEGER PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     title VARCHAR(255) NOT NULL,
-    summary varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    poster varchar(1000) COLLATE utf8mb4_unicode_ci,
-    releaseYear varchar(255) COLLATE utf8mb4_unicode_ci,
+    summary VARCHAR(1000) DEFAULT NULL,
+    poster VARCHAR(1000),
+    release_year VARCHAR(255),
     genres VARCHAR(255),
-    internetRating TINYINT unsigned,
-    userRating TINYINT unsigned,
-    createdAt datetime,
-    userId int not null,
-        foreign key (userId) references Users(idUser)
+    internet_rating TINYINT UNSIGNED,
+    user_rating TINYINT UNSIGNED,
+    created_at DATETIME,
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
-
-
-
-
 
 CREATE TABLE Collections (
-    idCollection INTEGER PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     title VARCHAR(255) NOT NULL,
-    userId integer NOT NULL,
-    createdAt datetime,
-    userText varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-        FOREIGN KEY (userId) REFERENCES Users(idUser)
-
+    user_id INT NOT NULL,
+    created_at DATETIME NOT NULL,
+    user_text VARCHAR(1000) DEFAULT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 
-
 CREATE TABLE MovieCollections (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    movieId INTEGER NOT NULL,
-    collectionId INTEGER NOT NULL,
-    FOREIGN KEY (movieId) REFERENCES Movies(idMovie),
-    FOREIGN KEY (collectionId) REFERENCES Collections(idCollection)
-        ON DELETE CASCADE
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    movie_id INT NOT NULL,
+    collection_id INT NOT NULL,
+    FOREIGN KEY (movie_id) REFERENCES Movies(id),
+    FOREIGN KEY (collection_id) REFERENCES Collections(id)
+      ON DELETE CASCADE
 );

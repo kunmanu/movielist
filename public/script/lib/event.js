@@ -249,3 +249,11 @@ export const editCollectionEvent = async (btn) => {
 
 
 
+/* Add a click event listener to the responsive menu */
+
+const menuButton = document.querySelector('.siteNav-ToggleResponsive');
+const menuList = document.querySelector('.siteNav-list');
+
+menuButton.addEventListener('click', function() {
+        menuList.classList.toggle('responsive');
+});

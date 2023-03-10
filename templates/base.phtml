@@ -19,25 +19,25 @@
 
 
 <nav class="siteNav">
+    <div class="siteNav-ToggleResponsive">MENU</div>
     <ul class="siteNav-list">
-
         <?php if (isConnected()): ?>
-            <li class="siteNav-item">
-                <a href="<?=buildUrl('home');?>" class="siteNav-link">
-                    <i class="fa-solid fa-circle siteNav-icon"></i>Home
+            <li class="siteNav-list-item">
+                <a href="<?=buildUrl('home');?>" class="siteNav-list-item-link">
+                    <i class="fa-solid fa-circle siteNav-list-item-link-icon"></i>Home
                 </a>
             </li>
-            <li class="siteNav-item">
-                <a href="<?=buildUrl('all_collection_from_user');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>Collections</a>
+            <li class="siteNav-list-item">
+                <a href="<?=buildUrl('all_collection_from_user');?>" class="siteNav-list-item-link"><i class="fa-solid fa-circle siteNav-list-item-link-icon"></i>Collections</a>
             </li>
-            <li class="siteNav-item">
-                <a href="<?=buildUrl('user_profile');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>Profile</a>
+            <li class="siteNav-list-item">
+                <a href="<?=buildUrl('user_profile');?>" class="siteNav-list-item-link"><i class="fa-solid fa-circle siteNav-list-item-link-icon"></i>Profile</a>
             </li>
-            <li class="siteNav-item">
-                <a href="<?=buildUrl('search_page');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>Search</a>
+            <li class="siteNav-list-item">
+                <a href="<?=buildUrl('search_page');?>" class="siteNav-list-item-link"><i class="fa-solid fa-circle siteNav-list-item-link-icon"></i>Search</a>
             </li>
-            <li class="siteNav-item">
-                <a href="<?=buildUrl('logout');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>Logout</a>
+            <li class="siteNav-list-item">
+                <a href="<?=buildUrl('logout');?>" class="siteNav-list-item-link"><i class="fa-solid fa-circle siteNav-list-item-link-icon"></i>Logout</a>
             </li>
         <?php endif; ?>
         <?php if (isConnected() && isAdmin()): ?>
@@ -46,22 +46,15 @@
 
 
         <?php if (!isConnected()): ?>
-            <li class="siteNav-item">
-                <a href="<?=buildUrl('signup');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>sign up</a>
+            <li class="siteNav-list-item">
+                <a href="<?=buildUrl('signup');?>" class="siteNav-list-item-link"><i class="fa-solid fa-circle siteNav-list-item-link-icon"></i>sign up</a>
             </li>
-            <li class="siteNav-item">
-                <a href="<?=buildUrl('login');?>" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>login</a>
+            <li class="siteNav-list-item">
+                <a href="<?=buildUrl('login');?>" class="siteNav-list-item-link"><i class="fa-solid fa-circle siteNav-list-item-link-icon"></i>login</a>
             </li>
 
         <?php endif; ?>
 
-
-<!--        <li class="siteNav-item">-->
-<!--            <a href="--><?php //=buildUrl('all_collection');?><!--" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>all collection</a>-->
-<!--        </li>-->
-<!--        <li class="siteNav-item">-->
-<!--            <a href="--><?php //=buildUrl('add');?><!--" class="siteNav-link"><i class="fa-solid fa-circle siteNav-icon"></i>add page</a>-->
-<!--        </li>-->
     </ul>
 </nav>
 
