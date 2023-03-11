@@ -3,12 +3,13 @@ import {
     createAddMovieForm,
 } from "./lib/dom.js";
 import {
+    addMovieFromTmdbEvent,
     deleteCollectionEvent,
     deleteMovieEvent,
     deleteMovieFromCollectionEvent, editCollectionEvent, editMovieEvent,
     searchTmdbEvent,
 } from "./lib/event.js";
-import {buildUrl} from "./lib/utilities.js";
+import {buildUrl, downloadImg} from "./lib/utilities.js";
 import {fetchMovieDataFromTmdb} from "./lib/ajax.js";
 
 console.log('main.js');
@@ -115,43 +116,46 @@ if (movieSearchForm){
 
 const addMovieFromTmdbBtn = document.querySelector('.addMovieFromTmdbBtn')
 
-async function downloadImg(imgPath) {
-    const response = await fetch(`../controllers/download_img.php?img=${imgPath}`);
-    return await response.text();
-}
 
 
-addMovieFromTmdbBtn.addEventListener('click',async (e) => {
-    e.preventDefault()
-    const collectionId = document.getElementById('movieCollection').value
-    const movie = await fetchMovieDataFromTmdb(addMovieFromTmdbBtn.dataset.movieid)
-    console.log(movie)
+addMovieFromTmdbBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    addMovieFromTmdbEvent(addMovieFromTmdbBtn);
+});
 
-    const title = movie.title;
-    const genreNames = movie.genres.map(genre => genre.name).join(', ');
-    const releaseDate = movie.release_date;
-    const rating = movie.vote_average;
-    const overview = movie.overview;
-    const imgPath = movie.poster_path
-
-
-
-    const imgLocalPath = await downloadImg(imgPath)
-
-    const params = {
-        movieTitle: title,
-        movieSummary: overview,
-        movieRating: rating,
-        movieImg: imgLocalPath,
-        movieGenre: genreNames,
-        idCollection: collectionId,
-        releaseYear: releaseDate
-    };
-
-    const url = buildUrl('add_movie', params);
-
-    const response = await fetch(url);
-
-
-
-})
+// if (addMovieFromTmdbBtn){
+//     addMovieFromTmdbBtn.addEventListener('click',async (e) => {
+//         e.preventDefault()
+//         const collectionId = document.getElementById('movieCollection').value
+//         const movie = await fetchMovieDataFromTmdb(addMovieFromTmdbBtn.dataset.movieid)
+//         console.log(movie)
+//
+//         const title = movie.title;
+//         const genreNames = movie.genres.map(genre => genre.name).join(', ');
+//         const releaseDate = movie.release_date;
+//         const rating = movie.vote_average;
+//         const overview = movie.overview;
+//         const imgPath = movie.poster_path
+//
+//
+//
+//         const imgLocalPath = await downloadImg(imgPath)
+//
+//         const params = {
+//             movieTitle: title,
+//             movieSummary: overview,
+//             movieRating: rating,
+//             movieImg: imgLocalPath,
+//             movieGenre: genreNames,
+//             idCollection: collectionId,
+//             releaseYear: releaseDate
+//         };
+//
+//         const url = buildUrl('add_movie', params);
+//
+//         const response = await fetch(url);
+//
+//
+//
+//     })
+//}

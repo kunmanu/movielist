@@ -29,3 +29,7 @@ export function buildUrl(path, params) {
     }
 
 
+export async function downloadImg(imgPath) {
+    const response = await fetch(`../controllers/download_img.php?img=${imgPath}`);
+    return await response.text();
+}

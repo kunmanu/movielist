@@ -1,5 +1,6 @@
 <?php
-include_once '../app/config.php';
+require_once '../vendor/autoload.php';
+require_once '../app/config.php';
 
 
 $imgName = str_replace('/', '', $_GET['img']);

@@ -70,7 +70,7 @@ $movieTitle = strip_tags(trim($data['movie_name']));
 //    ]);
 //}
 
-require_once '../autoload.php';
+require_once '../vendor/autoload.php';
 
 $errors = [];
 $data = $_GET;

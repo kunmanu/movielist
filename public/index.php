@@ -11,9 +11,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 
-//dump($_SESSION);
-//dump($_GET);
-
 $routes = include '../app/routes.php';
 
 $page = $_GET['page'] ?? 'home';

@@ -1,6 +1,6 @@
 import {
         AddCollectionDom,
-        addMovieDom,
+        addMovieDom, addMovieFromTmdbDom,
         deleteCollectionDom,
         deleteMovieDom,
         deleteMovieFromCollectionDom,
@@ -9,6 +9,7 @@ import {
         searchTmdbDom, showOverlay, updateOverlayWithMovieInfo,
 } from "./dom.js";
 import {
+        addMovieFromTmdbAjax,
         ajaxAddCollection,
         ajaxAddMovie,
         ajaxDeleteCollection,
@@ -20,7 +21,7 @@ import {
         searchTmdbAjax,
         uploadImg,
 } from "./ajax.js";
-import {buildUrl} from "./utilities.js";
+import {buildUrl, downloadImg} from "./utilities.js";
 
 
 export const deleteMovieEvent = async (btn) => {
@@ -247,6 +248,36 @@ export const editCollectionEvent = async (btn) => {
         });
 };
 
+
+
+
+export async function addMovieFromTmdbEvent(addMovieFromTmdbBtn) {
+        const collectionId = document.getElementById('movieCollection').value
+        const movie = await fetchMovieDataFromTmdb(addMovieFromTmdbBtn.dataset.movieid);
+
+        const title = movie.title;
+        const genreNames = movie.genres.map(genre => genre.name).join(', ');
+        const releaseDate = movie.release_date;
+        const rating = movie.vote_average;
+        const overview = movie.overview;
+        const imgPath = movie.poster_path;
+
+        const imgLocalPath = await downloadImg(imgPath);
+
+        const  response = await addMovieFromTmdbAjax(
+            title,
+            overview,
+            rating,
+            imgLocalPath,
+            genreNames,
+            collectionId,
+            releaseDate
+        )
+
+        if (response.status === 200){
+                addMovieFromTmdbDom()
+        }
+}
 
 
 /* Add a click event listener to the responsive menu */

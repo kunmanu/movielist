@@ -211,3 +211,20 @@ export async function fetchCollectionData(collectionId) {
     const response = await fetch(buildUrl('get_one_collection', {'id': collectionId }));
     return response.json();
 }
+
+export async function addMovieFromTmdbAjax(title, overview, rating, imgLocalPath, genreNames, collectionId, releaseDate) {
+    const params = {
+        movieTitle: title,
+        movieSummary: overview,
+        movieRating: rating,
+        movieImg: imgLocalPath,
+        movieGenre: genreNames,
+        idCollection: collectionId,
+        releaseYear: releaseDate
+    };
+
+    const url = buildUrl('add_movie', params);
+
+    return await fetch(url);
+
+}

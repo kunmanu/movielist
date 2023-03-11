@@ -317,15 +317,18 @@ export const searchTmdbDom = (data) => {
 
 export const displayOneMovieFromTmdb = async (addBtn) => {
 
-    const overlay = document.getElementById('overlay');
+    const overlayClass = ".overlay";
 
-    try {
+    // try {
         const movieData = await fetchMovieDataFromTmdb(addBtn.dataset.movieid);
         updateOverlayWithMovieInfo(movieData);
-        showOverlay(overlay);
-    } catch (error) {
-        console.error(error);
-    }
+        showOverlay(overlayClass);
+        document.getElementById('close-overlay').addEventListener('click', ()=>
+            hideOverlay('.overlay')
+        )
+    // } catch (error) {
+    //     console.error(error);
+    // }
 };
 
 
@@ -386,6 +389,13 @@ export const editMovieDom = (data) => {
 
 
 
+
+
+
+export function addMovieFromTmdbDom() {
+    hideOverlay('.overlay')
+}
+
 export function showOverlay(overlayClass) {
     let overlay = document.querySelector(overlayClass);
     overlay.style.display = 'block';
@@ -396,19 +406,3 @@ export function hideOverlay(overlayClass) {
     let overlay = document.querySelector(overlayClass);
     overlay.style.display = 'none';
 }
-
-
-
-
-// export function showOverlay(overlay) {
-//     overlay.style.display = 'block';
-// }
-
-
-// const closeOverlay = document.getElementById('close-overlay');
-// if (closeOverlay) {
-//     closeOverlay.addEventListener('click', () => {
-//         const overlay = document.getElementById('overlay');
-//         overlay.style.display = 'none';
-//     });
-// }

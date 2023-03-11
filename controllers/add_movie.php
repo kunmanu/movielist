@@ -105,7 +105,7 @@
 //}
 
 
-require_once '../autoload.php';
+require_once '../vendor/autoload.php';
 
 $errors = [];
 $user = $_SESSION['user']['id'] ;
@@ -120,34 +120,6 @@ $idCollection = isset($data['idCollection']) ? strip_tags(trim($data['idCollecti
 $releaseYear = isset($data['releaseYear']) ? strip_tags(trim($data['releaseYear'])) : null;
 $internetRating = isset($data['internetRating']) ? strip_tags(trim($data['internetRating'])) : null;
 $genres = isset($data['movieGenre']) ? strip_tags(trim($data['movieGenre'])) : null;
-
-
-//echo "title: ";
-//dump($title);
-//
-//echo "Collection: ";
-//dump($idCollection);
-//
-//echo "User: ";
-//dump($user);
-//
-//echo "summary: ";
-//dump($summary);
-//
-//echo "imgPath: ";
-//dump($imgPath);
-//
-//echo "releaseYear: ";
-//dump($releaseYear);
-//
-//echo "internetRating: ";
-//dump($internetRating);
-//
-//echo "rating: ";
-//dump($rating);
-//
-//echo "genres: ";
-//dump($genres);
 
 
 try {
