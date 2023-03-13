@@ -41,7 +41,9 @@
             </li>
         <?php endif; ?>
         <?php if (isConnected() && isAdmin()): ?>
-
+            <li class="siteNav-list-item">
+                <a href="<?=buildUrl('admin');?>" class="siteNav-list-item-link"><i class="fa-solid fa-circle siteNav-list-item-link-icon"></i>Admin</a>
+            </li>
         <?php endif; ?>
 
 

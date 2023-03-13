@@ -22,8 +22,10 @@ $routes = [
     'get_one_movie'=>'get_one_movie.php',
     'get_one_collection'=>'get_one_collection.php',
     'delete_user'=>'delete_user.php',
-    'password_reset'=>'password_reset.php',
-    'password_reset_mailer'=>'password_reset_mailer.php'
+//    'password_reset'=>'password_reset.php',
+//    'password_reset_mailer'=>'password_reset_mailer.php',
+    'edit_user'=>'edit_user.php',
+    'admin'=>'admin.php'
 
 ];
 

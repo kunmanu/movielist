@@ -1,12 +1,12 @@
 import {
     createAddCollectionForm,
-    createAddMovieForm,
+    createAddMovieForm, showOverlay,
 } from "./lib/dom.js";
 import {
     addMovieFromTmdbEvent,
     deleteCollectionEvent,
     deleteMovieEvent,
-    deleteMovieFromCollectionEvent, editCollectionEvent, editMovieEvent,
+    deleteMovieFromCollectionEvent, editCollectionEvent, editMovieEvent, editUserEvent,
     searchTmdbEvent,
 } from "./lib/event.js";
 import {buildUrl, downloadImg} from "./lib/utilities.js";
@@ -117,45 +117,21 @@ if (movieSearchForm){
 const addMovieFromTmdbBtn = document.querySelector('.addMovieFromTmdbBtn')
 
 
+if (addMovieFromTmdbBtn) {
+    addMovieFromTmdbBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        addMovieFromTmdbEvent(addMovieFromTmdbBtn);
+    });
 
-addMovieFromTmdbBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    addMovieFromTmdbEvent(addMovieFromTmdbBtn);
-});
+}
 
-// if (addMovieFromTmdbBtn){
-//     addMovieFromTmdbBtn.addEventListener('click',async (e) => {
-//         e.preventDefault()
-//         const collectionId = document.getElementById('movieCollection').value
-//         const movie = await fetchMovieDataFromTmdb(addMovieFromTmdbBtn.dataset.movieid)
-//         console.log(movie)
-//
-//         const title = movie.title;
-//         const genreNames = movie.genres.map(genre => genre.name).join(', ');
-//         const releaseDate = movie.release_date;
-//         const rating = movie.vote_average;
-//         const overview = movie.overview;
-//         const imgPath = movie.poster_path
-//
-//
-//
-//         const imgLocalPath = await downloadImg(imgPath)
-//
-//         const params = {
-//             movieTitle: title,
-//             movieSummary: overview,
-//             movieRating: rating,
-//             movieImg: imgLocalPath,
-//             movieGenre: genreNames,
-//             idCollection: collectionId,
-//             releaseYear: releaseDate
-//         };
-//
-//         const url = buildUrl('add_movie', params);
-//
-//         const response = await fetch(url);
-//
-//
-//
-//     })
-//}
+
+//USER
+
+
+let editUserButton = document.querySelector(".editUserBtnOverlay");
+console.log(editUserButton)
+if (editUserButton) {
+    editUserButton.addEventListener("click", () => editUserEvent());
+
+}

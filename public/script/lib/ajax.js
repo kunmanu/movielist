@@ -228,3 +228,23 @@ export async function addMovieFromTmdbAjax(title, overview, rating, imgLocalPath
     return await fetch(url);
 
 }
+
+export const ajaxEditUser = (username, email) => {
+    const params ={
+        username :username,
+        email :email
+    }
+
+    const url = buildUrl('edit_user', params)
+
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success === true) {
+                return data;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};

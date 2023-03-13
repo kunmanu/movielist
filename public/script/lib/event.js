@@ -1,12 +1,15 @@
 import {
         AddCollectionDom,
-        addMovieDom, addMovieFromTmdbDom,
+        addMovieDom,
+        addMovieFromTmdbDom,
         deleteCollectionDom,
         deleteMovieDom,
         deleteMovieFromCollectionDom,
-        editCollectionDom, editMovieDom,
+        editCollectionDom,
+        editMovieDom, editUserDom,
         hideOverlay,
-        searchTmdbDom, showOverlay, updateOverlayWithMovieInfo,
+        searchTmdbDom,
+        showOverlay,
 } from "./dom.js";
 import {
         addMovieFromTmdbAjax,
@@ -16,12 +19,14 @@ import {
         ajaxDeleteMovie,
         ajaxDeleteMovieFromCollection,
         ajaxEditCollection,
-        ajaxEditMovie, fetchCollectionData,
-        fetchMovieDataFromTmdb, fetchMovieDataLocal,
+        ajaxEditMovie, ajaxEditUser,
+        fetchCollectionData,
+        fetchMovieDataFromTmdb,
+        fetchMovieDataLocal,
         searchTmdbAjax,
         uploadImg,
 } from "./ajax.js";
-import {buildUrl, downloadImg} from "./utilities.js";
+import {downloadImg} from "./utilities.js";
 
 
 export const deleteMovieEvent = async (btn) => {
@@ -76,7 +81,7 @@ export const deleteCollectionEvent = async (btn) => {
 
 export const editMovieEvent = async (btn) => {
         let ajaxUrl = btn.dataset.ajax
-        console.log(btn.dataset.idmovie);
+
 
         showOverlay('.editMovieOverlay')
 
@@ -288,3 +293,33 @@ const menuList = document.querySelector('.siteNav-list');
 menuButton.addEventListener('click', function() {
         menuList.classList.toggle('responsive');
 });
+
+
+
+
+export const editUserEvent = () => {
+        showOverlay('.editUserOverlay');
+        document.querySelector('.closeEditUserOverlay').addEventListener('click', () => {
+                hideOverlay('.editUserOverlay');
+        });
+
+        // Prefill the form with user information
+        document.querySelector('#username').value = document.querySelector('.userInfo-username').innerHTML;
+        document.querySelector('#email').value = document.querySelector('.userInfo-email').innerHTML;
+
+
+        //edit the user on click
+
+        document.querySelector('.editUserBtn').addEventListener('click', async (e) => {
+                e.preventDefault()
+                let username = document.querySelector('#username').value
+                let email = document.querySelector('#email').value
+
+                let data = await ajaxEditUser(username, email)
+
+                if (data.success === true){
+                        editUserDom(data);
+                }
+
+        })
+}

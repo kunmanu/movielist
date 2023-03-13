@@ -406,3 +406,11 @@ export function hideOverlay(overlayClass) {
     let overlay = document.querySelector(overlayClass);
     overlay.style.display = 'none';
 }
+
+
+export function editUserDom(data) {
+    hideOverlay('.editUserOverlay');
+    alert('movie edited successfully')
+    document.querySelector('.userInfo-username').innerHTML = data.username
+    document.querySelector('.userInfo-email').innerHTML = data.email
+}

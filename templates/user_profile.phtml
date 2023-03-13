@@ -1,62 +1,65 @@
-<!--<div class="user-info">-->
-<!--    <table>-->
-<!--        <tr>-->
-<!--            <th>Pseudonym</th>-->
-<!--            <th>Email</th>-->
-<!--            <th>Role</th>-->
-<!--            <th>Created At</th>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td>-->
-<!--                <p>--><?php //= $user['username'] ?><!--</p>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--                <p>--><?php //= $user['email'] ?><!--</p>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--                <p>--><?php //= $user['role'] ?><!--</p>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--                <p>--><?php //= $user['createdAt'] ?><!--</p>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--    </table>-->
+<main>
+    <div class="editUserOverlay ">
+        <div class="editUserOverlay-container">
+            <button class="closeEditUserOverlay">Close</button>
+            <form id="edit-user-form">
+                <div>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" >
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <!--                <div>-->
+                <!--                    <label for="password">Password:</label>-->
+                <!--                    <input type="password" id="password" name="password">-->
+                <!--                </div>-->
+                <input type="hidden" id="idUser" name="idUser">
+                <button class="editUserBtn" type="submit">Edit User</button>
+            </form>
+        </div>
 
-<!--</div>-->
-<div class="userInfo">
-    <div class="userInfoHeader">
-        <h3 class="userInfoTitle">User Profile</h3>
     </div>
-    <div class="userInfoBody">
-        <div class="userInfoSection">
-            <div class="userInfoSectionHeader">
-                <h4 class="userInfoSectionTitle">Username</h4>
-                <button class="userInfoSectionEditButton">Edit</button>
-            </div>
-            <p class="userInfoSectionContent"><?= $user['username'] ?></p>
+
+
+    <div class="userInfo">
+        <div class="userInfoHeader">
+            <h3 class="userInfoTitle">User Profile</h3>
         </div>
-        <div class="userInfoSection">
-            <div class="userInfoSectionHeader">
-                <h4 class="userInfoSectionTitle">Email</h4>
-                <button class="userInfoSectionEditButton">Edit</button>
+        <div class="userInfoBody">
+            <div class="userInfoSection">
+                <div class="userInfoSectionHeader">
+                    <h4 class="userInfoSectionTitle">Username</h4>
+                </div>
+                <p class="userInfo-username"><?= htmlspecialchars($user['username']) ?></p>
             </div>
-            <p class="userInfoSectionContent"><?= $user['email'] ?></p>
+            <div class="userInfoSection">
+                <div class="userInfoSectionHeader">
+                    <h4 class="userInfoSectionTitle">Email</h4>
+                </div>
+                <p class="userInfo-email"><?= htmlspecialchars($user['email']) ?></p>
+            </div>
+            <div class="userInfoSection">
+                <div class="userInfoSectionHeader">
+                    <h4 class="userInfoSectionTitle">Password</h4>
+                </div>
+                <p class="userInfoSectionContent">*****</p>
+            </div>
+            <div class="userInfoSection">
+                <div class="userInfoSectionHeader">
+                    <h4 class="userInfoSectionTitle">Created On</h4>
+                </div>
+                <p class="userInfoSectionContent"><?= htmlspecialchars($user['createdAt']) ?></p>
+            </div>
         </div>
-        <div class="userInfoSection">
-            <div class="userInfoSectionHeader">
-                <h4 class="userInfoSectionTitle">Password</h4>
-                <button class="userInfoSectionEditButton">Edit</button>
-            </div>
-            <p class="userInfoSectionContent">*****</p>
-        </div>
-        <div class="userInfoSection">
-            <div class="userInfoSectionHeader">
-                <h4 class="userInfoSectionTitle">Created On</h4>
-            </div>
-            <p class="userInfoSectionContent"><?= $user['createdAt'] ?></p>
+        <div class="userInfoFooter">
+            <button class="editUserBtnOverlay" type="submit">Edit user</button>
+            <a href="<?= buildUrl('delete_user', ['id' => htmlspecialchars($user['idUser'])]) ?>" onclick="return confirm('Are you sure you want to delete this user?');">
+                <button class="userInfoDeleteButton">Delete User</button>
+            </a>
         </div>
     </div>
-    <div class="userInfoFooter">
-        <a href="<?= buildUrl('delete_user', ['id' => $user['idUser']]) ?>" onclick="return confirm('Are you sure you want to delete this user?');"><button class="userInfoDeleteButton">Delete User</button></a>
-    </div>
-</div>
+
+
+</main>

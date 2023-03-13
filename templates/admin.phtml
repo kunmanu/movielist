@@ -1,0 +1,30 @@
+<main>
+    <table class="userTable">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Member since</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($allUsers as $user) : ?>
+            <tr>
+                <td><?= htmlspecialchars($user['username']) ?></td>
+                <td><?= htmlspecialchars($user['email']) ?></td>
+                <td><?= htmlspecialchars($user['createdAt']) ?></td>
+                <td><?= htmlspecialchars($user['role']) ?></td>
+                <td>
+                    <a href="<?= buildUrl('delete_user', ['id' => $user['idUser']]) ?>" onclick="return confirm('Are you sure you want to delete this user?');">
+                        <button class="userInfoDeleteButton">Delete User</button>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+
+</main>

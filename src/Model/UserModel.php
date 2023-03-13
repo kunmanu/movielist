@@ -55,6 +55,21 @@ class UserModel extends AbstractModel {
     }
 
 
+    function editUser ($email, $username, $userID)
+    {
+        $sql = SqlConstants::USERS_SQL_UPDATE_USER;
+
+        $this->db->executeQuery($sql,[$email, $username,  $userID]);
+
+        return $this->getUserById($userID);
+    }
+
+    function getAllUsers(): bool|array
+    {
+        $sql = SqlConstants::USERS_SQL_GET_ALL_USERS;
+
+        return $this->db->getAllResults($sql);
+    }
 
 
 }
